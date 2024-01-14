@@ -2,7 +2,5 @@
 </script>
 
 <template>
-  <div>
-    <router-view />
-  </div>
+  <main>this is from home.</main>
 </template>
