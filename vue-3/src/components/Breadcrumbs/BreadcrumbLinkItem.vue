@@ -17,7 +17,7 @@ defineProps({
 
   icon: {
     type: String,
-    default: 'fa-home'
+    default: ''
   }
 })
 </script>

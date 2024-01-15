@@ -2,6 +2,7 @@
 import DashboardLayout from '@/layouts/DashboardLayout.vue'
 import Breadcrumb from '@/components/Breadcrumbs/MainBreadcrumb.vue'
 import BreadcrumbItem from '@/components/Breadcrumbs/BreadcrumbItem.vue'
+import BreadcrumbLinkItem from '@/components/Breadcrumbs/BreadcrumbLinkItem.vue'
 import TableContainer from '@/components/Tables/TableContainer.vue'
 import ActionTable from '@/components/Tables/ActionTable.vue'
 import DashboardTableDataSearchBox from '@/components/Forms/SearchBoxs/DashboardTableDataSearchBox.vue'
@@ -10,18 +11,18 @@ import SortableTableHeaderCell from '@/components/Tables/TableCells/SortableTabl
 import TableHeaderCell from '@/components/Tables/TableCells/TableHeaderCell.vue'
 import TableDataCell from '@/components/Tables/TableCells/TableDataCell.vue'
 import TableActionCell from '@/components/Tables/TableCells/TableActionCell.vue'
-import TableSelectBoxCell from '@/components/Tables/TableCells/TableSelectBoxCell.vue'
 import NoTableData from '@/components/Tables/NoTableData.vue'
 import GreenBadge from '@/components/Badges/GreenBadge.vue'
 import RedBadge from '@/components/Badges/RedBadge.vue'
 import BulkActionButton from '@/components/Buttons/BulkActionButton.vue'
 import RouterLinkButton from '@/components/Buttons/RouterLinkButton.vue'
+import EmptyTrashButton from '@/components/Buttons/EmptyTrashButton.vue'
 import NormalButton from '@/components/Buttons/NormalButton.vue'
 import Pagination from '@/components/Paginations/DashboardPagination.vue'
 import { useTitle } from '@vueuse/core'
 import { reactive } from 'vue'
 
-useTitle('Categories - Restaurant Food Ordering')
+useTitle('Deleted Categories - Restaurant Food Ordering')
 
 const categories = reactive({
   current_page: 1,
@@ -175,25 +176,23 @@ const categories = reactive({
         class="flex flex-col items-start md:flex-row md:items-center md:justify-between mb-4 md:mb-8"
       >
         <Breadcrumb to="admin.dashboard" icon="fa-list" label="Categories">
+          <BreadcrumbLinkItem label="Trash" to="admin.dashboard" />
           <BreadcrumbItem label="List" />
         </Breadcrumb>
+
+        <div class="w-auto flex items-center justify-end">
+          <RouterLinkButton to="admin.dashboard">
+            <i class="fa-solid fa-left-long"></i>
+            Go To List
+          </RouterLinkButton>
+        </div>
       </div>
 
-      <div class="flex items-center justify-between mb-3">
-        <!-- Create New Button -->
-        <RouterLinkButton to="admin.dashboard">
-          <i class="fa-solid fa-file-circle-plus mr-1"></i>
-          Add A New Category
-        </RouterLinkButton>
+      <!-- Message -->
+      <div class="text-left text-sm font-bold mb-5 text-slate-800">
+        Categories in the trash will be automatically deleted after 60 days
 
-        <!-- Trash Button -->
-        <RouterLinkButton
-          to="admin.categories.trashed"
-          class="text-white bg-red-600 hover:bg-red-700"
-        >
-          <i class="fa-solid fa-trash-can mr-1"></i>
-          Trash
-        </RouterLinkButton>
+        <EmptyTrashButton />
       </div>
 
       <!-- Table Start -->
@@ -226,8 +225,6 @@ const categories = reactive({
 
               <SortableTableHeaderCell label="Status" to="admin.dashboard" sort="status" />
 
-              <TableHeaderCell label="Change Status" />
-
               <TableHeaderCell label="Actions" />
             </template>
 
@@ -252,17 +249,15 @@ const categories = reactive({
                 </RedBadge>
               </TableDataCell>
 
-              <TableSelectBoxCell />
-
               <TableActionCell>
-                <RouterLinkButton to="admin.dashboard">
-                  <i class="fa-solid fa-edit"></i>
-                  Edit
-                </RouterLinkButton>
+                <NormalButton to="admin.dashboard">
+                  <i class="fa-solid fa-recycle"></i>
+                  Restore
+                </NormalButton>
 
                 <NormalButton class="bg-red-600 hover:bg-red-700 text-white">
                   <i class="fa-solid fa-trash-can"></i>
-                  Delete
+                  Delete Forever
                 </NormalButton>
               </TableActionCell>
             </template>

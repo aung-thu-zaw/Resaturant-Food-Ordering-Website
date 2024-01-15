@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Home from '@/views/restaurant/Home.vue'
 import Dashboard from '@/views/admin/Dashboard.vue'
 import CategoryIndex from '@/views/admin/Categories/Index.vue'
+import CategoryTrash from '@/views/admin/Categories/Trash.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -20,6 +21,11 @@ const router = createRouter({
       path: '/admin/categories',
       name: 'admin.categories.index',
       component: CategoryIndex
+    },
+    {
+      path: '/admin/categories/trashed',
+      name: 'admin.categories.trashed',
+      component: CategoryTrash
     }
   ]
 })
