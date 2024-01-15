@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Home from '@/views/restaurant/HomeView.vue'
-import Dashboard from '@/views/admin/DashboardView.vue'
+import Home from '@/views/restaurant/Home.vue'
+import Dashboard from '@/views/admin/Dashboard.vue'
+import CategoryIndex from '@/views/admin/Categories/Index.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -12,8 +13,13 @@ const router = createRouter({
     },
     {
       path: '/admin/dashboard',
-      name: 'admin-dashboard',
+      name: 'admin.dashboard',
       component: Dashboard
+    },
+    {
+      path: '/admin/categories',
+      name: 'admin.categories.index',
+      component: CategoryIndex
     }
   ]
 })

@@ -2,11 +2,19 @@
 import UserDropdown from '@/components/Dropdowns/UserDropdown.vue'
 import { ref } from 'vue'
 import logo from '../../assets/images/logo-color.png'
+import { useRoute } from 'vue-router'
 
+const route = useRoute()
 const collapseShow = ref('hidden')
 
 const toggleCollapseShow = (classes) => {
   collapseShow.value = classes
+}
+
+const getSidebarMenuActiveColor = (targetRoute) => {
+  return route.path.startsWith(targetRoute)
+    ? 'text-primary hover:text-red-500'
+    : 'text-slate-600 hover:text-slate-800'
 }
 </script>
 
@@ -95,18 +103,24 @@ const toggleCollapseShow = (classes) => {
         >
           <!-- Dashboard -->
           <li class="items-center">
-            <a class="text-primary hover:text-red-500" href="#">
+            <router-link
+              :to="{ name: 'admin.dashboard' }"
+              class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] outline-none"
+              :class="getSidebarMenuActiveColor('/admin/dashboard')"
+              href="#"
+            >
               <div class="text-[13px] py-3 block">
                 <i class="fas fa-tv mr-2" />
                 Dashboard
               </div>
-            </a>
+            </router-link>
           </li>
 
           <!-- Analytics -->
           <li class="items-center">
             <a
-              class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] text-slate-600 hover:text-slate-800 outline-none"
+              class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] outline-none"
+              :class="getSidebarMenuActiveColor('/admin/analytics')"
               href="#"
             >
               <div class="text-[13px] py-3 block">
@@ -118,21 +132,23 @@ const toggleCollapseShow = (classes) => {
 
           <!-- Category -->
           <li class="items-center">
-            <a
-              class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] text-slate-600 hover:text-slate-800 outline-none"
-              href="#"
+            <router-link
+              :to="{ name: 'admin.categories.index' }"
+              class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] outline-none"
+              :class="getSidebarMenuActiveColor('/admin/categories')"
             >
               <div class="text-[13px] py-3 block">
                 <i class="fas fa-list mr-2" />
                 Categories
               </div>
-            </a>
+            </router-link>
           </li>
 
           <!-- Products -->
           <li class="items-center">
             <a
-              class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] text-slate-600 hover:text-slate-800 outline-none"
+              class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] outline-none"
+              :class="getSidebarMenuActiveColor('/admin/products')"
               href="#"
             >
               <div class="text-[13px] py-3 block">
@@ -145,7 +161,8 @@ const toggleCollapseShow = (classes) => {
           <!-- Product Reviews -->
           <li class="items-center">
             <a
-              class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] text-slate-600 hover:text-slate-800 outline-none"
+              class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] outline-none"
+              :class="getSidebarMenuActiveColor('/admin/product-reviews')"
               href="#"
             >
               <div class="text-[13px] py-3 block">
@@ -158,7 +175,8 @@ const toggleCollapseShow = (classes) => {
           <!-- Daily Offer -->
           <li class="items-center">
             <a
-              class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] text-slate-600 hover:text-slate-800 outline-none"
+              class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] outline-none"
+              :class="getSidebarMenuActiveColor('/admin/daily-offers')"
               href="#"
             >
               <div class="text-[13px] py-3 block">
@@ -171,7 +189,8 @@ const toggleCollapseShow = (classes) => {
           <!-- Coupons -->
           <li class="items-center">
             <a
-              class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] text-slate-600 hover:text-slate-800 outline-none"
+              class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] outline-none"
+              :class="getSidebarMenuActiveColor('/admin/coupons')"
               href="#"
             >
               <div class="text-[13px] py-3 block">
@@ -215,7 +234,9 @@ const toggleCollapseShow = (classes) => {
             >
               <li class="relative hover:bg-gray-100 duration-100 rounded-md">
                 <a
-                  class="flex font-semibold cursor-pointer items-center truncate rounded-[5px] py-3 pl-7 text-[0.8rem] text-slate-600 outline-none transition duration-300 ease-linear"
+                  class="flex font-semibold cursor-pointer items-center truncate rounded-[5px] py-3 pl-7 text-[0.8rem] outline-none transition duration-300 ease-linear"
+                  :class="getSidebarMenuActiveColor('/admin/delivery-areas')"
+                  href="#"
                   data-te-sidenav-link-ref
                 >
                   Delivery Areas
@@ -223,7 +244,8 @@ const toggleCollapseShow = (classes) => {
               </li>
               <li class="relative hover:bg-gray-100 duration-100 rounded-md">
                 <a
-                  class="flex font-semibold cursor-pointer items-center truncate rounded-[5px] py-3 pl-7 text-[0.8rem] text-slate-600 outline-none transition duration-300 ease-linear"
+                  class="flex font-semibold cursor-pointer items-center truncate rounded-[5px] py-3 pl-7 text-[0.8rem] outline-none transition duration-300 ease-linear"
+                  :class="getSidebarMenuActiveColor('/admin/shipping-methods')"
                   data-te-sidenav-link-ref
                 >
                   Shipping Methods
@@ -266,7 +288,8 @@ const toggleCollapseShow = (classes) => {
             >
               <li class="relative hover:bg-gray-100 duration-100 rounded-md">
                 <a
-                  class="flex font-semibold cursor-pointer items-center truncate rounded-[5px] py-3 pl-7 text-[0.8rem] text-slate-600 outline-none transition duration-300 ease-linear"
+                  class="flex font-semibold cursor-pointer items-center truncate rounded-[5px] py-3 pl-7 text-[0.8rem] outline-none transition duration-300 ease-linear"
+                  :class="getSidebarMenuActiveColor('/admin/reservation-tables')"
                   data-te-sidenav-link-ref
                 >
                   Reservation Tables
@@ -274,7 +297,8 @@ const toggleCollapseShow = (classes) => {
               </li>
               <li class="relative hover:bg-gray-100 duration-100 rounded-md">
                 <a
-                  class="flex font-semibold cursor-pointer items-center truncate rounded-[5px] py-3 pl-7 text-[0.8rem] text-slate-600 outline-none transition duration-300 ease-linear"
+                  class="flex font-semibold cursor-pointer items-center truncate rounded-[5px] py-3 pl-7 text-[0.8rem] outline-none transition duration-300 ease-linear"
+                  :class="getSidebarMenuActiveColor('/admin/reservation-times')"
                   data-te-sidenav-link-ref
                 >
                   Reservation Times
@@ -282,7 +306,8 @@ const toggleCollapseShow = (classes) => {
               </li>
               <li class="relative hover:bg-gray-100 duration-100 rounded-md">
                 <a
-                  class="flex font-semibold cursor-pointer items-center truncate rounded-[5px] py-3 pl-7 text-[0.8rem] text-slate-600 outline-none transition duration-300 ease-linear"
+                  class="flex font-semibold cursor-pointer items-center truncate rounded-[5px] py-3 pl-7 text-[0.8rem] outline-none transition duration-300 ease-linear"
+                  :class="getSidebarMenuActiveColor('/admin/reservation-requests')"
                   data-te-sidenav-link-ref
                 >
                   Reservation Requests
@@ -325,15 +350,17 @@ const toggleCollapseShow = (classes) => {
             >
               <li class="relative hover:bg-gray-100 duration-100 rounded-md">
                 <a
-                  class="flex font-semibold cursor-pointer items-center truncate rounded-[5px] py-3 pl-7 text-[0.8rem] text-slate-600 outline-none transition duration-300 ease-linear"
+                  class="flex font-semibold cursor-pointer items-center truncate rounded-[5px] py-3 pl-7 text-[0.8rem] outline-none transition duration-300 ease-linear"
+                  :class="getSidebarMenuActiveColor('/admin/blog-categories')"
                   data-te-sidenav-link-ref
                 >
-                  Category
+                  Categories
                 </a>
               </li>
               <li class="relative hover:bg-gray-100 duration-100 rounded-md">
                 <a
-                  class="flex font-semibold cursor-pointer items-center truncate rounded-[5px] py-3 pl-7 text-[0.8rem] text-slate-600 outline-none transition duration-300 ease-linear"
+                  class="flex font-semibold cursor-pointer items-center truncate rounded-[5px] py-3 pl-7 text-[0.8rem] outline-none transition duration-300 ease-linear"
+                  :class="getSidebarMenuActiveColor('/admin/blog-contents')"
                   data-te-sidenav-link-ref
                 >
                   Contents
@@ -341,7 +368,8 @@ const toggleCollapseShow = (classes) => {
               </li>
               <li class="relative hover:bg-gray-100 duration-100 rounded-md">
                 <a
-                  class="flex font-semibold cursor-pointer items-center truncate rounded-[5px] py-3 pl-7 text-[0.8rem] text-slate-600 outline-none transition duration-300 ease-linear"
+                  class="flex font-semibold cursor-pointer items-center truncate rounded-[5px] py-3 pl-7 text-[0.8rem] outline-none transition duration-300 ease-linear"
+                  :class="getSidebarMenuActiveColor('/admin/comments-and-replies')"
                   data-te-sidenav-link-ref
                 >
                   Comments And Replies
@@ -384,7 +412,8 @@ const toggleCollapseShow = (classes) => {
             >
               <li class="relative hover:bg-gray-100 duration-100 rounded-md">
                 <a
-                  class="flex font-semibold cursor-pointer items-center truncate rounded-[5px] py-3 pl-7 text-[0.8rem] text-slate-600 outline-none transition duration-300 ease-linear"
+                  class="flex font-semibold cursor-pointer items-center truncate rounded-[5px] py-3 pl-7 text-[0.8rem] outline-none transition duration-300 ease-linear"
+                  :class="getSidebarMenuActiveColor('/admin/subscribers')"
                   data-te-sidenav-link-ref
                 >
                   All Subscribers
@@ -392,7 +421,8 @@ const toggleCollapseShow = (classes) => {
               </li>
               <li class="relative hover:bg-gray-100 duration-100 rounded-md">
                 <a
-                  class="flex font-semibold cursor-pointer items-center truncate rounded-[5px] py-3 pl-7 text-[0.8rem] text-slate-600 outline-none transition duration-300 ease-linear"
+                  class="flex font-semibold cursor-pointer items-center truncate rounded-[5px] py-3 pl-7 text-[0.8rem] outline-none transition duration-300 ease-linear"
+                  :class="getSidebarMenuActiveColor('/admin/send-newsletter')"
                   data-te-sidenav-link-ref
                 >
                   Send Newsletter
@@ -404,7 +434,8 @@ const toggleCollapseShow = (classes) => {
           <!-- Chat Box -->
           <li class="items-center">
             <a
-              class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] text-slate-600 hover:text-slate-800 outline-none"
+              class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] outline-none"
+              :class="getSidebarMenuActiveColor('/admin/chat-box')"
               href="#"
             >
               <div class="text-[13px] py-3 block">
@@ -430,7 +461,8 @@ const toggleCollapseShow = (classes) => {
           <!-- POS -->
           <li class="items-center">
             <a
-              class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] text-slate-600 hover:text-slate-800 outline-none"
+              class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] outline-none"
+              :class="getSidebarMenuActiveColor('/admin/pos')"
               href="#"
             >
               <div class="text-[13px] py-3 block">
@@ -443,7 +475,8 @@ const toggleCollapseShow = (classes) => {
           <!-- Customer Orders -->
           <li class="items-center">
             <a
-              class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] text-slate-600 hover:text-slate-800 outline-none"
+              class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] outline-none"
+              :class="getSidebarMenuActiveColor('/admin/customer-orders')"
               href="#"
             >
               <div class="text-[13px] py-3 block">
@@ -456,7 +489,8 @@ const toggleCollapseShow = (classes) => {
           <!-- Kitchen Orders -->
           <li class="items-center">
             <a
-              class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] text-slate-600 hover:text-slate-800 outline-none"
+              class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] outline-none"
+              :class="getSidebarMenuActiveColor('/admin/kitchen-orders')"
               href="#"
             >
               <div class="text-[13px] py-3 block">
@@ -469,7 +503,8 @@ const toggleCollapseShow = (classes) => {
           <!-- Counter Checkout -->
           <li class="items-center">
             <a
-              class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] text-slate-600 hover:text-slate-800 outline-none"
+              class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] outline-none"
+              :class="getSidebarMenuActiveColor('/admin/counter-checkout')"
               href="#"
             >
               <div class="text-[13px] py-3 block">
@@ -482,7 +517,8 @@ const toggleCollapseShow = (classes) => {
           <!-- Menu Stock -->
           <li class="items-center">
             <a
-              class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] text-slate-600 hover:text-slate-800 outline-none"
+              class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] outline-none"
+              :class="getSidebarMenuActiveColor('/admin/menu-stock')"
               href="#"
             >
               <div class="text-[13px] py-3 block">
@@ -495,7 +531,8 @@ const toggleCollapseShow = (classes) => {
           <!-- Table Booking -->
           <li class="items-center">
             <a
-              class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] text-slate-600 hover:text-slate-800 outline-none"
+              class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] outline-none"
+              :class="getSidebarMenuActiveColor('/admin/table-booking')"
               href="#"
             >
               <div class="text-[13px] py-3 block">
@@ -552,7 +589,8 @@ const toggleCollapseShow = (classes) => {
             >
               <li class="relative hover:bg-gray-100 duration-100 rounded-md">
                 <a
-                  class="flex font-semibold cursor-pointer items-center truncate rounded-[5px] py-3 pl-7 text-[0.8rem] text-slate-600 outline-none transition duration-300 ease-linear"
+                  class="flex font-semibold cursor-pointer items-center truncate rounded-[5px] py-3 pl-7 text-[0.8rem] outline-none transition duration-300 ease-linear"
+                  :class="getSidebarMenuActiveColor('/admin/employees')"
                   data-te-sidenav-link-ref
                 >
                   All Employee
@@ -560,15 +598,17 @@ const toggleCollapseShow = (classes) => {
               </li>
               <li class="relative hover:bg-gray-100 duration-100 rounded-md">
                 <a
-                  class="flex font-semibold cursor-pointer items-center truncate rounded-[5px] py-3 pl-7 text-[0.8rem] text-slate-600 outline-none transition duration-300 ease-linear"
+                  class="flex font-semibold cursor-pointer items-center truncate rounded-[5px] py-3 pl-7 text-[0.8rem] outline-none transition duration-300 ease-linear"
+                  :class="getSidebarMenuActiveColor('/admin/attendance-lists')"
                   data-te-sidenav-link-ref
                 >
-                  Attendance List
+                  Attendance Lists
                 </a>
               </li>
               <li class="relative hover:bg-gray-100 duration-100 rounded-md">
                 <a
-                  class="flex font-semibold cursor-pointer items-center truncate rounded-[5px] py-3 pl-7 text-[0.8rem] text-slate-600 outline-none transition duration-300 ease-linear"
+                  class="flex font-semibold cursor-pointer items-center truncate rounded-[5px] py-3 pl-7 text-[0.8rem] outline-none transition duration-300 ease-linear"
+                  :class="getSidebarMenuActiveColor('/admin/salary')"
                   data-te-sidenav-link-ref
                 >
                   Salary
@@ -576,7 +616,8 @@ const toggleCollapseShow = (classes) => {
               </li>
               <li class="relative hover:bg-gray-100 duration-100 rounded-md">
                 <a
-                  class="flex font-semibold cursor-pointer items-center truncate rounded-[5px] py-3 pl-7 text-[0.8rem] text-slate-600 outline-none transition duration-300 ease-linear"
+                  class="flex font-semibold cursor-pointer items-center truncate rounded-[5px] py-3 pl-7 text-[0.8rem] outline-none transition duration-300 ease-linear"
+                  :class="getSidebarMenuActiveColor('/admin/pay-salary')"
                   data-te-sidenav-link-ref
                 >
                   Pay Salary
@@ -584,7 +625,8 @@ const toggleCollapseShow = (classes) => {
               </li>
               <li class="relative hover:bg-gray-100 duration-100 rounded-md">
                 <a
-                  class="flex font-semibold cursor-pointer items-center truncate rounded-[5px] py-3 pl-7 text-[0.8rem] text-slate-600 outline-none transition duration-300 ease-linear"
+                  class="flex font-semibold cursor-pointer items-center truncate rounded-[5px] py-3 pl-7 text-[0.8rem] outline-none transition duration-300 ease-linear"
+                  :class="getSidebarMenuActiveColor('/admin/last-month-salary')"
                   data-te-sidenav-link-ref
                 >
                   Last Month Salary
@@ -627,7 +669,8 @@ const toggleCollapseShow = (classes) => {
             >
               <li class="relative hover:bg-gray-100 duration-100 rounded-md">
                 <a
-                  class="flex font-semibold cursor-pointer items-center truncate rounded-[5px] py-3 pl-7 text-[0.8rem] text-slate-600 outline-none transition duration-300 ease-linear"
+                  class="flex font-semibold cursor-pointer items-center truncate rounded-[5px] py-3 pl-7 text-[0.8rem] outline-none transition duration-300 ease-linear"
+                  :class="getSidebarMenuActiveColor('/admin/suppliers')"
                   data-te-sidenav-link-ref
                 >
                   All Suppliers
@@ -639,7 +682,8 @@ const toggleCollapseShow = (classes) => {
           <!-- Customer Mangement -->
           <li class="items-center">
             <a
-              class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] text-slate-600 hover:text-slate-800 outline-none"
+              class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] outline-none"
+              :class="getSidebarMenuActiveColor('/admin/customer-management')"
               href="#"
             >
               <div class="text-[13px] py-3 block">
@@ -683,7 +727,8 @@ const toggleCollapseShow = (classes) => {
             >
               <li class="relative hover:bg-gray-100 duration-100 rounded-md">
                 <a
-                  class="flex font-semibold cursor-pointer items-center truncate rounded-[5px] py-3 pl-7 text-[0.8rem] text-slate-600 outline-none transition duration-300 ease-linear"
+                  class="flex font-semibold cursor-pointer items-center truncate rounded-[5px] py-3 pl-7 text-[0.8rem] outline-none transition duration-300 ease-linear"
+                  :class="getSidebarMenuActiveColor('/admin/registered-accounts')"
                   data-te-sidenav-link-ref
                 >
                   Registered Accounts
@@ -691,7 +736,8 @@ const toggleCollapseShow = (classes) => {
               </li>
               <li class="relative hover:bg-gray-100 duration-100 rounded-md">
                 <a
-                  class="flex font-semibold cursor-pointer items-center truncate rounded-[5px] py-3 pl-7 text-[0.8rem] text-slate-600 outline-none transition duration-300 ease-linear"
+                  class="flex font-semibold cursor-pointer items-center truncate rounded-[5px] py-3 pl-7 text-[0.8rem] outline-none transition duration-300 ease-linear"
+                  :class="getSidebarMenuActiveColor('/admin/admin-manage')"
                   data-te-sidenav-link-ref
                 >
                   Admin Manage
@@ -699,7 +745,8 @@ const toggleCollapseShow = (classes) => {
               </li>
               <li class="relative hover:bg-gray-100 duration-100 rounded-md">
                 <a
-                  class="flex font-semibold cursor-pointer items-center truncate rounded-[5px] py-3 pl-7 text-[0.8rem] text-slate-600 outline-none transition duration-300 ease-linear"
+                  class="flex font-semibold cursor-pointer items-center truncate rounded-[5px] py-3 pl-7 text-[0.8rem] outline-none transition duration-300 ease-linear"
+                  :class="getSidebarMenuActiveColor('/admin/assign-role-permissions')"
                   data-te-sidenav-link-ref
                 >
                   Assign Role Permissions
@@ -742,7 +789,8 @@ const toggleCollapseShow = (classes) => {
             >
               <li class="relative hover:bg-gray-100 duration-100 rounded-md">
                 <a
-                  class="flex font-semibold cursor-pointer items-center truncate rounded-[5px] py-3 pl-7 text-[0.8rem] text-slate-600 outline-none transition duration-300 ease-linear"
+                  class="flex font-semibold cursor-pointer items-center truncate rounded-[5px] py-3 pl-7 text-[0.8rem] outline-none transition duration-300 ease-linear"
+                  :class="getSidebarMenuActiveColor('/admin/permissions')"
                   data-te-sidenav-link-ref
                 >
                   Permissions
@@ -750,7 +798,8 @@ const toggleCollapseShow = (classes) => {
               </li>
               <li class="relative hover:bg-gray-100 duration-100 rounded-md">
                 <a
-                  class="flex font-semibold cursor-pointer items-center truncate rounded-[5px] py-3 pl-7 text-[0.8rem] text-slate-600 outline-none transition duration-300 ease-linear"
+                  class="flex font-semibold cursor-pointer items-center truncate rounded-[5px] py-3 pl-7 text-[0.8rem] outline-none transition duration-300 ease-linear"
+                  :class="getSidebarMenuActiveColor('/admin/roles')"
                   data-te-sidenav-link-ref
                 >
                   Roles
@@ -758,7 +807,8 @@ const toggleCollapseShow = (classes) => {
               </li>
               <li class="relative hover:bg-gray-100 duration-100 rounded-md">
                 <a
-                  class="flex font-semibold cursor-pointer items-center truncate rounded-[5px] py-3 pl-7 text-[0.8rem] text-slate-600 outline-none transition duration-300 ease-linear"
+                  class="flex font-semibold cursor-pointer items-center truncate rounded-[5px] py-3 pl-7 text-[0.8rem] outline-none transition duration-300 ease-linear"
+                  :class="getSidebarMenuActiveColor('/admin/assign-role-permissions')"
                   data-te-sidenav-link-ref
                 >
                   Assign Role Permissions
@@ -770,7 +820,8 @@ const toggleCollapseShow = (classes) => {
           <!-- Settings -->
           <li class="items-center">
             <a
-              class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] text-slate-600 hover:text-slate-800 outline-none"
+              class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] outline-none"
+              :class="getSidebarMenuActiveColor('/admin/settings')"
               href="#"
             >
               <div class="text-[13px] py-3 block">
@@ -783,7 +834,8 @@ const toggleCollapseShow = (classes) => {
           <!-- Database Backups -->
           <li class="items-center">
             <a
-              class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] text-slate-600 hover:text-slate-800 outline-none"
+              class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] outline-none"
+              :class="getSidebarMenuActiveColor('/admin/database-backups')"
               href="#"
             >
               <div class="text-[13px] py-3 block">
