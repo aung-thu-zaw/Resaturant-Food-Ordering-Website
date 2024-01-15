@@ -1,11 +1,11 @@
 <script setup>
 import DashboardNavbar from '@/components/Navbars/DashboardNavbar.vue'
 import DashboardSidebar from '@/components/Sidebars/DashboardSidebar.vue'
-import { Dropdown, Ripple, initTE } from 'tw-elements'
+import { Dropdown, Ripple, Sidenav, initTE } from 'tw-elements'
 import { onMounted } from 'vue'
 
 onMounted(() => {
-  initTE({ Dropdown, Ripple })
+  initTE({ Dropdown, Ripple, Sidenav })
 })
 </script>
 

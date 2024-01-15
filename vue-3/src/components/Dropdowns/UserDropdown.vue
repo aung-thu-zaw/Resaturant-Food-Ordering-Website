@@ -1,10 +1,13 @@
 <script setup></script>
 
 <template>
-  <div class="relative inline-flex" data-te-dropdown-ref>
+  <div
+    class="relative inline-flex"
+    data-te-dropdown-ref
+  >
     <button
-      type="button"
       id="user-dropdown"
+      type="button"
       data-te-dropdown-toggle-ref
       aria-expanded="false"
       class="inline-flex items-center"
@@ -17,7 +20,7 @@
             class="w-full h-full object-cover rounded-full align-middle border-none shadow-lg ring-1 ring-red-300"
             alt="user-photo"
             src="https://rare-gallery.com/thumbs/5408546-woman-female-girl-photographer-camera-beanie-pine-holding-hand-jean-jacket-red-film-caucasian-blonde-photography-nature-exterior-hat-vintage-contax-creative-commons-images.jpg"
-          />
+          >
         </span>
         <span class="font-bold text-sm ml-2 text-slate-600 hidden md:block">Aung Thu Zaw</span>
       </div>
@@ -34,7 +37,7 @@
           href="#"
           data-te-dropdown-item-ref
         >
-          <i class="fa-solid fa-tv mr-1"></i>
+          <i class="fa-solid fa-tv mr-1" />
           My Dashboard
         </a>
       </li>
@@ -45,7 +48,7 @@
           href="#"
           data-te-dropdown-item-ref
         >
-          <i class="fa-solid fa-user-circle mr-1"></i>
+          <i class="fa-solid fa-user-circle mr-1" />
           Profile
         </a>
       </li>
@@ -55,12 +58,12 @@
           href="#"
           data-te-dropdown-item-ref
         >
-          <i class="fa-solid fa-gear mr-1"></i>
+          <i class="fa-solid fa-gear mr-1" />
           Settings
         </a>
       </li>
 
-      <hr class="my-2" />
+      <hr class="my-2">
 
       <li>
         <a
@@ -68,7 +71,7 @@
           href="#"
           data-te-dropdown-item-ref
         >
-          <i class="fa-solid fa-right-from-bracket mr-1"></i>
+          <i class="fa-solid fa-right-from-bracket mr-1" />
           Logout
         </a>
       </li>
