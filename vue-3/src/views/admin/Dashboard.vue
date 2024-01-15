@@ -6,7 +6,7 @@ import OrderDonutChart from '@/components/Charts/OrderDonutChart.vue'
 import CustomerBarChart from '@/components/Charts/CustomerBarChart.vue'
 import { useTitle } from '@vueuse/core'
 
-useTitle('Restaurant Food Ordering')
+useTitle('Dashboard - Restaurant Food Ordering')
 </script>
 
 <template>

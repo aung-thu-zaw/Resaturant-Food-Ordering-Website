@@ -28,5 +28,19 @@ module.exports = {
       }
     }
   },
-  plugins: [require('tw-elements/dist/plugin.cjs')]
+  plugins: [
+    require('tw-elements/dist/plugin.cjs'),
+    function ({ addUtilities }) {
+      const newUtilities = {
+        '.animate-press': {
+          transition: 'transform 0.1s ease'
+        },
+        '.animate-press:active': {
+          transform: 'scale(0.95)'
+        }
+      }
+
+      addUtilities(newUtilities, ['responsive', 'hover'])
+    }
+  ]
 }

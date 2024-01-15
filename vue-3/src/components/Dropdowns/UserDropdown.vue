@@ -1,10 +1,7 @@
 <script setup></script>
 
 <template>
-  <div
-    class="relative inline-flex"
-    data-te-dropdown-ref
-  >
+  <div class="relative inline-flex" data-te-dropdown-ref>
     <button
       id="user-dropdown"
       type="button"
@@ -20,7 +17,7 @@
             class="w-full h-full object-cover rounded-full align-middle border-none shadow-lg ring-1 ring-red-300"
             alt="user-photo"
             src="https://rare-gallery.com/thumbs/5408546-woman-female-girl-photographer-camera-beanie-pine-holding-hand-jean-jacket-red-film-caucasian-blonde-photography-nature-exterior-hat-vintage-contax-creative-commons-images.jpg"
-          >
+          />
         </span>
         <span class="font-bold text-sm ml-2 text-slate-600 hidden md:block">Aung Thu Zaw</span>
       </div>
@@ -63,7 +60,7 @@
         </a>
       </li>
 
-      <hr class="my-2">
+      <hr class="my-2" />
 
       <li>
         <a
