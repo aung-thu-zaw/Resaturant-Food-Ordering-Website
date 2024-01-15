@@ -181,7 +181,7 @@ const categories = reactive({
 
       <div class="flex items-center justify-between mb-3">
         <!-- Create New Button -->
-        <RouterLinkButton to="admin.dashboard">
+        <RouterLinkButton to="admin.categories.create">
           <i class="fa-solid fa-file-circle-plus mr-1"></i>
           Add A New Category
         </RouterLinkButton>
