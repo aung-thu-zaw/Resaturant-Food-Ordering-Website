@@ -6,10 +6,10 @@ import InputLabel from '@/components/Forms/Fields/InputLabel.vue'
 import InputError from '@/components/Forms/Fields/InputError.vue'
 import InputField from '@/components/Forms/Fields/InputField.vue'
 import { useTitle } from '@vueuse/core'
-import image from '@/assets/images/admin-login.jpg'
+import image from '@/assets/images/login.jpg'
 import { reactive } from 'vue'
 
-useTitle('Admin Dashboard Login - Restaurant Food Ordering')
+useTitle('Login - Restaurant Food Ordering')
 
 const form = reactive({
   email: '',
@@ -21,12 +21,12 @@ const form = reactive({
   <GuestLayout>
     <div class="mx-auto p-5 md:p-10 flex items-center justify-center">
       <div
-        class="relative flex flex-col items-center justify-between bg-white border rounded-md shadow-md w-auto max-w-[600px] p-10 pb-14"
+        class="w-auto md:w-[1200px] relative flex flex-col md:flex-row items-center justify-between bg-white border rounded-md shadow-md max-w-[1200px] p-10 pb-14"
       >
-        <img :src="image" alt="admin-login" class="w-full" />
-        <div class="flex flex-col items-center w-full md:px-5">
+        <img :src="image" alt="register" class="w-full md:w-1/2" />
+        <div class="flex flex-col items-center md:px-5 w-full md:w-1/2">
           <form class="w-full space-y-6">
-            <h1 class="text-center text-2xl text-dark mb-5 font-bold">Admin Dashboard Login</h1>
+            <h1 class="text-center text-2xl text-dark mb-5 font-bold">Welcome Back</h1>
 
             <!-- <div
               class="mb-4 font-medium text-sm text-green-600 bg-green-100 p-3 w-full rounded-md text-center"
@@ -85,6 +85,16 @@ const form = reactive({
             </div>
 
             <FormButton> Login </FormButton>
+
+            <p class="text-center text-sm">
+              You don't have an account?
+              <router-link
+                :to="{ name: 'register' }"
+                class="text-red-600 font-bold hover:cursor-pointer hover:underline"
+              >
+                Register
+              </router-link>
+            </p>
           </form>
         </div>
       </div>
