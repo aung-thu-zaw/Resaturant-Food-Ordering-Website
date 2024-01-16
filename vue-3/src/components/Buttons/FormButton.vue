@@ -4,7 +4,7 @@ import { computed } from 'vue'
 const props = defineProps({
   class: {
     type: String,
-    default: 'text-white bg-slate-600 hover:bg-slate-700 rounded-md'
+    default: 'text-white bg-slate-600 hover:bg-slate-700 rounded-md w-full'
   },
 
   processing: {
