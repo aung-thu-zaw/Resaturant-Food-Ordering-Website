@@ -5,21 +5,24 @@ import InputLabel from '@/components/Forms/Fields/InputLabel.vue'
 import InputError from '@/components/Forms/Fields/InputError.vue'
 import InputField from '@/components/Forms/Fields/InputField.vue'
 import { useTitle } from '@vueuse/core'
-import { reactive } from 'vue'
+import { ref } from 'vue'
+import { useAuthStore } from '@/stores/auth'
 
-useTitle('Login - Restaurant Food Ordering')
+useTitle('Forgot Password - Restaurant Food Ordering')
 
-const form = reactive({
-  email: '',
-  password: ''
-})
+const authStore = useAuthStore()
+const email = ref('')
+
+const handleForgotPassword = async () => {
+  await authStore.forgotPassword(email.value)
+}
 </script>
 
 <template>
   <GuestLayout>
     <div class="mx-auto p-5 md:p-10 flex items-center justify-center">
       <div class="w-[500px] bg-white p-8 rounded-md">
-        <form class="w-full space-y-6">
+        <form @submit.prevent="handleForgotPassword" class="w-full space-y-6">
           <h1 class="text-center text-2xl text-dark mb-5 font-bold">Forgot password?</h1>
 
           <p class="text-sm text-center">
@@ -29,11 +32,12 @@ const form = reactive({
             </router-link>
           </p>
 
-          <!-- <div
-              class="mb-4 font-medium text-sm text-green-600 bg-green-100 p-3 w-full rounded-md text-center"
-            >
-              this is status
-            </div> -->
+          <div
+            v-show="authStore.status"
+            class="mb-4 font-medium text-sm text-green-600 bg-green-100 p-3 w-full rounded-md text-center"
+          >
+            {{ authStore.status }}
+          </div>
           <!-- Email Input -->
           <div>
             <InputLabel label="Email Address" required />
@@ -43,14 +47,14 @@ const form = reactive({
               name="your-email"
               icon="fa-envelope"
               placeholder="Enter Email Address"
-              v-model="form.email"
+              v-model="email"
               required
             />
 
-            <InputError message="Email address field is required" />
+            <InputError :message="authStore.errors?.email" />
           </div>
 
-          <FormButton> Reset Password </FormButton>
+          <FormButton> Submit </FormButton>
         </form>
       </div>
     </div>

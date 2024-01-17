@@ -5,14 +5,16 @@ export const useAuthStore = defineStore('auth', {
     user: null,
     isLoggedIn: false,
     authErrors: null,
-    authMessage: ''
+    authMessage: '',
+    authStatus: null
   }),
 
   getters: {
     currentUser: (state) => state.user,
     isAuthenticated: (state) => state.isLoggedIn,
     errors: (state) => state.authErrors,
-    message: (state) => state.authMessage
+    message: (state) => state.authMessage,
+    status: (state) => state.authStatus
   },
 
   actions: {
@@ -21,6 +23,36 @@ export const useAuthStore = defineStore('auth', {
         await this.$axios.get('sanctum/csrf-cookie')
       } catch (error) {
         console.error('Failed to get CSRF cookie:', error)
+      }
+    },
+
+    async forgotPassword(email) {
+      try {
+        await this.getCsrfCookie()
+
+        const response = await this.$axios.post('/forgot-password', { email })
+
+        if (!response) throw new Error('Response Not Found!')
+
+        this.authStatus = response.data.status
+      } catch (error) {
+        if (error.response.status === 422) {
+          this.authErrors = error.response?.data?.errors
+        }
+      }
+    },
+
+    async resetPassword(resetData) {
+      try {
+        const response = await this.$axios.post('/reset-password', resetData)
+
+        if (!response) throw new Error('Response Not Found!')
+
+        this.authStatus = response.data.status
+      } catch (error) {
+        if (error.response.status === 422) {
+          this.authErrors = error.response?.data?.errors
+        }
       }
     },
 

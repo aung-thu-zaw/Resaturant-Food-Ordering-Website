@@ -21,7 +21,7 @@ onMounted(() => {
     <br />
     =========================
 
-    <button @click="authStore.logout">Logout</button>
+    <button v-show="authStore.isAuthenticated" @click="authStore.logout">Logout</button>
     <slot />
   </div>
 </template>
