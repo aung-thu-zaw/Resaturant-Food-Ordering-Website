@@ -8,13 +8,23 @@ import InputField from '@/components/Forms/Fields/InputField.vue'
 import { useTitle } from '@vueuse/core'
 import image from '@/assets/images/login.jpg'
 import { reactive } from 'vue'
+import { useAuthStore } from '@/stores/auth'
 
-useTitle('Login - Restaurant Food Ordering')
+useTitle('Register - Restaurant Food Ordering')
+
+const authStore = useAuthStore()
 
 const form = reactive({
   email: '',
   password: ''
 })
+
+const handleLogin = async () => {
+  await authStore.login({
+    email: form.email,
+    password: form.password
+  })
+}
 </script>
 
 <template>
@@ -25,7 +35,7 @@ const form = reactive({
       >
         <img :src="image" alt="register" class="w-full md:w-1/2" />
         <div class="flex flex-col items-center md:px-5 w-full md:w-1/2">
-          <form class="w-full space-y-6">
+          <form @submit.prevent="handleLogin" class="w-full space-y-6">
             <h1 class="text-center text-2xl text-dark mb-5 font-bold">Welcome Back</h1>
 
             <!-- <div
@@ -46,7 +56,7 @@ const form = reactive({
                 required
               />
 
-              <InputError message="Email address field is required" />
+              <InputError :message="authStore.errors?.email" />
             </div>
 
             <!-- Password Input -->
@@ -62,7 +72,7 @@ const form = reactive({
                 required
               />
 
-              <InputError message="Password field is required" />
+              <InputError :message="authStore.errors?.password" />
             </div>
 
             <!-- Remember me and Forgot Password -->

@@ -7,13 +7,27 @@ import InputField from '@/components/Forms/Fields/InputField.vue'
 import { useTitle } from '@vueuse/core'
 import image from '@/assets/images/register.jpg'
 import { reactive } from 'vue'
+import { useAuthStore } from '@/stores/auth'
 
 useTitle('Register - Restaurant Food Ordering')
 
+const authStore = useAuthStore()
+
 const form = reactive({
+  name: '',
   email: '',
-  password: ''
+  password: '',
+  password_confirmation: ''
 })
+
+const handleRegister = async () => {
+  await authStore.register({
+    name: form.name,
+    email: form.email,
+    password: form.password,
+    password_confirmation: form.password_confirmation
+  })
+}
 </script>
 
 <template>
@@ -24,7 +38,7 @@ const form = reactive({
       >
         <img :src="image" alt="register" class="w-full md:w-1/2" />
         <div class="flex flex-col items-center md:px-5 w-full md:w-1/2">
-          <form class="w-full space-y-6">
+          <form @submit.prevent="handleRegister" class="w-full space-y-6">
             <h1 class="text-center text-2xl text-dark mb-5 font-bold">Create A New Account</h1>
 
             <!-- Name Input -->
@@ -40,7 +54,7 @@ const form = reactive({
                 required
               />
 
-              <!-- <InputError message="Name field is required" /> -->
+              <InputError :message="authStore.errors?.name" />
             </div>
 
             <!-- Email Input -->
@@ -56,7 +70,7 @@ const form = reactive({
                 required
               />
 
-              <!-- <InputError message="Email address field is required" /> -->
+              <InputError :message="authStore.errors?.email" />
             </div>
 
             <!-- Password Input -->
@@ -72,7 +86,7 @@ const form = reactive({
                 required
               />
 
-              <!-- <InputError message="Password field is required" /> -->
+              <InputError :message="authStore.errors?.password" />
             </div>
 
             <!-- Confirm Password Input -->
@@ -87,11 +101,9 @@ const form = reactive({
                 v-model="form.password_confirmation"
                 required
               />
-
-              <InputError message="Confirm Password field is required" />
             </div>
 
-            <FormButton> Login </FormButton>
+            <FormButton> Register </FormButton>
 
             <p class="text-center text-sm">
               Already have an account?

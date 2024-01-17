@@ -12,7 +12,7 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const authStore = useAuthStore()
 
-  if (to.meta.requiresAuth && !authStore.isLoggedIn) {
+  if (to.meta.requiresAuth && !authStore.isAuthenticated) {
     if (to.path.startsWith('/admin')) {
       next('/admin/login')
     } else {
