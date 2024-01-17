@@ -76,6 +76,7 @@ export const useAuthStore = defineStore('auth', {
         if (!response) throw new Error('Response Not Found!')
 
         this.authMessage = response?.data?.message
+        this.authStatus = response?.data?.status
 
         this.router.push({ name: 'home' })
       } catch (error) {
@@ -101,6 +102,8 @@ export const useAuthStore = defineStore('auth', {
       await this.performAuthAction('post', '/logout')
       this.user = null
       this.isLoggedIn = false
+
+      this.router.push({ name: 'home' })
     }
   }
 })

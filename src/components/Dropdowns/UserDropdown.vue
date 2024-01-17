@@ -1,4 +1,8 @@
-<script setup></script>
+<script setup>
+import { useAuthStore } from '@/stores/auth'
+
+const authStore = useAuthStore()
+</script>
 
 <template>
   <div class="relative inline-flex" data-te-dropdown-ref>
@@ -63,14 +67,15 @@
       <hr class="my-2" />
 
       <li>
-        <a
-          class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-bold text-gray-700 hover:bg-gray-100 rounded-md"
-          href="#"
+        <button
+          @click="authStore.logout"
+          type="button"
+          class="block w-full whitespace-nowrap bg-transparent text-left px-4 py-2 text-sm font-bold text-gray-700 hover:bg-gray-100 rounded-md"
           data-te-dropdown-item-ref
         >
           <i class="fa-solid fa-right-from-bracket mr-1" />
           Logout
-        </a>
+        </button>
       </li>
     </ul>
   </div>

@@ -16,13 +16,15 @@ const authStore = useAuthStore()
 
 const form = reactive({
   email: '',
-  password: ''
+  password: '',
+  remember: false
 })
 
 const handleLogin = async () => {
   await authStore.login({
     email: form.email,
-    password: form.password
+    password: form.password,
+    remember: form.remember
   })
 }
 </script>
@@ -38,11 +40,13 @@ const handleLogin = async () => {
           <form @submit.prevent="handleLogin" class="w-full space-y-6">
             <h1 class="text-center text-2xl text-dark mb-5 font-bold">Welcome Back</h1>
 
-            <!-- <div
+            <div
+              v-show="authStore.status"
               class="mb-4 font-medium text-sm text-green-600 bg-green-100 p-3 w-full rounded-md text-center"
             >
-              this is status
-            </div> -->
+              {{ authStore.status }}
+            </div>
+
             <!-- Email Input -->
             <div>
               <InputLabel label="Email Address" required />
@@ -79,7 +83,7 @@ const handleLogin = async () => {
             <div class="flex items-center justify-between mb-5">
               <div>
                 <label class="flex items-center">
-                  <Checkbox name="remember" />
+                  <Checkbox v-model:checked="form.remember" />
                   <span class="ml-2 text-sm text-slate-600"> Remember Me</span>
                 </label>
               </div>
