@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { useAuthStore } from '@/stores/auth'
 import restaurantRoutes from './restaurant'
 import adminRoutes from './admin'
 import authRoutes from './auth'
@@ -9,17 +8,14 @@ const router = createRouter({
   routes: [...restaurantRoutes, ...adminRoutes, ...authRoutes]
 })
 
-router.beforeEach((to, from, next) => {
-  const authStore = useAuthStore()
-
-  if (to.meta.requiresAuth && !authStore.isAuthenticated) {
-    if (to.path.startsWith('/admin')) {
-      next('/admin/login')
-    } else {
-      next('/login')
+router.beforeEach(async (to, from, next) => {
+  if (to.meta.middleware) {
+    for (const middleware of to.meta.middleware) {
+      await middleware(to, from, next)
     }
   } else {
     next()
   }
 })
+
 export default router

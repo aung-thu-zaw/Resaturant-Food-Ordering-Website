@@ -6,10 +6,10 @@ import 'vue3-toastify/dist/index.css'
 
 const authStore = useAuthStore()
 
-onMounted(() => {
+onMounted(async () => {
   if (authStore.message) toast.success(authStore.message, { autoClose: 2000 })
 
-  if (!authStore.isAuthenticated) authStore.getAuthenticatedUser()
+  if (!authStore.isAuthenticated) await authStore.getAuthenticatedUser()
 })
 </script>
 
@@ -19,6 +19,8 @@ onMounted(() => {
     <br />
     {{ authStore.currentUser }}
     <br />
+
+    {{ authStore.isAuthenticated }}
     =========================
 
     <button v-show="authStore.isAuthenticated" @click="authStore.logout">Logout</button>
