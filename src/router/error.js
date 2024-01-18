@@ -12,7 +12,9 @@ export default [
     path: '/errors',
     name: 'errors',
     component: () => import('@/views/Error.vue'),
-    props: (route) => ({ status: route.query.status }),
+    props: (route) => ({
+      status: !route.redirectedFrom ? 404 : Number(route.query.status)
+    }),
     meta: {
       middleware: [noDirectAccess]
     }

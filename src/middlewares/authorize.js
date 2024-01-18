@@ -10,8 +10,7 @@ export default async function authorizeMiddleware(to, from, next) {
 
   if (condition) {
     next()
-    return
   } else {
-    next({ name: 'home' })
+    next({ name: 'errors', query: { status: 403 } })
   }
 }
