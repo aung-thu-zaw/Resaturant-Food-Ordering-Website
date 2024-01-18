@@ -1,23 +1,17 @@
-import './assets/main.css'
+import '@/assets/main.css'
 
-import { createApp, markRaw } from 'vue'
-import { createPinia } from 'pinia'
+import { createApp } from 'vue'
 import VueApexCharts from 'vue3-apexcharts'
 import VueDatePicker from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
 import AxiosPlugin from '@/plugins/axios'
 import { Can } from '@/plugins/can'
+import { pinia } from '@/plugins/pinia'
 
-import App from './App.vue'
-import router from './router'
+import App from '@/App.vue'
+import router from '@/router'
 
-const pinia = createPinia()
 const app = createApp(App)
-
-pinia.use(({ store }) => {
-  store.router = markRaw(router)
-  store.$axios = app.config.globalProperties.$axios
-})
 
 app.use(pinia)
 app.use(router)

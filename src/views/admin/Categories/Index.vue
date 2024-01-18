@@ -179,20 +179,11 @@ const categories = reactive({
         </Breadcrumb>
       </div>
 
-      <div class="flex items-center justify-between mb-3">
+      <div class="flex items-center justify-end mb-3">
         <!-- Create New Button -->
         <RouterLinkButton to="admin.categories.create">
           <i class="fa-solid fa-file-circle-plus mr-1"></i>
           Add A New Category
-        </RouterLinkButton>
-
-        <!-- Trash Button -->
-        <RouterLinkButton
-          to="admin.categories.trashed"
-          class="text-white bg-red-600 hover:bg-red-700"
-        >
-          <i class="fa-solid fa-trash-can mr-1"></i>
-          Trash
         </RouterLinkButton>
       </div>
 

@@ -18,10 +18,7 @@ export const useAbility = defineStore('ability', {
         if (!response) throw new Error('Response Not Found!')
 
         this.abilities = response.data
-
-        console.log(response)
       } catch (error) {
-        console.log(error.response)
         this.authErrors = error.response?.data?.errors
       }
     }
