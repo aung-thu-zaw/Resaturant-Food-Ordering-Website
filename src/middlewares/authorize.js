@@ -10,6 +10,8 @@ export default async function authorizeMiddleware(to, from, next) {
 
   if (condition) {
     next()
+  } else if (!authStore.isAuthenticated) {
+    next({ name: 'admin.login' })
   } else {
     next({ name: 'errors', query: { status: 403 } })
   }

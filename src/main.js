@@ -6,6 +6,7 @@ import VueApexCharts from 'vue3-apexcharts'
 import VueDatePicker from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
 import AxiosPlugin from '@/plugins/axios'
+import { Can } from '@/plugins/can'
 
 import App from './App.vue'
 import router from './router'
@@ -22,5 +23,6 @@ app.use(pinia)
 app.use(router)
 app.use(VueApexCharts)
 app.use(AxiosPlugin, { baseUrl: 'http://localhost:8000/' })
+app.use(Can)
 app.component('VueDatePicker', VueDatePicker)
 app.mount('#app')

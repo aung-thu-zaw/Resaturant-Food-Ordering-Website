@@ -3,9 +3,14 @@ import DashboardNavbar from '@/components/Navbars/DashboardNavbar.vue'
 import DashboardSidebar from '@/components/Sidebars/DashboardSidebar.vue'
 import { Dropdown, Ripple, Sidenav, initTE } from 'tw-elements'
 import { onMounted } from 'vue'
+import { useAbility } from '@/stores/ability'
 
-onMounted(() => {
+const abilityStore = useAbility()
+
+onMounted(async () => {
   initTE({ Dropdown, Ripple, Sidenav })
+
+  await abilityStore.getAllAbilities()
 })
 </script>
 

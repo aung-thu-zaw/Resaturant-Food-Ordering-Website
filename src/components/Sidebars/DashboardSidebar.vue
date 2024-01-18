@@ -131,7 +131,7 @@ const getSidebarMenuActiveColor = (targetRoute) => {
           </li>
 
           <!-- Category -->
-          <li class="items-center">
+          <li v-show="can('categories.view')" class="items-center">
             <router-link
               :to="{ name: 'admin.categories.index' }"
               class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] outline-none"
