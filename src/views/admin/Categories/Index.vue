@@ -21,19 +21,14 @@ import { useTitle } from '@vueuse/core'
 import { useCategoryStore } from '@/stores/category'
 import { storeToRefs } from 'pinia'
 import { onMounted } from 'vue'
-import { useQueryStringParams } from '@/composables/useQueryStringParams'
 import { useRoute } from 'vue-router'
 
 useTitle('Categories - Restaurant Food Ordering')
 
-const categoryStore = useCategoryStore()
 const route = useRoute()
+const categoryStore = useCategoryStore()
 
-const { search, page, per_page, sort, direction } = useQueryStringParams().dashboardParams.value
-
-onMounted(
-  async () => await categoryStore.getAllCategories({ search, page, per_page, sort, direction })
-)
+onMounted(async () => await categoryStore.getAllCategories(route.query))
 
 const { categories } = storeToRefs(categoryStore)
 </script>
@@ -49,7 +44,6 @@ const { categories } = storeToRefs(categoryStore)
           <BreadcrumbItem label="List" />
         </Breadcrumb>
       </div>
-      {{ route.query }}
 
       <div class="flex items-center justify-end mb-3">
         <!-- Create New Button -->
@@ -58,7 +52,7 @@ const { categories } = storeToRefs(categoryStore)
           Add A New Category
         </RouterLinkButton>
       </div>
-
+      {{ route.query }}
       <!-- Table Start -->
       <div class="border border-gray-300 bg-white rounded-md shadow-sm shadow-gray-200 px-5 py-3">
         <div
@@ -147,7 +141,7 @@ const { categories } = storeToRefs(categoryStore)
           </Table>
         </TableContainer>
 
-        <Pagination :data="categories" />
+        <Pagination :data="categories" :getAllMethod="categoryStore.getAllCategories" />
 
         <NoTableData v-show="!categories?.data?.length" />
       </div>

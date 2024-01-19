@@ -24,8 +24,8 @@ const handleSearch = () => {
     clearTimeout(delayedSearch.value)
   }
   delayedSearch.value = setTimeout(() => {
-    props.getAllMethod({ ...route.query, search: search.value })
-    router.push({ query: { ...route.query, search: search.value } })
+    props.getAllMethod({ ...route.query, page: 1, search: search.value })
+    router.push({ query: { ...route.query, page: 1, search: search.value } })
   }, 400)
 }
 

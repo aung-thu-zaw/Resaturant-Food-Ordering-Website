@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import { useGenerator } from '@/composables/useGenerator'
 
 export const useCategoryStore = defineStore('category', {
   state: () => ({
@@ -7,26 +8,12 @@ export const useCategoryStore = defineStore('category', {
   }),
 
   actions: {
-    async getAllCategories({ search, page, per_page, sort, direction }) {
+    async getAllCategories(params) {
       try {
-        const queryParams = [
-          search && `search=${search}`,
-          page && `page=${page}`,
-          per_page && `per_page=${per_page}`,
-          sort && `sort=${sort}`,
-          direction && `direction=${direction}`
-        ].filter(Boolean)
+        const { generateQueryParams } = useGenerator()
+        const apiUrl = '/api/admin/categories?' + generateQueryParams(params)
 
-        const object = queryParams.reduce((acc, item) => {
-          const [key, value] = item.split('=')
-          acc[key] = value
-          return acc
-        }, {})
-
-        this.router.push({ query: object })
-
-        const apiUrl =
-          '/api/admin/categories' + (queryParams.length ? `?${queryParams.join('&')}` : '')
+        this.router.push({ query: params })
 
         const response = await this.$axios.get(apiUrl)
 

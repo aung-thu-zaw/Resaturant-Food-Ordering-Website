@@ -1,9 +1,32 @@
 <script setup>
-defineProps({
+import { ref, watch } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+
+const props = defineProps({
   data: {
     type: Object
+  },
+  getAllMethod: {
+    type: Function,
+    required: true
   }
 })
+
+const route = useRoute()
+const router = useRouter()
+const currentPage = ref(route.query?.page || 1)
+
+const getCurrentPage = (newPage) => {
+  currentPage.value = newPage
+}
+
+watch(
+  () => currentPage.value,
+  (newPage) => {
+    props.getAllMethod({ ...route.query, page: newPage })
+    router.push({ query: { ...route.query, page: newPage } })
+  }
+)
 </script>
 
 <template>
@@ -25,13 +48,17 @@ defineProps({
             />
 
             <div v-else class="flex items-center">
-              <a
-                class="mr-1 mb-1 px-4 py-3 text-sm leading-4 border border-slate-300 rounded-md hover:bg-white hover:text-primary hover:border-primary focus:border-primary focus:text-primary"
-                :class="{ 'bg-primary text-white': link.active }"
-                :href="link.url"
+              <button
+                @click="getCurrentPage(link.label)"
+                type="button"
+                class="mr-1 mb-1 px-4 py-3 text-sm leading-4 border border-slate-300 rounded-md hover:bg-white hover:text-primary hover:border-primary focus:border-primary duration-200"
+                :class="{
+                  'bg-primary text-white hover:bg-red-500 hover:text-white':
+                    link.label == currentPage
+                }"
               >
                 <span v-html="link.label"></span>
-              </a>
+              </button>
             </div>
           </div>
         </div>
@@ -39,3 +66,5 @@ defineProps({
     </div>
   </div>
 </template>
+
+<!-- :href="link.url" -->
