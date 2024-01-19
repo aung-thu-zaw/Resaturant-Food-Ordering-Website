@@ -9,14 +9,6 @@ export const useAuthStore = defineStore('auth', {
     authStatus: null
   }),
 
-  getters: {
-    currentUser: (state) => state.user,
-    isAuthenticated: (state) => state.isLoggedIn,
-    errors: (state) => state.authErrors,
-    message: (state) => state.authMessage,
-    status: (state) => state.authStatus
-  },
-
   actions: {
     async getCsrfCookie() {
       try {
@@ -105,5 +97,13 @@ export const useAuthStore = defineStore('auth', {
 
       this.router.push({ name: 'home' })
     }
-  }
+  },
+
+  getters: {
+    currentUser: (state) => state.user,
+    isAuthenticated: (state) => state.isLoggedIn,
+    errors: (state) => state.authErrors,
+    message: (state) => state.authMessage,
+    status: (state) => state.authStatus
+  },
 })

@@ -1,16 +1,32 @@
 <script setup>
-defineProps({
-  to: {
-    type: String,
+import { ref, watch } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+
+const props = defineProps({
+  getAllMethod: {
+    type: Function,
     required: true
   }
 })
+
+const route = useRoute()
+const router = useRouter()
+const perPage = ref(route.query?.per_page)
+
+watch(
+  () => perPage.value,
+  (newValue) => {
+    props.getAllMethod({ ...route.query, per_page: newValue })
+    router.push({ query: { ...route.query, per_page: newValue } })
+  }
+)
 </script>
 
 <template>
   <select
     id="per-page"
     class="p-3 py-3.5 font-medium text-xs text-gray-700 rounded-md bg-gray-50 outline-none focus:ring-2 focus:ring-slate-300 border border-gray-300 focus:border-slate-400"
+    v-model="perPage"
   >
     <option selected disabled>Per Page</option>
     <option value="5">5</option>

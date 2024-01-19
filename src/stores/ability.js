@@ -1,14 +1,10 @@
 import { defineStore } from 'pinia'
 
-export const useAbility = defineStore('ability', {
+export const useAbilityStore = defineStore('ability', {
   state: () => ({
     abilities: [],
     responseErrors: null
   }),
-
-  getters: {
-    permissions: (state) => state.abilities
-  },
 
   actions: {
     async getAllAbilities() {
@@ -22,5 +18,9 @@ export const useAbility = defineStore('ability', {
         this.authErrors = error.response?.data?.errors
       }
     }
+  },
+
+  getters: {
+    permissions: (state) => state.abilities
   }
 })

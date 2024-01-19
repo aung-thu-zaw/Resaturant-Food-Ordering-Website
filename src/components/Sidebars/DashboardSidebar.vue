@@ -3,6 +3,7 @@ import UserDropdown from '@/components/Dropdowns/UserDropdown.vue'
 import { ref } from 'vue'
 import logo from '../../assets/images/logo-color.png'
 import { useRoute } from 'vue-router'
+import { useQueryStringParams } from '@/composables/useQueryStringParams'
 
 const route = useRoute()
 const collapseShow = ref('hidden')
@@ -16,6 +17,10 @@ const getSidebarMenuActiveColor = (targetRoute) => {
     ? 'text-primary hover:text-red-500'
     : 'text-slate-600 hover:text-slate-800'
 }
+
+const { dashboardParams } = useQueryStringParams()
+
+const { page, per_page, sort, direction } = dashboardParams.value
 </script>
 
 <template>
@@ -107,7 +112,6 @@ const getSidebarMenuActiveColor = (targetRoute) => {
               :to="{ name: 'admin.dashboard' }"
               class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] outline-none"
               :class="getSidebarMenuActiveColor('/admin/dashboard')"
-              href="#"
             >
               <div class="text-[13px] py-3 block">
                 <i class="fas fa-tv mr-2" />
@@ -133,7 +137,7 @@ const getSidebarMenuActiveColor = (targetRoute) => {
           <!-- Category -->
           <li v-show="can('categories.view')" class="items-center">
             <router-link
-              :to="{ name: 'admin.categories.index' }"
+              :to="{ name: 'admin.categories.index', query: { page, per_page, sort, direction } }"
               class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] outline-none"
               :class="getSidebarMenuActiveColor('/admin/categories')"
             >

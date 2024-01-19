@@ -7,17 +7,17 @@ const props = defineProps({
     type: String,
     required: true
   },
-  to: {
-    type: String,
-    required: true
-  },
   sort: {
     type: String,
     default: 'desc'
+  },
+  getAllMethod: {
+    type: Function,
+    required: true
   }
 })
 
-const { params, updateSorting } = useSorting(props.to)
+const { params, updateSorting } = useSorting(props.getAllMethod)
 </script>
 
 <template>

@@ -1,15 +1,40 @@
 <script setup>
-defineProps({
-  to: {
-    type: String,
-    required: true
-  },
+import { ref, watch } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 
+const props = defineProps({
   placeholder: {
     type: String,
     default: 'Search by name ...'
+  },
+
+  getAllMethod: {
+    type: Function,
+    required: true
   }
 })
+
+const route = useRoute()
+const router = useRouter()
+const search = ref(route.query?.search)
+const delayedSearch = ref(null)
+
+const handleSearch = () => {
+  if (delayedSearch.value) {
+    clearTimeout(delayedSearch.value)
+  }
+  delayedSearch.value = setTimeout(() => {
+    props.getAllMethod({ ...route.query, search: search.value })
+    router.push({ query: { ...route.query, search: search.value } })
+  }, 400)
+}
+
+watch(
+  () => search.value,
+  () => {
+    handleSearch()
+  }
+)
 </script>
 
 <template>
@@ -38,6 +63,8 @@ defineProps({
         </div>
 
         <button
+          v-show="search"
+          @click="search = undefined"
           type="button"
           class="absolute inset-y-0 right-0 flex items-center pr-5 hover:cursor-pointer text-gray-500 hover:text-red-600 transition-all"
         >
@@ -48,6 +75,7 @@ defineProps({
           id="default-search"
           class="block w-full p-4 pl-10 text-xs text-gray-700 rounded-md bg-gray-50 transition-all focus:outline-none focus:ring-2 focus:ring-slate-300 border border-gray-300 focus:border-slate-400 font-semibold"
           :placeholder="placeholder"
+          v-model="search"
           required
         />
       </div>

@@ -3,7 +3,7 @@ import DashboardLayout from '@/layouts/DashboardLayout.vue'
 import Breadcrumb from '@/components/Breadcrumbs/MainBreadcrumb.vue'
 import BreadcrumbItem from '@/components/Breadcrumbs/BreadcrumbItem.vue'
 import TableContainer from '@/components/Tables/TableContainer.vue'
-import ActionTable from '@/components/Tables/ActionTable.vue'
+import Table from '@/components/Tables/Table.vue'
 import DashboardTableDataSearchBox from '@/components/Forms/SearchBoxs/DashboardTableDataSearchBox.vue'
 import DashboardTableDataPerPageSelectBox from '@/components/Forms/SelectBoxs/DashboardTableDataPerPageSelectBox.vue'
 import SortableTableHeaderCell from '@/components/Tables/TableCells/SortableTableHeaderCell.vue'
@@ -14,157 +14,28 @@ import TableSelectBoxCell from '@/components/Tables/TableCells/TableSelectBoxCel
 import NoTableData from '@/components/Tables/NoTableData.vue'
 import GreenBadge from '@/components/Badges/GreenBadge.vue'
 import RedBadge from '@/components/Badges/RedBadge.vue'
-import BulkActionButton from '@/components/Buttons/BulkActionButton.vue'
 import RouterLinkButton from '@/components/Buttons/RouterLinkButton.vue'
 import NormalButton from '@/components/Buttons/NormalButton.vue'
 import Pagination from '@/components/Paginations/DashboardPagination.vue'
 import { useTitle } from '@vueuse/core'
-import { reactive } from 'vue'
+import { useCategoryStore } from '@/stores/category'
+import { storeToRefs } from 'pinia'
+import { onMounted } from 'vue'
+import { useQueryStringParams } from '@/composables/useQueryStringParams'
+import { useRoute } from 'vue-router'
 
 useTitle('Categories - Restaurant Food Ordering')
 
-const categories = reactive({
-  current_page: 1,
-  data: [
-    {
-      id: 167,
-      parent_id: 45,
-      name: 'quod',
-      slug: 'quod',
-      image: 'https://via.placeholder.com/640x480.png/00ffff?text=ut',
-      status: 'show',
-      deleted_at: null,
-      created_at: '2024-01-09T19:13:41.000000Z',
-      updated_at: '2024-01-11T02:49:56.000000Z'
-    },
-    {
-      id: 166,
-      parent_id: 28,
-      name: 'aliquid',
-      slug: 'aliquid',
-      image: 'https://via.placeholder.com/640x480.png/007744?text=fuga',
-      status: 'show',
-      deleted_at: null,
-      created_at: '2023-11-24T17:33:18.000000Z',
-      updated_at: '2024-01-11T02:49:56.000000Z'
-    },
-    {
-      id: 165,
-      parent_id: 34,
-      name: 'dolorem',
-      slug: 'dolorem',
-      image: 'https://via.placeholder.com/640x480.png/005544?text=quis',
-      status: 'show',
-      deleted_at: null,
-      created_at: '2023-11-02T00:33:43.000000Z',
-      updated_at: '2024-01-11T02:49:56.000000Z'
-    },
-    {
-      id: 164,
-      parent_id: 26,
-      name: 'doloremque',
-      slug: 'doloremque',
-      image: 'https://via.placeholder.com/640x480.png/002299?text=neque',
-      status: 'show',
-      deleted_at: null,
-      created_at: '2023-09-15T23:02:49.000000Z',
-      updated_at: '2024-01-11T02:49:56.000000Z'
-    },
-    {
-      id: 163,
-      parent_id: 61,
-      name: 'dolorum',
-      slug: 'dolorum',
-      image: 'https://via.placeholder.com/640x480.png/0077dd?text=iste',
-      status: 'show',
-      deleted_at: null,
-      created_at: '2023-10-17T15:44:37.000000Z',
-      updated_at: '2024-01-11T02:49:56.000000Z'
-    }
-  ],
-  first_page_url:
-    'https://multi-seller-ecommerce-platform.test/admin/categories?per_page=5&sort=id&direction=desc&page=1',
-  from: 1,
-  last_page: 34,
-  last_page_url:
-    'https://multi-seller-ecommerce-platform.test/admin/categories?per_page=5&sort=id&direction=desc&page=34',
-  links: [
-    { url: null, label: '&laquo; Previous', active: false },
-    {
-      url: 'https://multi-seller-ecommerce-platform.test/admin/categories?per_page=5&sort=id&direction=desc&page=1',
-      label: '1',
-      active: true
-    },
-    {
-      url: 'https://multi-seller-ecommerce-platform.test/admin/categories?per_page=5&sort=id&direction=desc&page=2',
-      label: '2',
-      active: false
-    },
-    {
-      url: 'https://multi-seller-ecommerce-platform.test/admin/categories?per_page=5&sort=id&direction=desc&page=3',
-      label: '3',
-      active: false
-    },
-    {
-      url: 'https://multi-seller-ecommerce-platform.test/admin/categories?per_page=5&sort=id&direction=desc&page=4',
-      label: '4',
-      active: false
-    },
-    {
-      url: 'https://multi-seller-ecommerce-platform.test/admin/categories?per_page=5&sort=id&direction=desc&page=5',
-      label: '5',
-      active: false
-    },
-    {
-      url: 'https://multi-seller-ecommerce-platform.test/admin/categories?per_page=5&sort=id&direction=desc&page=6',
-      label: '6',
-      active: false
-    },
-    {
-      url: 'https://multi-seller-ecommerce-platform.test/admin/categories?per_page=5&sort=id&direction=desc&page=7',
-      label: '7',
-      active: false
-    },
-    {
-      url: 'https://multi-seller-ecommerce-platform.test/admin/categories?per_page=5&sort=id&direction=desc&page=8',
-      label: '8',
-      active: false
-    },
-    {
-      url: 'https://multi-seller-ecommerce-platform.test/admin/categories?per_page=5&sort=id&direction=desc&page=9',
-      label: '9',
-      active: false
-    },
-    {
-      url: 'https://multi-seller-ecommerce-platform.test/admin/categories?per_page=5&sort=id&direction=desc&page=10',
-      label: '10',
-      active: false
-    },
-    { url: null, label: '...', active: false },
-    {
-      url: 'https://multi-seller-ecommerce-platform.test/admin/categories?per_page=5&sort=id&direction=desc&page=33',
-      label: '33',
-      active: false
-    },
-    {
-      url: 'https://multi-seller-ecommerce-platform.test/admin/categories?per_page=5&sort=id&direction=desc&page=34',
-      label: '34',
-      active: false
-    },
-    {
-      url: 'https://multi-seller-ecommerce-platform.test/admin/categories?per_page=5&sort=id&direction=desc&page=2',
-      label: 'Next &raquo;',
-      active: false
-    }
-  ],
-  next_page_url:
-    'https://multi-seller-ecommerce-platform.test/admin/categories?per_page=5&sort=id&direction=desc&page=2',
-  path: 'https://multi-seller-ecommerce-platform.test/admin/categories',
-  per_page: 5,
-  prev_page_url: null,
-  to: 5,
-  total: 167
-})
+const categoryStore = useCategoryStore()
+const route = useRoute()
+
+const { search, page, per_page, sort, direction } = useQueryStringParams().dashboardParams.value
+
+onMounted(
+  async () => await categoryStore.getAllCategories({ search, page, per_page, sort, direction })
+)
+
+const { categories } = storeToRefs(categoryStore)
 </script>
 
 <template>
@@ -178,6 +49,7 @@ const categories = reactive({
           <BreadcrumbItem label="List" />
         </Breadcrumb>
       </div>
+      {{ route.query }}
 
       <div class="flex items-center justify-end mb-3">
         <!-- Create New Button -->
@@ -192,30 +64,33 @@ const categories = reactive({
         <div
           class="my-3 flex flex-col sm:flex-row space-y-5 sm:space-y-0 items-center justify-between overflow-auto p-1"
         >
-          <DashboardTableDataSearchBox to="admin.dashboard" />
-
+          <DashboardTableDataSearchBox :getAllMethod="categoryStore.getAllCategories" />
           <div class="flex items-center justify-end w-full md:space-x-3">
-            <DashboardTableDataPerPageSelectBox to="admin.dashboard" />
+            <DashboardTableDataPerPageSelectBox :getAllMethod="categoryStore.getAllCategories" />
           </div>
         </div>
 
         <TableContainer>
-          <ActionTable :items="categories.data">
-            <!-- Table Actions -->
-            <template #bulk-actions="{}">
-              <BulkActionButton class="text-red-600">
-                <i class="fa-solid fa-trash-can"></i>
-                Delete Selected (5)
-              </BulkActionButton>
-            </template>
-
+          <Table :items="categories.data ?? []">
             <!-- Table Header -->
             <template #table-header>
-              <SortableTableHeaderCell label="# Id" to="admin.dashboard" sort="id" />
+              <SortableTableHeaderCell
+                label="# Id"
+                sort="id"
+                :getAllMethod="categoryStore.getAllCategories"
+              />
 
-              <SortableTableHeaderCell label="Category Name" to="admin.dashboard" sort="name" />
+              <SortableTableHeaderCell
+                label="Category Name"
+                sort="name"
+                :getAllMethod="categoryStore.getAllCategories"
+              />
 
-              <SortableTableHeaderCell label="Status" to="admin.dashboard" sort="status" />
+              <SortableTableHeaderCell
+                label="Status"
+                sort="status"
+                :getAllMethod="categoryStore.getAllCategories"
+              />
 
               <TableHeaderCell label="Change Status" />
 
@@ -233,17 +108,29 @@ const categories = reactive({
               </TableDataCell>
 
               <TableDataCell>
-                <GreenBadge v-show="item?.status === 'show'">
+                <GreenBadge v-show="item?.status">
                   <i class="fa-solid fa-eye animate-pulse"></i>
-                  {{ item?.status }}
+                  show
                 </GreenBadge>
-                <RedBadge v-show="item?.status === 'hide'">
+                <RedBadge v-show="!item?.status">
                   <i class="fa-solid fa-eye-slash animate-pulse"></i>
-                  {{ item?.status }}
+                  hide
                 </RedBadge>
               </TableDataCell>
 
-              <TableSelectBoxCell />
+              <TableSelectBoxCell
+                :options="[
+                  {
+                    label: 'Show',
+                    value: true
+                  },
+                  {
+                    label: 'Hide',
+                    value: false
+                  }
+                ]"
+                :selected="item.status"
+              />
 
               <TableActionCell>
                 <RouterLinkButton to="admin.dashboard">
@@ -257,12 +144,12 @@ const categories = reactive({
                 </NormalButton>
               </TableActionCell>
             </template>
-          </ActionTable>
+          </Table>
         </TableContainer>
 
         <Pagination :data="categories" />
 
-        <NoTableData v-show="!categories.data.length" />
+        <NoTableData v-show="!categories?.data?.length" />
       </div>
       <!-- Table End -->
     </div>
