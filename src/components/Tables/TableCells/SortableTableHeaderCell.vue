@@ -10,14 +10,10 @@ const props = defineProps({
   sort: {
     type: String,
     default: 'desc'
-  },
-  getAllMethod: {
-    type: Function,
-    required: true
   }
 })
 
-const { params, updateSorting } = useSorting(props.getAllMethod)
+const { params, updateSorting } = useSorting()
 </script>
 
 <template>

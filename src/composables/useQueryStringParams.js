@@ -5,7 +5,7 @@ export function useQueryStringParams() {
   const route = useRoute()
 
   const dashboardParams = computed(() => ({
-    search: route.query?.search ?? '',
+    search: route.query?.search,
     page: route.query?.page ?? 1,
     per_page: route.query?.per_page ?? 5,
     sort: route.query?.sort ?? 'id',

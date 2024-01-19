@@ -2,13 +2,6 @@
 import { ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
-const props = defineProps({
-  getAllMethod: {
-    type: Function,
-    required: true
-  }
-})
-
 const route = useRoute()
 const router = useRouter()
 const perPage = ref(route.query?.per_page)
@@ -16,7 +9,6 @@ const perPage = ref(route.query?.per_page)
 watch(
   () => perPage.value,
   (newValue) => {
-    props.getAllMethod({ ...route.query, per_page: newValue })
     router.push({ query: { ...route.query, per_page: newValue } })
   }
 )

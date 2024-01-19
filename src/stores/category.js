@@ -11,9 +11,10 @@ export const useCategoryStore = defineStore('category', {
     async getAllCategories(params) {
       try {
         const { generateQueryParams } = useGenerator()
-        const apiUrl = '/api/admin/categories?' + generateQueryParams(params)
 
-        this.router.push({ query: params })
+        const apiUrl = '/api/admin/categories?' + generateQueryParams({ ...params })
+
+        this.router.push({ query: { ...params } })
 
         const response = await this.$axios.get(apiUrl)
 

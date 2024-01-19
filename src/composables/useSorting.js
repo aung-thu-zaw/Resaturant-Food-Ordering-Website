@@ -1,7 +1,7 @@
 import { computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
-export function useSorting(getAllMethod) {
+export function useSorting() {
   const route = useRoute()
   const router = useRouter()
 
@@ -12,15 +12,9 @@ export function useSorting(getAllMethod) {
     }
   })
 
-  const updateSorting = async (sort = 'id') => {
+  const updateSorting = (sort = 'id') => {
     params.value.sort = sort
     params.value.direction = params.value.direction === 'asc' ? 'desc' : 'asc'
-
-    await getAllMethod({
-      ...route.query,
-      sort: params.value.sort,
-      direction: params.value.direction
-    })
 
     router.push({
       query: { ...route.query, sort: params.value.sort, direction: params.value.direction }

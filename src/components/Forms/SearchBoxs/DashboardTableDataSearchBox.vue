@@ -2,15 +2,10 @@
 import { ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
-const props = defineProps({
+defineProps({
   placeholder: {
     type: String,
     default: 'Search by name ...'
-  },
-
-  getAllMethod: {
-    type: Function,
-    required: true
   }
 })
 
@@ -24,7 +19,6 @@ const handleSearch = () => {
     clearTimeout(delayedSearch.value)
   }
   delayedSearch.value = setTimeout(() => {
-    props.getAllMethod({ ...route.query, page: 1, search: search.value })
     router.push({ query: { ...route.query, page: 1, search: search.value } })
   }, 400)
 }

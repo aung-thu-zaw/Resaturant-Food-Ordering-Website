@@ -2,13 +2,9 @@
 import { ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
-const props = defineProps({
+defineProps({
   data: {
     type: Object
-  },
-  getAllMethod: {
-    type: Function,
-    required: true
   }
 })
 
@@ -23,7 +19,6 @@ const getCurrentPage = (newPage) => {
 watch(
   () => currentPage.value,
   (newPage) => {
-    props.getAllMethod({ ...route.query, page: newPage })
     router.push({ query: { ...route.query, page: newPage } })
   }
 )

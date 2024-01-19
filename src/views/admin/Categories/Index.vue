@@ -20,15 +20,24 @@ import Pagination from '@/components/Paginations/DashboardPagination.vue'
 import { useTitle } from '@vueuse/core'
 import { useCategoryStore } from '@/stores/category'
 import { storeToRefs } from 'pinia'
-import { onMounted } from 'vue'
+import { onMounted, watch } from 'vue'
 import { useRoute } from 'vue-router'
+import { useQueryStringParams } from '@/composables/useQueryStringParams'
 
 useTitle('Categories - Restaurant Food Ordering')
 
 const route = useRoute()
 const categoryStore = useCategoryStore()
+const { dashboardParams } = useQueryStringParams()
 
-onMounted(async () => await categoryStore.getAllCategories(route.query))
+onMounted(async () => await categoryStore.getAllCategories(dashboardParams.value))
+
+watch(
+  () => route.query,
+  async () => {
+    await categoryStore.getAllCategories(dashboardParams.value)
+  }
+)
 
 const { categories } = storeToRefs(categoryStore)
 </script>
@@ -52,15 +61,15 @@ const { categories } = storeToRefs(categoryStore)
           Add A New Category
         </RouterLinkButton>
       </div>
-      {{ route.query }}
+
       <!-- Table Start -->
       <div class="border border-gray-300 bg-white rounded-md shadow-sm shadow-gray-200 px-5 py-3">
         <div
           class="my-3 flex flex-col sm:flex-row space-y-5 sm:space-y-0 items-center justify-between overflow-auto p-1"
         >
-          <DashboardTableDataSearchBox :getAllMethod="categoryStore.getAllCategories" />
+          <DashboardTableDataSearchBox />
           <div class="flex items-center justify-end w-full md:space-x-3">
-            <DashboardTableDataPerPageSelectBox :getAllMethod="categoryStore.getAllCategories" />
+            <DashboardTableDataPerPageSelectBox />
           </div>
         </div>
 
@@ -68,23 +77,11 @@ const { categories } = storeToRefs(categoryStore)
           <Table :items="categories.data ?? []">
             <!-- Table Header -->
             <template #table-header>
-              <SortableTableHeaderCell
-                label="# Id"
-                sort="id"
-                :getAllMethod="categoryStore.getAllCategories"
-              />
+              <SortableTableHeaderCell label="# Id" sort="id" />
 
-              <SortableTableHeaderCell
-                label="Category Name"
-                sort="name"
-                :getAllMethod="categoryStore.getAllCategories"
-              />
+              <SortableTableHeaderCell label="Category Name" sort="name" />
 
-              <SortableTableHeaderCell
-                label="Status"
-                sort="status"
-                :getAllMethod="categoryStore.getAllCategories"
-              />
+              <SortableTableHeaderCell label="Status" sort="status" />
 
               <TableHeaderCell label="Change Status" />
 
@@ -141,7 +138,7 @@ const { categories } = storeToRefs(categoryStore)
           </Table>
         </TableContainer>
 
-        <Pagination :data="categories" :getAllMethod="categoryStore.getAllCategories" />
+        <Pagination :data="categories" />
 
         <NoTableData v-show="!categories?.data?.length" />
       </div>
