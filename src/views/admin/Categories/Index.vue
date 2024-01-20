@@ -150,7 +150,10 @@ const { categories } = storeToRefs(categoryStore)
               />
 
               <TableActionCell>
-                <RouterLinkButton to="admin.dashboard">
+                <RouterLinkButton
+                  to="admin.categories.edit"
+                  :targetIdentifier="{ slug: item.slug }"
+                >
                   <i class="fa-solid fa-edit"></i>
                   Edit
                 </RouterLinkButton>

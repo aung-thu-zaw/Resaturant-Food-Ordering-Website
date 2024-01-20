@@ -34,8 +34,9 @@ export default [
             component: () => import('@/views/admin/Categories/Create.vue')
           },
           {
-            path: 'edit',
+            path: 'edit/:slug',
             name: 'admin.categories.edit',
+            props: true,
             component: () => import('@/views/admin/Categories/Edit.vue')
           }
         ]

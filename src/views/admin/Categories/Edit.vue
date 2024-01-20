@@ -9,8 +9,35 @@ import SelectBox from '@/components/Forms/Fields/SelectBox.vue'
 import FormButton from '@/components/Buttons/FormButton.vue'
 import GoBackButton from '@/components/Buttons/GoBackButton.vue'
 import { useTitle } from '@vueuse/core'
+import { onMounted, reactive } from 'vue'
+import { useCategoryStore } from '@/stores/category'
 
-useTitle('Create - Restaurant Food Ordering')
+useTitle('Edit - Restaurant Food Ordering')
+
+const categoryStore = useCategoryStore()
+
+const props = defineProps({
+  slug: {
+    type: String,
+    required: true
+  }
+})
+
+onMounted(async () => {
+  await categoryStore.getCategory(props.slug)
+
+  form.name = categoryStore.category?.name
+  form.status = categoryStore.category?.status
+})
+
+const form = reactive({
+  name: '',
+  status: ''
+})
+
+const handleUpdateCategory = async () => {
+  await categoryStore.updateCategory({ ...form }, props.slug)
+}
 </script>
 
 <template>
@@ -20,7 +47,8 @@ useTitle('Create - Restaurant Food Ordering')
         class="flex flex-col items-start md:flex-row md:items-center md:justify-between mb-4 md:mb-8"
       >
         <Breadcrumb to="admin.categories.index" icon="fa-list" label="Categories">
-          <BreadcrumbItem label="Create" />
+          <BreadcrumbItem :label="categoryStore.category ? categoryStore.category?.name : ''" />
+          <BreadcrumbItem label="Edit" />
         </Breadcrumb>
 
         <div class="w-auto flex items-center justify-end">
@@ -30,7 +58,7 @@ useTitle('Create - Restaurant Food Ordering')
 
       <!-- Form Start -->
       <div class="border p-10 bg-white rounded-md">
-        <form class="space-y-4 md:space-y-6">
+        <form @submit.prevent="handleUpdateCategory" class="space-y-4 md:space-y-6">
           <div>
             <InputLabel label="Category Name" required />
 
@@ -39,9 +67,10 @@ useTitle('Create - Restaurant Food Ordering')
               name="category-name"
               placeholder="Enter Category Name"
               required
+              v-model="form.name"
             />
 
-            <InputError />
+            <InputError :message="categoryStore.errors?.name" />
           </div>
 
           <div>
@@ -52,27 +81,25 @@ useTitle('Create - Restaurant Food Ordering')
               :options="[
                 {
                   label: 'Show',
-                  value: 'show'
+                  value: true
                 },
                 {
                   label: 'Hide',
-                  value: 'hide'
+                  value: false
                 }
               ]"
               required
+              v-model="form.status"
+              :selected="form.status"
             />
 
-            <InputError />
+            <InputError :message="categoryStore.errors?.status" />
           </div>
 
           <div class="flex items-center justify-end w-full space-x-5">
-            <FormButton class="w-[200px] text-white bg-slate-600 hover:bg-slate-700 rounded-md">
-              Save And Create Another
-            </FormButton>
-
-            <FormButton class="w-[100px] text-white bg-blue-600 hover:bg-blue-700 rounded-md">
+            <FormButton class="w-[150px] text-white bg-blue-600 hover:bg-blue-700 rounded-md">
               <i class="fa-solid fa-save"></i>
-              Save
+              Save Changes
             </FormButton>
           </div>
         </form>

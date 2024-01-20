@@ -6,6 +6,7 @@ import 'vue3-toastify/dist/index.css'
 export const useCategoryStore = defineStore('category', {
   state: () => ({
     data: [],
+    specificData: null,
     responseErrors: null
   }),
 
@@ -23,6 +24,20 @@ export const useCategoryStore = defineStore('category', {
         if (!response) throw new Error('Response Not Found!')
 
         this.data = response.data
+      } catch (error) {
+        this.responseErrors = error.response?.data?.errors
+      }
+    },
+
+    async getCategory(categorySlug) {
+      try {
+        const apiUrl = `/api/admin/categories/${categorySlug}`
+
+        const response = await this.$axios.get(apiUrl)
+
+        if (!response) throw new Error('Response Not Found!')
+
+        this.specificData = response.data
       } catch (error) {
         this.responseErrors = error.response?.data?.errors
       }
@@ -71,6 +86,23 @@ export const useCategoryStore = defineStore('category', {
       }
     },
 
+    async updateCategory(formData, categorySlug) {
+      try {
+        const apiUrl = `/api/admin/categories/${categorySlug}`
+
+        const response = await this.$axios.patch(apiUrl, { ...formData })
+
+        if (!response) throw new Error('Response Not Found!')
+
+        this.router.push({ name: 'admin.categories.index' })
+        this.$swal({ icon: 'success', title: 'Category updated successfully!' })
+
+        this.$reset()
+      } catch (error) {
+        this.responseErrors = error.response?.data?.errors
+      }
+    },
+
     async deleteCategory(categorySlug) {
       try {
         const apiUrl = `/api/admin/categories/${categorySlug}`
@@ -108,6 +140,7 @@ export const useCategoryStore = defineStore('category', {
 
   getters: {
     categories: (state) => state.data,
+    category: (state) => state.specificData,
     errors: (state) => state.responseErrors
   }
 })

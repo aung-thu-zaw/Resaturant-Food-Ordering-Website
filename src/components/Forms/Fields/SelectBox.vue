@@ -1,7 +1,7 @@
 <script setup>
 const props = defineProps({
   selected: {
-    type: Object,
+    type: [Object, Boolean, String],
     default: () => {}
   },
   options: {
@@ -29,7 +29,7 @@ const props = defineProps({
     default: 'Select an option'
   },
   modelValue: {
-    type: [String, Number],
+    type: [String, Number, Boolean],
     default: ''
   },
   rounded: {
@@ -49,7 +49,7 @@ const optionValue = (option) => {
 }
 
 const isSelected = (option) => {
-  return props.selected === optionValue(option)
+  return props.selected == optionValue(option)
 }
 
 const optionLabel = (option) => {

@@ -67,11 +67,11 @@ const handleCreateCategory = async () => {
               :options="[
                 {
                   label: 'Show',
-                  value: 1
+                  value: true
                 },
                 {
                   label: 'Hide',
-                  value: 0
+                  value: false
                 }
               ]"
               required
