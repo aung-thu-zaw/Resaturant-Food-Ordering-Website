@@ -1,5 +1,7 @@
 import { defineStore } from 'pinia'
 import { useGenerator } from '@/composables/useGenerator'
+import { toast } from 'vue3-toastify'
+import 'vue3-toastify/dist/index.css'
 
 export const useCategoryStore = defineStore('category', {
   state: () => ({
@@ -45,6 +47,27 @@ export const useCategoryStore = defineStore('category', {
           icon: 'error',
           title: 'Failed to change category status. Please try again.'
         })
+      }
+    },
+
+    async createCategory(formData, createAnother) {
+      try {
+        const apiUrl = `/api/admin/categories`
+
+        const response = await this.$axios.post(apiUrl, { ...formData })
+
+        if (!response) throw new Error('Response Not Found!')
+
+        if (!createAnother) {
+          this.router.push({ name: 'admin.categories.index' })
+          this.$swal({ icon: 'success', title: 'Category created successfully!' })
+        } else {
+          toast.success('Category created successfully!', { autoClose: 2000 })
+        }
+
+        this.$reset()
+      } catch (error) {
+        this.responseErrors = error.response?.data?.errors
       }
     },
 

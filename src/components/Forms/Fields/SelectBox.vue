@@ -74,11 +74,11 @@ const optionLabel = (option) => {
         'rounded-md': !rounded,
         'pl-12': icon
       }"
-      @input="$emit('update:modelValue', $event.target.value)"
+      @change="$emit('update:modelValue', $event.target.value)"
       :disabled="disabled"
       :required="required"
     >
-      <option selected disabled>{{ placeholder }}</option>
+      <option value="" :selected="modelValue === ''" disabled>{{ placeholder }}</option>
       <option
         v-for="(option, index) in options"
         :key="optionKey(index)"

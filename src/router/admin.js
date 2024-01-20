@@ -31,12 +31,12 @@ export default [
           {
             path: 'create',
             name: 'admin.categories.create',
-            component: () => import('@/views/admin/Categories/Form.vue')
+            component: () => import('@/views/admin/Categories/Create.vue')
           },
           {
-            path: 'trashed',
-            name: 'admin.categories.trashed',
-            component: () => import('@/views/admin/Categories/Trash.vue')
+            path: 'edit',
+            name: 'admin.categories.edit',
+            component: () => import('@/views/admin/Categories/Edit.vue')
           }
         ]
       }
