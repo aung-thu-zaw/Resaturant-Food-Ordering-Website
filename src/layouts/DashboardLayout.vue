@@ -3,7 +3,7 @@ import DashboardNavbar from '@/components/Navbars/DashboardNavbar.vue'
 import DashboardSidebar from '@/components/Sidebars/DashboardSidebar.vue'
 import { Dropdown, Ripple, Sidenav, initTE } from 'tw-elements'
 import { onMounted } from 'vue'
-import { useAbilityStore } from '@/stores/ability'
+import { useAbilityStore } from '@/stores/dashboard/ability.js'
 
 const abilityStore = useAbilityStore()
 

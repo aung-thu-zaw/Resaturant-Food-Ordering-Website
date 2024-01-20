@@ -10,7 +10,7 @@ import FormButton from '@/components/Buttons/FormButton.vue'
 import GoBackButton from '@/components/Buttons/GoBackButton.vue'
 import { useTitle } from '@vueuse/core'
 import { onMounted, reactive } from 'vue'
-import { useCategoryStore } from '@/stores/category'
+import { useCategoryStore } from '@/stores/dashboard/category'
 
 useTitle('Edit - Restaurant Food Ordering')
 

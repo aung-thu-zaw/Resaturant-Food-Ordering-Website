@@ -1,4 +1,4 @@
-import { useAbilityStore } from '@/stores/ability'
+import { useAbilityStore } from '@/stores/dashboard/ability'
 
 export const Can = {
   install: (app) => {
