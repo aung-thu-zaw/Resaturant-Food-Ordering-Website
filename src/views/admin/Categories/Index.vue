@@ -39,6 +39,10 @@ watch(
   }
 )
 
+const handleStatusChange = async (slug, event) => {
+  await categoryStore.changeStatus(slug, event.target.value)
+}
+
 const { categories } = storeToRefs(categoryStore)
 </script>
 
@@ -110,6 +114,7 @@ const { categories } = storeToRefs(categoryStore)
               </TableDataCell>
 
               <TableSelectBoxCell
+                @change="handleStatusChange(item.slug, $event)"
                 :options="[
                   {
                     label: 'Show',
