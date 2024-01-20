@@ -28,21 +28,14 @@ useTitle('Categories - Restaurant Food Ordering')
 
 const route = useRoute()
 const swal = inject('$swal')
-const categoryStore = useCategoryStore()
+const store = useCategoryStore()
+
+const { categories } = storeToRefs(store)
 const { dashboardParams } = useQueryStringParams()
 
-onMounted(async () => await categoryStore.getAllCategories(dashboardParams.value))
+onMounted(async () => await store.getAllCategories(dashboardParams.value))
 
-watch(
-  () => route.query,
-  async () => {
-    await categoryStore.getAllCategories(dashboardParams.value)
-  }
-)
-
-const handleStatusChange = async (slug, event) => {
-  await categoryStore.changeStatus(slug, event.target.value)
-}
+const handleStatusChange = async (slug, event) => await store.changeStatus(slug, event.target.value)
 
 const handleDeleteCategory = async (categorySlug) => {
   const result = await swal({
@@ -60,11 +53,14 @@ const handleDeleteCategory = async (categorySlug) => {
   })
 
   if (result.isConfirmed) {
-    await categoryStore.deleteCategory(categorySlug)
+    await store.deleteCategory(categorySlug)
   }
 }
 
-const { categories } = storeToRefs(categoryStore)
+watch(
+  () => route.query,
+  async () => await store.getAllCategories(dashboardParams.value)
+)
 </script>
 
 <template>

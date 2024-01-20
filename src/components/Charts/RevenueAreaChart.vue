@@ -27,13 +27,10 @@ const chartSeries = [
 ]
 </script>
 
-
 <template>
   <div class="border bg-white p-5 rounded-md shadow shadow-gray-200 space-y-5">
     <div class="flex items-center justify-between">
-      <h3 class="font-bold text-slate-800 text-lg">
-        Revenue
-      </h3>
+      <h3 class="font-bold text-slate-800 text-lg">Revenue</h3>
 
       <div>
         <select
@@ -66,14 +63,7 @@ const chartSeries = [
     </div>
 
     <div>
-      <apexchart
-        :options="chartOptions"
-        :series="chartSeries"
-        type="area"
-        height="350"
-      />
+      <apexchart :options="chartOptions" :series="chartSeries" type="area" height="350" />
     </div>
   </div>
 </template>
-
-

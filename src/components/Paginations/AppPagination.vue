@@ -2,7 +2,6 @@
 // Your Code
 </script>
 
-
 <template>
   <div>
     <!-- Your Code -->

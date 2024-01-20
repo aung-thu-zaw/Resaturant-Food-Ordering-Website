@@ -105,5 +105,5 @@ export const useAuthStore = defineStore('auth', {
     errors: (state) => state.authErrors,
     message: (state) => state.authMessage,
     status: (state) => state.authStatus
-  },
+  }
 })

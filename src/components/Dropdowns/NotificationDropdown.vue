@@ -1,5 +1,4 @@
-<script setup>
-</script>
+<script setup></script>
 
 <template>
   <div class="hs-dropdown relative inline-flex [--placement:bottom-right]">
@@ -26,19 +25,14 @@
     >
       <div class="px-4 py-3 bg-gray-100 flex items-center justify-between border-b w-full">
         <span class="text-gray-700 font-semibold text-md"> Notifications </span>
-        <button
-          type="button"
-          class="text-primary hover:text-red-600 text-sm font-bold"
-        >
+        <button type="button" class="text-primary hover:text-red-600 text-sm font-bold">
           Mark all as read
         </button>
       </div>
 
       <!-- No notification -->
       <div class="py-5">
-        <p class="font-bold text-sm text-gray-600 text-center">
-          There are no notifications.
-        </p>
+        <p class="font-bold text-sm text-gray-600 text-center">There are no notifications.</p>
       </div>
     </div>
   </div>

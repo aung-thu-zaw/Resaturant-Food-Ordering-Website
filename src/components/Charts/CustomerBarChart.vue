@@ -20,19 +20,11 @@ const chartSeries = [
 <template>
   <div class="border bg-white p-5 rounded-md shadow shadow-gray-200">
     <div class="flex items-center justify-between">
-      <h3 class="font-bold text-slate-800 text-lg mb-5">
-        Customer Bar Chart
-      </h3>
+      <h3 class="font-bold text-slate-800 text-lg mb-5">Customer Bar Chart</h3>
     </div>
 
     <div class="bar-chart">
-      <apexchart
-        :options="chartOptions"
-        :series="chartSeries"
-        type="bar"
-        height="300"
-      />
+      <apexchart :options="chartOptions" :series="chartSeries" type="bar" height="300" />
     </div>
   </div>
 </template>
-

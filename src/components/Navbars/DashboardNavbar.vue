@@ -23,7 +23,7 @@ import NotificationDropdown from '@/components/Dropdowns/NotificationDropdown.vu
             type="text"
             placeholder="Search ( ctrl + k )"
             class="px-3 py-3 placeholder-gray-500 text-blueGray-600 relative bg-white rounded text-sm outline-none focus:outline-none focus:ring-2 focus:ring-slate-300 border border-gray-300 focus:border-slate-400 font-medium w-full pl-10"
-          >
+          />
         </div>
       </form>
 

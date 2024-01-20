@@ -14,13 +14,13 @@ import { useCategoryStore } from '@/stores/category'
 
 useTitle('Create - Restaurant Food Ordering')
 
+const store = useCategoryStore()
 const isCreateAnother = ref(false)
-const categoryStore = useCategoryStore()
 const form = reactive({ name: '', status: '' })
 
 const handleCreateCategory = async () => {
-  await categoryStore.createCategory({ ...form }, isCreateAnother.value)
-  if (isCreateAnother.value && !categoryStore.errors) {
+  await store.createCategory({ ...form }, isCreateAnother.value)
+  if (isCreateAnother.value && !store.errors) {
     form.name = ''
     form.status = ''
   }
@@ -56,7 +56,7 @@ const handleCreateCategory = async () => {
               v-model="form.name"
             />
 
-            <InputError :message="categoryStore.errors?.name" />
+            <InputError :message="store.errors?.name" />
           </div>
 
           <div>
@@ -78,7 +78,7 @@ const handleCreateCategory = async () => {
               v-model="form.status"
             />
 
-            <InputError :message="categoryStore.errors?.status" />
+            <InputError :message="store.errors?.status" />
           </div>
 
           <div class="flex items-center justify-end w-full space-x-5">

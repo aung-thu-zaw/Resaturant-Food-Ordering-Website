@@ -23,13 +23,10 @@ const chartOptions = {
 const chartSeries = [30, 50, 20]
 </script>
 
-
 <template>
   <div class="border bg-white p-5 rounded-md shadow shadow-gray-200 space-y-10">
     <div class="flex items-center justify-between">
-      <h3 class="font-bold text-slate-800 text-lg mb-5">
-        Orders Summary
-      </h3>
+      <h3 class="font-bold text-slate-800 text-lg mb-5">Orders Summary</h3>
 
       <div class="flex">
         <div class="flex bg-gray-200 rounded-md transition p-1">
@@ -59,33 +56,22 @@ const chartSeries = [30, 50, 20]
 
     <div class="grid grid-cols-3 gap-5">
       <div class="border border-gray-200 p-3 rounded-md">
-        <h3 class="font-bold text-slate-800 text-xl">
-          25
-        </h3>
+        <h3 class="font-bold text-slate-800 text-xl">25</h3>
         <span class="text-sm font-semibold text-gray-600">On Delivery</span>
       </div>
       <div class="border border-gray-200 p-3 rounded-md">
-        <h3 class="font-bold text-slate-800 text-xl">
-          25
-        </h3>
+        <h3 class="font-bold text-slate-800 text-xl">25</h3>
         <span class="text-sm font-semibold text-gray-600">Delivered</span>
       </div>
       <div class="border border-gray-200 p-3 rounded-md">
-        <h3 class="font-bold text-slate-800 text-xl">
-          25
-        </h3>
+        <h3 class="font-bold text-slate-800 text-xl">25</h3>
         <span class="text-sm font-semibold text-gray-600">Cancelled</span>
       </div>
     </div>
 
     <div class="flex items-center justify-between">
       <div class="">
-        <apexchart
-          :options="chartOptions"
-          :series="chartSeries"
-          type="donut"
-          height="280"
-        />
+        <apexchart :options="chartOptions" :series="chartSeries" type="donut" height="280" />
       </div>
       <div class="w-[210px] space-y-5 pe-5">
         <div class="flex flex-col items-start space-x-2 space-y-3">
@@ -165,4 +151,3 @@ const chartSeries = [30, 50, 20]
     </div>
   </div>
 </template>
-

@@ -855,13 +855,3 @@ const defaultQueryParams = {
     </div>
   </nav>
 </template>
-
-
-
-
-
-
-
-
-
-

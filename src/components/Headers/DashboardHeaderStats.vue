@@ -62,5 +62,3 @@ import DashboardCardStats from '@/components/Cards/DashboardCardStats.vue'
     </div>
   </div>
 </template>
-
-

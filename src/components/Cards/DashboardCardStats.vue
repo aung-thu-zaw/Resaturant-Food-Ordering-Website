@@ -65,10 +65,7 @@ defineProps({
         </div>
       </div>
       <p class="text-xs text-slate-500 font-medium mt-4">
-        <span
-          class="mr-2"
-          :class="[statPercentColor]"
-        >
+        <span class="mr-2" :class="[statPercentColor]">
           <i
             :class="[
               statArrow === 'up' ? `fa-solid fa-arrow-trend-up` : `fa-solid fa-arrow-trend-down`

@@ -14,8 +14,6 @@ import { useCategoryStore } from '@/stores/category'
 
 useTitle('Edit - Restaurant Food Ordering')
 
-const categoryStore = useCategoryStore()
-
 const props = defineProps({
   slug: {
     type: String,
@@ -23,21 +21,17 @@ const props = defineProps({
   }
 })
 
+const store = useCategoryStore()
+const form = reactive({ name: '', status: '' })
+
 onMounted(async () => {
-  await categoryStore.getCategory(props.slug)
+  await store.getCategory(props.slug)
 
-  form.name = categoryStore.category?.name
-  form.status = categoryStore.category?.status
+  form.name = store.category?.name
+  form.status = store.category?.status
 })
 
-const form = reactive({
-  name: '',
-  status: ''
-})
-
-const handleUpdateCategory = async () => {
-  await categoryStore.updateCategory({ ...form }, props.slug)
-}
+const handleUpdateCategory = async () => await store.updateCategory({ ...form }, props.slug)
 </script>
 
 <template>
@@ -47,7 +41,7 @@ const handleUpdateCategory = async () => {
         class="flex flex-col items-start md:flex-row md:items-center md:justify-between mb-4 md:mb-8"
       >
         <Breadcrumb to="admin.categories.index" icon="fa-list" label="Categories">
-          <BreadcrumbItem :label="categoryStore.category ? categoryStore.category?.name : ''" />
+          <BreadcrumbItem :label="store.category ? store.category?.name : ''" />
           <BreadcrumbItem label="Edit" />
         </Breadcrumb>
 
@@ -70,7 +64,7 @@ const handleUpdateCategory = async () => {
               v-model="form.name"
             />
 
-            <InputError :message="categoryStore.errors?.name" />
+            <InputError :message="store.errors?.name" />
           </div>
 
           <div>
@@ -93,7 +87,7 @@ const handleUpdateCategory = async () => {
               :selected="form.status"
             />
 
-            <InputError :message="categoryStore.errors?.status" />
+            <InputError :message="store.errors?.status" />
           </div>
 
           <div class="flex items-center justify-end w-full space-x-5">
