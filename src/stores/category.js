@@ -42,8 +42,42 @@ export const useCategoryStore = defineStore('category', {
       } catch (error) {
         this.responseErrors = error.response?.data?.errors
         this.$swal({
-          icon: 'success',
+          icon: 'error',
           title: 'Failed to change category status. Please try again.'
+        })
+      }
+    },
+
+    async deleteCategory(categorySlug) {
+      try {
+        const apiUrl = `/api/admin/categories/${categorySlug}`
+
+        const response = await this.$axios.delete(apiUrl)
+
+        if (!response) throw new Error('Response Not Found!')
+
+        const deletedCategoryIndex = this.data.data.findIndex(
+          (category) => category.slug === categorySlug
+        )
+
+        if (deletedCategoryIndex !== -1) {
+          this.data.data.splice(deletedCategoryIndex, 1)
+
+          const currentPageIndex = this.data.current_page - 1
+          const itemsPerPage = this.data.per_page
+
+          if (deletedCategoryIndex >= currentPageIndex * itemsPerPage) {
+            await this.getAllCategories({ page: this.data.current_page })
+          }
+        }
+
+        if (response.status === 204)
+          this.$swal({ icon: 'success', title: 'Category deleted successfully!' })
+      } catch (error) {
+        this.responseErrors = error.response?.data?.errors
+        this.$swal({
+          icon: 'error',
+          title: 'Failed to delete category. Please try again.'
         })
       }
     }

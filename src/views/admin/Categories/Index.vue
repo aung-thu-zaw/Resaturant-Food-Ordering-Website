@@ -20,13 +20,14 @@ import Pagination from '@/components/Paginations/DashboardPagination.vue'
 import { useTitle } from '@vueuse/core'
 import { useCategoryStore } from '@/stores/category'
 import { storeToRefs } from 'pinia'
-import { onMounted, watch } from 'vue'
+import { inject, onMounted, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { useQueryStringParams } from '@/composables/useQueryStringParams'
 
 useTitle('Categories - Restaurant Food Ordering')
 
 const route = useRoute()
+const swal = inject('$swal')
 const categoryStore = useCategoryStore()
 const { dashboardParams } = useQueryStringParams()
 
@@ -41,6 +42,26 @@ watch(
 
 const handleStatusChange = async (slug, event) => {
   await categoryStore.changeStatus(slug, event.target.value)
+}
+
+const handleDeleteCategory = async (categorySlug) => {
+  const result = await swal({
+    icon: 'question',
+    title: 'Delete Category',
+    text: 'Are you sure you would like to do this?',
+    showCancelButton: true,
+    confirmButtonText: 'Confirm',
+    cancelButtonText: 'Cancel',
+    confirmButtonColor: '#d52222',
+    cancelButtonColor: '#626262',
+    timer: 20000,
+    timerProgressBar: true,
+    reverseButtons: true
+  })
+
+  if (result.isConfirmed) {
+    await categoryStore.deleteCategory(categorySlug)
+  }
 }
 
 const { categories } = storeToRefs(categoryStore)
@@ -134,7 +155,10 @@ const { categories } = storeToRefs(categoryStore)
                   Edit
                 </RouterLinkButton>
 
-                <NormalButton class="bg-red-600 hover:bg-red-700 text-white">
+                <NormalButton
+                  @click="handleDeleteCategory(item.slug)"
+                  class="bg-red-600 hover:bg-red-700 text-white"
+                >
                   <i class="fa-solid fa-trash-can"></i>
                   Delete
                 </NormalButton>
