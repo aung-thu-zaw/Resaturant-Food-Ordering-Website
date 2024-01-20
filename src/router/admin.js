@@ -46,6 +46,12 @@ export default [
         ]
       },
       {
+        path: '/admin/permissions',
+        name: 'admin.permissions.index',
+        component: () => import('@/views/admin/AuthorityManagement/Permissions/Index.vue'),
+        meta: { middleware: [authorize, permission('permissions.view')] }
+      },
+      {
         path: 'roles',
         meta: { middleware: [authorize] },
         children: [

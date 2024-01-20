@@ -5,7 +5,7 @@ import { useRoute, useRouter } from 'vue-router'
 defineProps({
   placeholder: {
     type: String,
-    default: 'Search by name ...'
+    default: 'Search by name'
   }
 })
 
