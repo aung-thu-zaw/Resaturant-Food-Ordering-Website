@@ -77,7 +77,7 @@ watch(
 
       <div class="flex items-center justify-end mb-3">
         <!-- Create New Button -->
-        <RouterLinkButton to="admin.categories.create">
+        <RouterLinkButton v-show="can('categories.create')" to="admin.categories.create">
           <i class="fa-solid fa-file-circle-plus mr-1"></i>
           Add A New Category
         </RouterLinkButton>
@@ -147,6 +147,7 @@ watch(
 
               <TableActionCell>
                 <RouterLinkButton
+                  v-show="can('categories.edit')"
                   to="admin.categories.edit"
                   :targetIdentifier="{ slug: item.slug }"
                 >
@@ -155,6 +156,7 @@ watch(
                 </RouterLinkButton>
 
                 <NormalButton
+                  v-show="can('categories.delete')"
                   @click="handleDeleteCategory(item.slug)"
                   class="bg-red-600 hover:bg-red-700 text-white"
                 >

@@ -1,6 +1,7 @@
 import guest from '@/middlewares/guest'
 import auth from '@/middlewares/auth'
 import authorize from '@/middlewares/authorize'
+import permission from '@/middlewares/permission'
 
 export default [
   {
@@ -26,18 +27,21 @@ export default [
           {
             path: '',
             name: 'admin.categories.index',
-            component: () => import('@/views/admin/Categories/Index.vue')
+            component: () => import('@/views/admin/Categories/Index.vue'),
+            meta: { middleware: [permission('categories.view')] }
           },
           {
             path: 'create',
             name: 'admin.categories.create',
-            component: () => import('@/views/admin/Categories/Create.vue')
+            component: () => import('@/views/admin/Categories/Create.vue'),
+            meta: { middleware: [permission('categories.create')] }
           },
           {
-            path: 'edit/:slug',
+            path: ':slug/edit',
             name: 'admin.categories.edit',
             props: true,
-            component: () => import('@/views/admin/Categories/Edit.vue')
+            component: () => import('@/views/admin/Categories/Edit.vue'),
+            meta: { middleware: [permission('categories.edit')] }
           }
         ]
       }

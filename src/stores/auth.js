@@ -52,7 +52,15 @@ export const useAuthStore = defineStore('auth', {
       try {
         await this.getCsrfCookie()
         const { data } = await this.$axios.get('api/user')
-        this.user = data
+
+        if (data.permissions.length > 0) {
+          const permissionNames = data.permissions.map((permission) => permission.name)
+
+          this.user = { ...data, permissions: permissionNames }
+        } else {
+          this.user = data
+        }
+
         this.isLoggedIn = true
       } catch (error) {
         console.error('Failed to get authenticated user:', error)
