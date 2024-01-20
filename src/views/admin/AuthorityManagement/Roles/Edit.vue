@@ -5,33 +5,31 @@ import BreadcrumbItem from '@/components/Breadcrumbs/BreadcrumbItem.vue'
 import InputLabel from '@/components/Forms/Fields/InputLabel.vue'
 import InputError from '@/components/Forms/Fields/InputError.vue'
 import InputField from '@/components/Forms/Fields/InputField.vue'
-import SelectBox from '@/components/Forms/Fields/SelectBox.vue'
 import FormButton from '@/components/Buttons/FormButton.vue'
 import GoBackButton from '@/components/Buttons/GoBackButton.vue'
 import { useTitle } from '@vueuse/core'
 import { onMounted, reactive } from 'vue'
-import { useCategoryStore } from '@/stores/dashboard/category'
+import { useRoleStore } from '@/stores/dashboard/role'
 
-useTitle('Edit Category - Restaurant Food Ordering')
+useTitle('Edit Role - Restaurant Food Ordering')
 
 const props = defineProps({
-  slug: {
-    type: String,
+  id: {
+    type: Number,
     required: true
   }
 })
 
-const store = useCategoryStore()
-const form = reactive({ name: '', status: '' })
+const store = useRoleStore()
+const form = reactive({ name: '' })
 
 onMounted(async () => {
-  await store.getCategory(props.slug)
+  await store.getRole(props.id)
 
-  form.name = store.category?.name
-  form.status = store.category?.status
+  form.name = store.role?.name
 })
 
-const handleUpdateCategory = async () => await store.updateCategory({ ...form }, props.slug)
+const handleUpdateRole = async () => await store.updateRole({ ...form }, props.id)
 </script>
 
 <template>
@@ -41,7 +39,7 @@ const handleUpdateCategory = async () => await store.updateCategory({ ...form },
         class="flex flex-col items-start md:flex-row md:items-center md:justify-between mb-4 md:mb-8"
       >
         <Breadcrumb to="admin.categories.index" icon="fa-list" label="Categories">
-          <BreadcrumbItem :label="store.category ? store.category?.name : ''" />
+          <BreadcrumbItem :label="store.role ? store.role?.name : ''" />
           <BreadcrumbItem label="Edit" />
         </Breadcrumb>
 
@@ -52,42 +50,19 @@ const handleUpdateCategory = async () => await store.updateCategory({ ...form },
 
       <!-- Form Start -->
       <div class="border p-10 bg-white rounded-md">
-        <form @submit.prevent="handleUpdateCategory" class="space-y-4 md:space-y-6">
+        <form @submit.prevent="handleUpdateRole" class="space-y-4 md:space-y-6">
           <div>
-            <InputLabel label="Category Name" required />
+            <InputLabel label="Role Name" required />
 
             <InputField
               type="text"
-              name="category-name"
-              placeholder="Enter Category Name"
+              name="role-name"
+              placeholder="Enter Role Name"
               required
               v-model="form.name"
             />
 
             <InputError :message="store.errors?.name" />
-          </div>
-
-          <div>
-            <InputLabel label="Status" required />
-
-            <SelectBox
-              name="status"
-              :options="[
-                {
-                  label: 'Show',
-                  value: true
-                },
-                {
-                  label: 'Hide',
-                  value: false
-                }
-              ]"
-              required
-              v-model="form.status"
-              :selected="form.status"
-            />
-
-            <InputError :message="store.errors?.status" />
           </div>
 
           <div class="flex items-center justify-end w-full space-x-5">

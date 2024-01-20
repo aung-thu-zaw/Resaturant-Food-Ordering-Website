@@ -44,6 +44,31 @@ export default [
             meta: { middleware: [permission('categories.edit')] }
           }
         ]
+      },
+      {
+        path: 'roles',
+        meta: { middleware: [authorize] },
+        children: [
+          {
+            path: '',
+            name: 'admin.roles.index',
+            component: () => import('@/views/admin/AuthorityManagement/Roles/Index.vue'),
+            meta: { middleware: [permission('roles.view')] }
+          },
+          {
+            path: 'create',
+            name: 'admin.roles.create',
+            component: () => import('@/views/admin/AuthorityManagement/Roles/Create.vue'),
+            meta: { middleware: [permission('roles.create')] }
+          },
+          {
+            path: ':id/edit',
+            name: 'admin.roles.edit',
+            props: true,
+            component: () => import('@/views/admin/AuthorityManagement/Roles/Edit.vue'),
+            meta: { middleware: [permission('roles.edit')] }
+          }
+        ]
       }
     ]
   }

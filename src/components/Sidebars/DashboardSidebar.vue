@@ -802,14 +802,19 @@ const defaultQueryParams = {
                   Permissions
                 </a>
               </li>
-              <li class="relative hover:bg-gray-100 duration-100 rounded-md">
-                <a
+
+              <li
+                v-show="can('roles.view')"
+                class="relative hover:bg-gray-100 duration-100 rounded-md"
+              >
+                <router-link
+                  :to="{ name: 'admin.roles.index', query: defaultQueryParams }"
                   class="flex font-semibold cursor-pointer items-center truncate rounded-[5px] py-3 pl-7 text-[0.8rem] outline-none transition duration-300 ease-linear"
                   :class="getSidebarMenuActiveColor('/admin/roles')"
                   data-te-sidenav-link-ref
                 >
                   Roles
-                </a>
+                </router-link>
               </li>
               <li class="relative hover:bg-gray-100 duration-100 rounded-md">
                 <a

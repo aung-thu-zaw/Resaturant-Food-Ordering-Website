@@ -5,21 +5,20 @@ import BreadcrumbItem from '@/components/Breadcrumbs/BreadcrumbItem.vue'
 import InputLabel from '@/components/Forms/Fields/InputLabel.vue'
 import InputError from '@/components/Forms/Fields/InputError.vue'
 import InputField from '@/components/Forms/Fields/InputField.vue'
-import SelectBox from '@/components/Forms/Fields/SelectBox.vue'
 import FormButton from '@/components/Buttons/FormButton.vue'
 import GoBackButton from '@/components/Buttons/GoBackButton.vue'
 import { useTitle } from '@vueuse/core'
 import { reactive, ref } from 'vue'
-import { useCategoryStore } from '@/stores/dashboard/category'
+import { useRoleStore } from '@/stores/dashboard/role'
 
-useTitle('Create Category - Restaurant Food Ordering')
+useTitle('Create Role - Restaurant Food Ordering')
 
-const store = useCategoryStore()
+const store = useRoleStore()
 const isCreateAnother = ref(false)
-const form = reactive({ name: '', status: '' })
+const form = reactive({ name: '' })
 
-const handleCreateCategory = async () => {
-  await store.createCategory({ ...form }, isCreateAnother.value)
+const handleCreateRole = async () => {
+  await store.createRole({ ...form }, isCreateAnother.value)
   if (isCreateAnother.value && !store.errors) {
     form.name = ''
     form.status = ''
@@ -33,7 +32,7 @@ const handleCreateCategory = async () => {
       <div
         class="flex flex-col items-start md:flex-row md:items-center md:justify-between mb-4 md:mb-8"
       >
-        <Breadcrumb to="admin.categories.index" icon="fa-list" label="Categories">
+        <Breadcrumb to="admin.roles.index" icon="fa-list" label="Roles">
           <BreadcrumbItem label="Create" />
         </Breadcrumb>
 
@@ -44,41 +43,19 @@ const handleCreateCategory = async () => {
 
       <!-- Form Start -->
       <div class="border p-10 bg-white rounded-md">
-        <form @submit.prevent="handleCreateCategory" class="space-y-4 md:space-y-6">
+        <form @submit.prevent="handleCreateRole" class="space-y-4 md:space-y-6">
           <div>
-            <InputLabel label="Category Name" required />
+            <InputLabel label="Role Name" required />
 
             <InputField
               type="text"
-              name="category-name"
-              placeholder="Enter Category Name"
+              name="role-name"
+              placeholder="Enter Role Name"
               required
               v-model="form.name"
             />
 
             <InputError :message="store.errors?.name" />
-          </div>
-
-          <div>
-            <InputLabel label="Status" required />
-
-            <SelectBox
-              name="status"
-              :options="[
-                {
-                  label: 'Show',
-                  value: true
-                },
-                {
-                  label: 'Hide',
-                  value: false
-                }
-              ]"
-              required
-              v-model="form.status"
-            />
-
-            <InputError :message="store.errors?.status" />
           </div>
 
           <div class="flex items-center justify-end w-full space-x-5">
