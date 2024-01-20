@@ -4,7 +4,7 @@ import { useRoute, useRouter } from 'vue-router'
 
 const route = useRoute()
 const router = useRouter()
-const perPage = ref(route.query?.per_page)
+const perPage = ref(route.query.per_page ?? 5)
 
 watch(
   () => perPage.value,

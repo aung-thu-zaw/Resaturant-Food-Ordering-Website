@@ -1,5 +1,4 @@
 <script setup>
-import { ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 defineProps({
@@ -10,18 +9,8 @@ defineProps({
 
 const route = useRoute()
 const router = useRouter()
-const currentPage = ref(route.query?.page || 1)
 
-const getCurrentPage = (newPage) => {
-  currentPage.value = newPage
-}
-
-watch(
-  () => currentPage.value,
-  (newPage) => {
-    router.push({ query: { ...route.query, page: newPage } })
-  }
-)
+const getCurrentPage = (newPage = 1) => router.push({ query: { ...route.query, page: newPage } })
 </script>
 
 <template>
@@ -49,7 +38,7 @@ watch(
                 class="mr-1 mb-1 px-4 py-3 text-sm leading-4 border border-slate-300 rounded-md hover:bg-white hover:text-primary hover:border-primary focus:border-primary duration-200"
                 :class="{
                   'bg-primary text-white hover:bg-red-500 hover:text-white':
-                    link.label == currentPage
+                    link.label == route.query.page
                 }"
               >
                 <span v-html="link.label"></span>
