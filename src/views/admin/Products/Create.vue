@@ -16,6 +16,7 @@ import GoBackButton from '@/components/Buttons/GoBackButton.vue'
 import { useTitle } from '@vueuse/core'
 import { onMounted, reactive, ref } from 'vue'
 import { useProductStore } from '@/stores/dashboard/product'
+import { useImagePreview } from '@/composables/useImagePreview'
 import { storeToRefs } from 'pinia'
 
 useTitle('Create Product - Restaurant Food Ordering')
@@ -24,6 +25,7 @@ const store = useProductStore()
 const isCreateAnother = ref(false)
 const isDiscount = ref(false)
 const productAddons = ref([])
+const { categories } = storeToRefs(store)
 const form = reactive({
   category_id: '',
   image: '',
@@ -42,7 +44,24 @@ const form = reactive({
 
 onMounted(async () => await store.getResources())
 
-const { categories } = storeToRefs(store)
+const {
+  previewImage,
+  setImagePreview,
+  previewImages,
+  setMultipleImagePreviews,
+  removeMultiplePreviewImage
+} = useImagePreview()
+
+const handleRemovePreviewImage = (index) => {
+  removeMultiplePreviewImage(index)
+
+  const additionalImages = Array.from(form.additional_images)
+
+  if (index >= 0 && index < additionalImages.length) {
+    additionalImages.splice(index, 1)
+    form.additional_images = additionalImages
+  }
+}
 
 const addNewProductAddon = () => {
   productAddons.value.push({
@@ -91,16 +110,28 @@ const handleCreateProduct = async () => {
       </div>
       <!-- Form Start -->
       <div class="w-full">
+        {{ form.additional_images }}
+
+        <br />
+
+        {{ previewImages }}
         <form
           @submit.prevent="handleCreateProduct"
           class="w-full flex flex-col md:flex-row items-start justify-between space-y-3 md:space-y-0 md:space-x-3"
         >
           <div class="flex flex-col items-center justify-center space-y-3 w-full md:w-5/12">
             <div class="border p-5 bg-white rounded-md space-y-4 md:space-y-6 w-full">
-              <ProductImagePreview />
+              <ProductImagePreview
+                :previewImage="previewImage"
+                :previewImages="previewImages"
+                @removeImage="handleRemovePreviewImage(index)"
+              />
 
               <div>
-                <ProductMultipleFileInput v-model="form.additional_images" />
+                <ProductMultipleFileInput
+                  v-model="form.additional_images"
+                  @update:modelValue="setMultipleImagePreviews"
+                />
                 <InputError :message="store.errors?.additional_images" />
               </div>
             </div>
@@ -183,7 +214,7 @@ const handleCreateProduct = async () => {
 
               <SelectBox
                 name="category"
-                :options="categories"
+                :options="categories ?? {}"
                 required
                 v-model="form.category_id"
               />
@@ -334,6 +365,7 @@ const handleCreateProduct = async () => {
                 name="product-image"
                 v-model="form.image"
                 text="PNG, JPG or JPEG ( Max File Size : 1.5 MB )"
+                @update:modelValue="setImagePreview"
                 required
               />
 

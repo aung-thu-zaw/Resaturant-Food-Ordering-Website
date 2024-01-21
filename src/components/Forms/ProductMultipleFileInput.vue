@@ -16,7 +16,7 @@ defineProps({
   },
 
   modelValue: {
-    type: [String, Array],
+    type: [String, Array, FileList],
     default: ''
   },
 

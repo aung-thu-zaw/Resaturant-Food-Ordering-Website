@@ -52,7 +52,6 @@ export const useProductStore = defineStore('product', {
 
         if (!response) throw new Error('Response Not Found!')
 
-        console.log(response.data)
         this.resources = response.data
       } catch (error) {
         this.responseErrors = error.response?.data?.errors

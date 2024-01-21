@@ -13,7 +13,7 @@ export function useImagePreview(existingImage = image) {
     previewImages.value = Array.from(files).map((file) => URL.createObjectURL(file))
   }
 
-  const removePreviewImage = (index) => {
+  const removeMultiplePreviewImage = (index) => {
     previewImages.value.splice(index, 1)
   }
 
@@ -22,6 +22,6 @@ export function useImagePreview(existingImage = image) {
     previewImages,
     setImagePreview,
     setMultipleImagePreviews,
-    removePreviewImage
+    removeMultiplePreviewImage
   }
 }

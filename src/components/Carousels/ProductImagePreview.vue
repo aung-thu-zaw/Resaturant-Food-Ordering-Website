@@ -1,4 +1,19 @@
 <script setup>
+defineProps({
+  previewImage: {
+    type: String,
+    required: true
+  },
+
+  previewImages: {
+    type: [Array, String],
+    required: true
+  }
+})
+
+const emit = defineEmits(['removeImage'])
+
+const removeAdditionalPreviewImages = (index) => emit('removeImage', index)
 </script>
 
 <template>
@@ -13,50 +28,21 @@
         data-te-carousel-item
         data-te-carousel-active
       >
-        <img
-          src="https://media.istockphoto.com/id/1316145932/photo/table-top-view-of-spicy-food.jpg?s=612x612&w=0&k=20&c=eaKRSIAoRGHMibSfahMyQS6iFADyVy1pnPdy1O5rZ98="
-          class="block w-full object-contain"
-          alt="Wild Landscape"
-        />
-
-        <button
-          type="button"
-          class="z-50 absolute top-2 right-2 bg-black bg-opacity-40 text-white hover:text-red-600 duration-150 text-xs p-2 rounded-md hover:bg-opacity-50 cursor-pointer"
-        >
-          <i class="fa-solid fa-trash-can"></i>
-        </button>
+        <img :src="previewImage" class="block w-full object-contain" alt="Cover Image" />
       </div>
       <!--Second item-->
       <div
+        v-show="previewImages.length"
+        v-for="(image, index) in previewImages"
+        :key="index"
         class="relative float-left -mr-[100%] hidden w-full transition-transform duration-[600ms] ease-in-out motion-reduce:transition-none"
         data-te-carousel-item
       >
-        <img
-          src="https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg"
-          class="block w-full object-contain"
-          alt="Camera"
-        />
+        <img :src="image" class="block w-full object-contain" alt="Additional-Images" />
 
         <button
           type="button"
-          class="z-50 absolute top-2 right-2 bg-black bg-opacity-40 text-white hover:text-red-600 duration-150 text-xs p-2 rounded-md hover:bg-opacity-50 cursor-pointer"
-        >
-          <i class="fa-solid fa-trash-can"></i>
-        </button>
-      </div>
-      <!--Third item-->
-      <div
-        class="relative float-left -mr-[100%] hidden w-full transition-transform duration-[600ms] ease-in-out motion-reduce:transition-none"
-        data-te-carousel-item
-      >
-        <img
-          src="https://images.theconversation.com/files/368263/original/file-20201109-22-lqiq5c.jpg?ixlib=rb-1.1.0&rect=10%2C0%2C6699%2C4476&q=45&auto=format&w=926&fit=clip"
-          class="block w-full object-contain"
-          alt="Exotic Fruits"
-        />
-
-        <button
-          type="button"
+          @click="removeAdditionalPreviewImages(index)"
           class="z-50 absolute top-2 right-2 bg-black bg-opacity-40 text-white hover:text-red-600 duration-150 text-xs p-2 rounded-md hover:bg-opacity-50 cursor-pointer"
         >
           <i class="fa-solid fa-trash-can"></i>
