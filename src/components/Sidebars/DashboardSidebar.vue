@@ -28,8 +28,8 @@ const defaultQueryParams = {
 <template>
   <nav
     class="md:left-0 md:block md:fixed md:top-0 md:bottom-0 md:overflow-y-auto md:flex-row md:flex-nowrap md:overflow-hidden shadow-xl bg-white flex flex-wrap items-center justify-between relative md:w-64 z-10 py-4 px-6"
-    data-te-sidenav-init
-  >
+    >
+    <!-- data-te-sidenav-init -->
     <div
       class="md:flex-col md:items-stretch md:min-h-full md:flex-nowrap px-0 flex flex-wrap items-center md:justify-between w-full mx-auto"
     >
@@ -151,8 +151,9 @@ const defaultQueryParams = {
           </li>
 
           <!-- Products -->
-          <li class="items-center">
-            <a
+          <li v-show="can('products.view')" class="items-center">
+            <router-link
+              :to="{ name: 'admin.products.index', query: defaultQueryParams }"
               class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] outline-none"
               :class="getSidebarMenuActiveColor('/admin/products')"
               href="#"
@@ -161,7 +162,7 @@ const defaultQueryParams = {
                 <i class="fa-solid fa-utensils mr-2"></i>
                 Products
               </div>
-            </a>
+            </router-link>
           </li>
 
           <!-- Product Reviews -->

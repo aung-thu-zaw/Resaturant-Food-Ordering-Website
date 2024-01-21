@@ -57,7 +57,7 @@ defineExpose({ focus: () => textarea.value.focus() })
       :name="name"
       :id="name"
       rows="7"
-      class="block w-full p-4 font-semibold text-sm text-gray-800 bg-gray-50 transition-all focus:ring-2 focus:ring-slate-300 border border-gray-300 focus:border-slate-400"
+      class="block w-full p-4 font-semibold text-sm outline-none text-gray-800 bg-gray-50 transition-all focus:ring-2 focus:ring-slate-300 border border-gray-300 focus:border-slate-400"
       :class="{
         'rounded-full': rounded,
         'rounded-md': !rounded,

@@ -46,6 +46,31 @@ export default [
         ]
       },
       {
+        path: 'products',
+        meta: { middleware: [authorize] },
+        children: [
+          {
+            path: '',
+            name: 'admin.products.index',
+            component: () => import('@/views/admin/Products/Index.vue'),
+            meta: { middleware: [permission('products.view')] }
+          },
+          {
+            path: 'create',
+            name: 'admin.products.create',
+            component: () => import('@/views/admin/Products/Create.vue'),
+            meta: { middleware: [permission('products.create')] }
+          },
+          {
+            path: ':slug/edit',
+            name: 'admin.products.edit',
+            props: true,
+            component: () => import('@/views/admin/Products/Edit.vue'),
+            meta: { middleware: [permission('products.edit')] }
+          }
+        ]
+      },
+      {
         path: '/admin/permissions',
         name: 'admin.permissions.index',
         component: () => import('@/views/admin/AuthorityManagement/Permissions/Index.vue'),
