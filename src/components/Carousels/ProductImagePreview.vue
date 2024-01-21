@@ -20,7 +20,7 @@ const removeAdditionalPreviewImages = (index) => emit('removeImage', index)
   <div id="preview-carousel" class="relative" data-te-carousel-init data-te-ride="carousel">
     <!--Carousel items-->
     <div
-      class="relative w-full rounded-md overflow-hidden after:clear-both after:block after:content-['']"
+      class="relative w-full rounded-md overflow-hidden after:clear-both after:block after:content-[''] border"
     >
       <!--First item-->
       <div

@@ -14,9 +14,10 @@ import ProductMultipleFileInput from '@/components/Forms/ProductMultipleFileInpu
 import ProductImagePreview from '@/components/Carousels/ProductImagePreview.vue'
 import GoBackButton from '@/components/Buttons/GoBackButton.vue'
 import { useTitle } from '@vueuse/core'
-import { onMounted, reactive, ref } from 'vue'
+import { onMounted, reactive, ref, watch } from 'vue'
 import { useProductStore } from '@/stores/dashboard/product'
 import { useImagePreview } from '@/composables/useImagePreview'
+import { useFormatFunctions } from '@/composables/useFormatFunctions'
 import { storeToRefs } from 'pinia'
 
 useTitle('Create Product - Restaurant Food Ordering')
@@ -43,6 +44,13 @@ const form = reactive({
 })
 
 onMounted(async () => await store.getResources())
+
+const { formatDateTime } = useFormatFunctions()
+
+watch(
+  () => form.discount_end_time,
+  (newDateTime) => (form.discount_end_time = formatDateTime(newDateTime))
+)
 
 const {
   previewImage,
@@ -110,11 +118,6 @@ const handleCreateProduct = async () => {
       </div>
       <!-- Form Start -->
       <div class="w-full">
-        {{ form.additional_images }}
-
-        <br />
-
-        {{ previewImages }}
         <form
           @submit.prevent="handleCreateProduct"
           class="w-full flex flex-col md:flex-row items-start justify-between space-y-3 md:space-y-0 md:space-x-3"
