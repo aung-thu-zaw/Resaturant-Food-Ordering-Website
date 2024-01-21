@@ -135,7 +135,8 @@ const handleCreateProduct = async () => {
                   v-model="form.additional_images"
                   @update:modelValue="setMultipleImagePreviews"
                 />
-                <InputError :message="store.errors?.additional_images" />
+
+                <InputError :message="store.errors['additional_images.*']" />
               </div>
             </div>
 
@@ -262,13 +263,13 @@ const handleCreateProduct = async () => {
 
             <div v-show="isDiscount" class="grid grid-cols-2 gap-5">
               <div>
-                <InputLabel label="Discount Price" required />
+                <InputLabel label="Discount Price" :required="isDiscount" />
 
                 <InputField
                   type="text"
                   name="discount-price"
                   placeholder="Enter Product Discount"
-                  required
+                  :required="isDiscount"
                   v-model="form.discount_price"
                 />
 
@@ -276,12 +277,12 @@ const handleCreateProduct = async () => {
               </div>
 
               <div>
-                <InputLabel label="Discount End Date ( Time )" required />
+                <InputLabel label="Discount End Date ( Time )" :required="isDiscount" />
 
                 <VueDatePicker
                   v-model="form.discount_end_time"
                   text-input
-                  required
+                  :required="isDiscount"
                   placeholder="Select End Date ( Time )"
                 />
 

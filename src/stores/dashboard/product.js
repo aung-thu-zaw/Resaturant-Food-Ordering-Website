@@ -84,7 +84,15 @@ export const useProductStore = defineStore('product', {
       try {
         const apiUrl = `/api/admin/products`
 
-        const response = await this.$axios.post(apiUrl, { ...formData })
+        const response = await this.$axios.post(
+          apiUrl,
+          { ...formData },
+          {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          }
+        )
 
         if (!response) throw new Error('Response Not Found!')
 

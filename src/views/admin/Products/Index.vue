@@ -54,7 +54,7 @@ const handleDeleteProduct = async (productSlug) => {
   })
 
   if (result.isConfirmed) {
-    await store.deleteCategory(productSlug)
+    await store.deleteProduct(productSlug)
   }
 }
 
@@ -143,7 +143,7 @@ watch(
               <TableDataCell class="min-w-[100px]"> $ {{ item?.base_price }} </TableDataCell>
 
               <TableDataCell class="min-w-[100px]">
-                $ {{ item?.discount_price ?? '-' }}
+                {{ item?.discount_price ? '$' + item?.discount_price : '-' }}
               </TableDataCell>
 
               <TableDataCell>
