@@ -28,7 +28,7 @@ const defaultQueryParams = {
 <template>
   <nav
     class="md:left-0 md:block md:fixed md:top-0 md:bottom-0 md:overflow-y-auto md:flex-row md:flex-nowrap md:overflow-hidden shadow-xl bg-white flex flex-wrap items-center justify-between relative md:w-64 z-10 py-4 px-6"
-    >
+  >
     <!-- data-te-sidenav-init -->
     <div
       class="md:flex-col md:items-stretch md:min-h-full md:flex-nowrap px-0 flex flex-wrap items-center md:justify-between w-full mx-auto"
@@ -166,17 +166,17 @@ const defaultQueryParams = {
           </li>
 
           <!-- Product Reviews -->
-          <li class="items-center">
-            <a
+          <li v-show="can('product-reviews.view')" class="items-center">
+            <router-link
+              :to="{ name: 'admin.product-reviews.index', query: defaultQueryParams }"
               class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] outline-none"
               :class="getSidebarMenuActiveColor('/admin/product-reviews')"
-              href="#"
             >
               <div class="text-[13px] py-3 block">
                 <i class="fa-solid fa-star mr-2"></i>
                 Product Reviews
               </div>
-            </a>
+            </router-link>
           </li>
 
           <!-- Daily Offer -->

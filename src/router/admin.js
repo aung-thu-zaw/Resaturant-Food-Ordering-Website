@@ -71,6 +71,12 @@ export default [
         ]
       },
       {
+        path: '/admin/product-reviews',
+        name: 'admin.product-reviews.index',
+        component: () => import('@/views/admin/ProductReviews/Index.vue'),
+        meta: { middleware: [authorize, permission('product-reviews.view')] }
+      },
+      {
         path: '/admin/permissions',
         name: 'admin.permissions.index',
         component: () => import('@/views/admin/AuthorityManagement/Permissions/Index.vue'),
