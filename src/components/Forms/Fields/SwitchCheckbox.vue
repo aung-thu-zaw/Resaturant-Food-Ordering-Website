@@ -33,5 +33,6 @@ const proxyChecked = computed({
     role="switch"
     :value="value"
     v-model="proxyChecked"
+    :checked="checked"
   />
 </template>

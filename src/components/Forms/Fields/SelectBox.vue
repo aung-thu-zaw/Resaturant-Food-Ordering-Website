@@ -1,7 +1,7 @@
 <script setup>
 const props = defineProps({
   selected: {
-    type: [Object, Boolean, String],
+    type: [Object, Boolean, String, Number],
     default: () => {}
   },
   options: {

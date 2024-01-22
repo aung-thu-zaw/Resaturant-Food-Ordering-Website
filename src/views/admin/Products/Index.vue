@@ -24,6 +24,7 @@ import { storeToRefs } from 'pinia'
 import { inject, onMounted, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { useQueryStringParams } from '@/composables/useQueryStringParams'
+import { useFormatFunctions } from '@/composables/useFormatFunctions'
 
 useTitle('Products - Restaurant Food Ordering')
 
@@ -33,6 +34,7 @@ const store = useProductStore()
 
 const { products } = storeToRefs(store)
 const { dashboardParams } = useQueryStringParams()
+const { formatAmount } = useFormatFunctions()
 
 onMounted(async () => await store.getAllProducts(dashboardParams.value))
 
@@ -140,10 +142,12 @@ watch(
                 {{ item?.qty }}
               </TableDataCell>
 
-              <TableDataCell class="min-w-[100px]"> $ {{ item?.base_price }} </TableDataCell>
+              <TableDataCell class="min-w-[100px]">
+                $ {{ formatAmount(item?.base_price) }}
+              </TableDataCell>
 
               <TableDataCell class="min-w-[100px]">
-                {{ item?.discount_price ? '$' + item?.discount_price : '-' }}
+                {{ item?.discount_price ? '$' + formatAmount(item?.discount_price) : '-' }}
               </TableDataCell>
 
               <TableDataCell>

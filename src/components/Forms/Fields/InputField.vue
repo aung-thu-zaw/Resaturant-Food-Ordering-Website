@@ -27,7 +27,7 @@ defineProps({
     default: false
   },
   modelValue: {
-    type: String,
+    type: [String, Number],
     default: ''
   },
   rounded: {

@@ -52,6 +52,16 @@ watch(
   (newDateTime) => (form.discount_end_time = formatDateTime(newDateTime))
 )
 
+watch(
+  () => isDiscount.value,
+  () => {
+    if (!isDiscount.value) {
+      form.discount_price = ''
+      form.discount_end_time = ''
+    }
+  }
+)
+
 const {
   previewImage,
   setImagePreview,
@@ -132,11 +142,15 @@ const handleCreateProduct = async () => {
 
               <div>
                 <ProductMultipleFileInput
+                  name="additional-images"
                   v-model="form.additional_images"
                   @update:modelValue="setMultipleImagePreviews"
+                  required
                 />
 
-                <InputError :message="store.errors['additional_images.*']" />
+                <div v-for="(error, index) in store.errors" :key="index">
+                  <InputError v-show="error.startsWith('additional_images')" :message="error" />
+                </div>
               </div>
             </div>
 

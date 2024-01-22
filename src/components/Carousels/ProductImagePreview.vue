@@ -20,25 +20,25 @@ const removeAdditionalPreviewImages = (index) => emit('removeImage', index)
   <div id="preview-carousel" class="relative" data-te-carousel-init data-te-ride="carousel">
     <!--Carousel items-->
     <div
-      class="relative w-full rounded-md overflow-hidden after:clear-both after:block after:content-[''] border"
+      class="relative w-full h-[350px] rounded-md overflow-hidden after:clear-both after:block after:content-[''] border"
     >
       <!--First item-->
       <div
-        class="relative float-left -mr-[100%] w-full transition-transform duration-[600ms] ease-in-out motion-reduce:transition-none"
+        class="relative float-left -mr-[100%] w-full h-full transition-transform duration-[600ms] ease-in-out motion-reduce:transition-none"
         data-te-carousel-item
         data-te-carousel-active
       >
-        <img :src="previewImage" class="block w-full object-contain" alt="Cover Image" />
+        <img :src="previewImage" class="block w-full h-full object-cover" alt="Cover Image" />
       </div>
       <!--Second item-->
       <div
         v-show="previewImages.length"
         v-for="(image, index) in previewImages"
         :key="index"
-        class="relative float-left -mr-[100%] hidden w-full transition-transform duration-[600ms] ease-in-out motion-reduce:transition-none"
+        class="relative float-left -mr-[100%] hidden w-full h-full transition-transform duration-[600ms] ease-in-out motion-reduce:transition-none"
         data-te-carousel-item
       >
-        <img :src="image" class="block w-full object-contain" alt="Additional-Images" />
+        <img :src="image" class="block w-full h-full object-cover" alt="Additional-Images" />
 
         <button
           type="button"
