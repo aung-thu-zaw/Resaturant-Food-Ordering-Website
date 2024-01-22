@@ -66,10 +66,8 @@ const handleRemovePreviewImage = (index) => {
 
   const additionalImages = Array.from(form.additional_images)
 
-  if (index >= 0 && index < additionalImages.length) {
-    additionalImages.splice(index, 1)
-    form.additional_images = additionalImages
-  }
+  additionalImages.splice(index, 1)
+  form.additional_images = additionalImages
 }
 
 onMounted(async () => {
@@ -145,6 +143,7 @@ const handleUpdateProduct = async () => await store.updateProduct({ ...form }, p
           <GoBackButton />
         </div>
       </div>
+
       <!-- Form Start -->
       <div class="w-full">
         <form
@@ -162,6 +161,7 @@ const handleUpdateProduct = async () => await store.updateProduct({ ...form }, p
 
               <div>
                 <ProductMultipleFileInput
+                  name="additional-images"
                   v-model="form.additional_images"
                   @update:modelValue="setMultipleImagePreviews"
                 />

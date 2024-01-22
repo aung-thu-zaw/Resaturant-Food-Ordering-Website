@@ -28,7 +28,7 @@ const removeAdditionalPreviewImages = (index) => emit('removeImage', index)
         data-te-carousel-item
         data-te-carousel-active
       >
-        <img :src="previewImage" class="block w-full h-full object-cover" alt="Cover Image" />
+        <img :src="previewImage" class="block w-full h-full object-contain" alt="Cover Image" />
       </div>
       <!--Second item-->
       <div
@@ -38,7 +38,7 @@ const removeAdditionalPreviewImages = (index) => emit('removeImage', index)
         class="relative float-left -mr-[100%] hidden w-full h-full transition-transform duration-[600ms] ease-in-out motion-reduce:transition-none"
         data-te-carousel-item
       >
-        <img :src="image" class="block w-full h-full object-cover" alt="Additional-Images" />
+        <img :src="image" class="block w-full h-full object-contain" alt="Additional-Images" />
 
         <button
           type="button"

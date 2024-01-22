@@ -25,6 +25,7 @@ useTitle('Create Product - Restaurant Food Ordering')
 const store = useProductStore()
 const isCreateAnother = ref(false)
 const isDiscount = ref(false)
+const createForm = ref(null)
 const productAddons = ref([])
 const { categories } = storeToRefs(store)
 const form = reactive({
@@ -75,10 +76,8 @@ const handleRemovePreviewImage = (index) => {
 
   const additionalImages = Array.from(form.additional_images)
 
-  if (index >= 0 && index < additionalImages.length) {
-    additionalImages.splice(index, 1)
-    form.additional_images = additionalImages
-  }
+  additionalImages.splice(index, 1)
+  form.additional_images = additionalImages
 }
 
 const addNewProductAddon = () => {
@@ -95,6 +94,8 @@ const deleteAddon = (index) => productAddons.value.splice(index, 1)
 const handleCreateProduct = async () => {
   await store.createProduct({ ...form }, isCreateAnother.value)
   if (isCreateAnother.value && !store.errors) {
+    createForm.value.reset()
+
     form.category_id = ''
     form.image = ''
     form.additional_images = []
@@ -108,6 +109,11 @@ const handleCreateProduct = async () => {
     form.discount_end_time = ''
     form.status = ''
     form.addons = []
+
+    isDiscount.value = false
+    previewImage.value = ''
+    previewImages.value = []
+    productAddons.value = []
   }
 }
 </script>
@@ -126,9 +132,11 @@ const handleCreateProduct = async () => {
           <GoBackButton />
         </div>
       </div>
+
       <!-- Form Start -->
       <div class="w-full">
         <form
+          ref="createForm"
           @submit.prevent="handleCreateProduct"
           class="w-full flex flex-col md:flex-row items-start justify-between space-y-3 md:space-y-0 md:space-x-3"
         >
@@ -272,7 +280,7 @@ const handleCreateProduct = async () => {
 
             <div class="space-x-3 mr-auto w-full flex items-center justify-end">
               <label for="Discount" class="text-sm font-bold text-slate-800">Add Discount</label>
-              <SwitchCheckbox v-model="isDiscount" />
+              <SwitchCheckbox v-model:checked="isDiscount" />
             </div>
 
             <div v-show="isDiscount" class="grid grid-cols-2 gap-5">

@@ -70,9 +70,10 @@ const onFileChange = (event) => {
       </div>
       <input
         id="dropzone-file"
+        :name="name"
         type="file"
-        class="hidden"
         multiple
+        class="hidden"
         @change="onFileChange"
         :disabled="disabled"
         :required="required"
