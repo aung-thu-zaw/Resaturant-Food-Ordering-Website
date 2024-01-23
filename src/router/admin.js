@@ -239,6 +239,12 @@ export default [
         meta: { middleware: [authorize, permission('subscribers.view')] }
       },
       {
+        path: '/admin/menu-stock',
+        name: 'admin.menu-stock.index',
+        component: () => import('@/views/admin/MenuStock/Index.vue')
+        // meta: { middleware: [authorize, permission('subscribers.view')] }
+      },
+      {
         path: '/admin/permissions',
         name: 'admin.permissions.index',
         component: () => import('@/views/admin/AuthorityManagement/Permissions/Index.vue'),
