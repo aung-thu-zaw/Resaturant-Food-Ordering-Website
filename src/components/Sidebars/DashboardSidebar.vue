@@ -386,14 +386,18 @@ const defaultQueryParams = {
                   Contents
                 </router-link>
               </li>
-              <li class="relative hover:bg-gray-100 duration-100 rounded-md">
-                <a
+              <li
+                v-show="can('blog-comments.view')"
+                class="relative hover:bg-gray-100 duration-100 rounded-md"
+              >
+                <router-link
+                  :to="{ name: 'admin.blog-comments.index', query: defaultQueryParams }"
                   class="flex font-semibold cursor-pointer items-center truncate rounded-[5px] py-3 pl-7 text-[0.8rem] outline-none transition duration-300 ease-linear"
-                  :class="getSidebarMenuActiveColor('/admin/comments-and-replies')"
+                  :class="getSidebarMenuActiveColor('/admin/blog-comments')"
                   data-te-sidenav-link-ref
                 >
-                  Comments And Replies
-                </a>
+                  Comments
+                </router-link>
               </li>
             </ul>
           </li>

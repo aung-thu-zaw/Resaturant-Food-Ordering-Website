@@ -227,6 +227,12 @@ export default [
         ]
       },
       {
+        path: '/admin/blog-comments',
+        name: 'admin.blog-comments.index',
+        component: () => import('@/views/admin/ManageBlog/BlogComments/Index.vue'),
+        meta: { middleware: [authorize, permission('blog-comments.view')] }
+      },
+      {
         path: '/admin/permissions',
         name: 'admin.permissions.index',
         component: () => import('@/views/admin/AuthorityManagement/Permissions/Index.vue'),
