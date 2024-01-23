@@ -127,6 +127,56 @@ export default [
         ]
       },
       {
+        path: 'delivery-areas',
+        meta: { middleware: [authorize] },
+        children: [
+          {
+            path: '',
+            name: 'admin.delivery-areas.index',
+            component: () => import('@/views/admin/ManageShipping/DeliveryAreas/Index.vue'),
+            meta: { middleware: [permission('delivery-areas.view')] }
+          },
+          {
+            path: 'create',
+            name: 'admin.delivery-areas.create',
+            component: () => import('@/views/admin/ManageShipping/DeliveryAreas/Create.vue'),
+            meta: { middleware: [permission('delivery-areas.create')] }
+          },
+          {
+            path: ':slug/edit',
+            name: 'admin.delivery-areas.edit',
+            props: true,
+            component: () => import('@/views/admin/ManageShipping/DeliveryAreas/Edit.vue'),
+            meta: { middleware: [permission('delivery-areas.edit')] }
+          }
+        ]
+      },
+      {
+        path: 'shipping-methods',
+        meta: { middleware: [authorize] },
+        children: [
+          {
+            path: '',
+            name: 'admin.shipping-methods.index',
+            component: () => import('@/views/admin/ManageShipping/ShippingMethods/Index.vue'),
+            meta: { middleware: [permission('shipping-methods.view')] }
+          },
+          {
+            path: 'create',
+            name: 'admin.shipping-methods.create',
+            component: () => import('@/views/admin/ManageShipping/ShippingMethods/Create.vue'),
+            meta: { middleware: [permission('shipping-methods.create')] }
+          },
+          {
+            path: ':slug/edit',
+            name: 'admin.shipping-methods.edit',
+            props: true,
+            component: () => import('@/views/admin/ManageShipping/ShippingMethods/Edit.vue'),
+            meta: { middleware: [permission('shipping-methods.edit')] }
+          }
+        ]
+      },
+      {
         path: '/admin/permissions',
         name: 'admin.permissions.index',
         component: () => import('@/views/admin/AuthorityManagement/Permissions/Index.vue'),

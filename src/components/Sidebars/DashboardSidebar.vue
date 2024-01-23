@@ -237,23 +237,31 @@ const defaultQueryParams = {
               class="show !visible relative m-0 hidden list-none p-0 data-[te-collapse-show]:block"
               data-te-sidenav-collapse-ref
             >
-              <li class="relative hover:bg-gray-100 duration-100 rounded-md">
-                <a
+              <li
+                v-show="can('delivery-areas.view')"
+                class="relative hover:bg-gray-100 duration-100 rounded-md"
+              >
+                <router-link
+                  :to="{ name: 'admin.delivery-areas.index', query: defaultQueryParams }"
                   class="flex font-semibold cursor-pointer items-center truncate rounded-[5px] py-3 pl-7 text-[0.8rem] outline-none transition duration-300 ease-linear"
                   :class="getSidebarMenuActiveColor('/admin/delivery-areas')"
                   data-te-sidenav-link-ref
                 >
                   Delivery Areas
-                </a>
+                </router-link>
               </li>
-              <li class="relative hover:bg-gray-100 duration-100 rounded-md">
-                <a
+              <li
+                v-show="can('shipping-methods.view')"
+                class="relative hover:bg-gray-100 duration-100 rounded-md"
+              >
+                <router-link
+                  :to="{ name: 'admin.shipping-methods.index', query: defaultQueryParams }"
                   class="flex font-semibold cursor-pointer items-center truncate rounded-[5px] py-3 pl-7 text-[0.8rem] outline-none transition duration-300 ease-linear"
                   :class="getSidebarMenuActiveColor('/admin/shipping-methods')"
                   data-te-sidenav-link-ref
                 >
                   Shipping Methods
-                </a>
+                </router-link>
               </li>
             </ul>
           </li>
