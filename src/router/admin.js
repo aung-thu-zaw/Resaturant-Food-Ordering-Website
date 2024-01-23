@@ -233,6 +233,12 @@ export default [
         meta: { middleware: [authorize, permission('blog-comments.view')] }
       },
       {
+        path: '/admin/subscribers',
+        name: 'admin.subscribers.index',
+        component: () => import('@/views/admin/Newsletter/Subscribers/Index.vue'),
+        meta: { middleware: [authorize, permission('subscribers.view')] }
+      },
+      {
         path: '/admin/permissions',
         name: 'admin.permissions.index',
         component: () => import('@/views/admin/AuthorityManagement/Permissions/Index.vue'),
