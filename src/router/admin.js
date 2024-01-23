@@ -71,6 +71,31 @@ export default [
         ]
       },
       {
+        path: 'daily-offers',
+        meta: { middleware: [authorize] },
+        children: [
+          {
+            path: '',
+            name: 'admin.daily-offers.index',
+            component: () => import('@/views/admin/DailyOffers/Index.vue'),
+            meta: { middleware: [permission('daily-offers.view')] }
+          },
+          {
+            path: 'create',
+            name: 'admin.daily-offers.create',
+            component: () => import('@/views/admin/DailyOffers/Create.vue'),
+            meta: { middleware: [permission('daily-offers.create')] }
+          },
+          {
+            path: ':id/edit',
+            name: 'admin.daily-offers.edit',
+            props: (route) => ({ id: Number(route.params.id) }),
+            component: () => import('@/views/admin/DailyOffers/Edit.vue'),
+            meta: { middleware: [permission('daily-offers.edit')] }
+          }
+        ]
+      },
+      {
         path: '/admin/product-reviews',
         name: 'admin.product-reviews.index',
         component: () => import('@/views/admin/ProductReviews/Index.vue'),
@@ -101,7 +126,7 @@ export default [
           {
             path: ':id/edit',
             name: 'admin.roles.edit',
-            props: true,
+            props: (route) => ({ id: Number(route.params.id) }),
             component: () => import('@/views/admin/AuthorityManagement/Roles/Edit.vue'),
             meta: { middleware: [permission('roles.edit')] }
           }

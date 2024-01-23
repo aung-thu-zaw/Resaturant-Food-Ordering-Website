@@ -1,14 +1,14 @@
 <script setup>
 import DashboardNavbar from '@/components/Navbars/DashboardNavbar.vue'
 import DashboardSidebar from '@/components/Sidebars/DashboardSidebar.vue'
-import { Dropdown, Ripple, Sidenav, Carousel, initTE } from 'tw-elements'
+import { Dropdown, Ripple, Sidenav, Carousel, Select, initTE } from 'tw-elements'
 import { onMounted } from 'vue'
 import { useAbilityStore } from '@/stores/dashboard/ability.js'
 
 const abilityStore = useAbilityStore()
 
 onMounted(async () => {
-  initTE({ Dropdown, Ripple, Sidenav, Carousel })
+  initTE({ Dropdown, Ripple, Sidenav, Carousel, Select })
 
   await abilityStore.getAllAbilities()
 })

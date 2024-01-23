@@ -180,8 +180,9 @@ const defaultQueryParams = {
           </li>
 
           <!-- Daily Offer -->
-          <li class="items-center">
-            <a
+          <li v-show="can('daily-offers.view')" class="items-center">
+            <router-link
+              :to="{ name: 'admin.daily-offers.index', query: defaultQueryParams }"
               class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] outline-none"
               :class="getSidebarMenuActiveColor('/admin/daily-offers')"
               href="#"
@@ -190,7 +191,7 @@ const defaultQueryParams = {
                 <i class="fas fa-clock mr-2" />
                 Daily Offers
               </div>
-            </a>
+            </router-link>
           </li>
 
           <!-- Coupons -->
