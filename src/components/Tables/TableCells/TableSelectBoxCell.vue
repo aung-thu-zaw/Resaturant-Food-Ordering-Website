@@ -15,6 +15,10 @@ const props = defineProps({
   modelValue: {
     type: [String, Number, Boolean],
     default: ''
+  },
+  placeholder: {
+    type: String,
+    default: 'Select an option'
   }
 })
 
@@ -39,7 +43,7 @@ const isSelected = (option) => {
       <select
         class="rounded-md p-2.5 w-full text-sm text-gray-700 font-medium border border-gray-300 focus:ring-2 transition-all focus:ring-slate-300 focus:border-gray-400 outline-none"
       >
-        <option disabled>Select an option</option>
+        <option value="" :selected="modelValue === ''" disabled>{{ placeholder }}</option>
         <option
           v-for="(option, index) in options"
           :key="index"

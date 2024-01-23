@@ -176,7 +176,6 @@ export default [
           }
         ]
       },
-
       {
         path: 'blog-categories',
         meta: { middleware: [authorize] },
@@ -202,7 +201,31 @@ export default [
           }
         ]
       },
-
+      {
+        path: 'blog-contents',
+        meta: { middleware: [authorize] },
+        children: [
+          {
+            path: '',
+            name: 'admin.blog-contents.index',
+            component: () => import('@/views/admin/ManageBlog/BlogContents/Index.vue'),
+            meta: { middleware: [permission('blog-contents.view')] }
+          },
+          {
+            path: 'create',
+            name: 'admin.blog-contents.create',
+            component: () => import('@/views/admin/ManageBlog/BlogContents/Create.vue'),
+            meta: { middleware: [permission('blog-contents.create')] }
+          },
+          {
+            path: ':slug/edit',
+            name: 'admin.blog-contents.edit',
+            props: true,
+            component: () => import('@/views/admin/ManageBlog/BlogContents/Edit.vue'),
+            meta: { middleware: [permission('blog-contents.edit')] }
+          }
+        ]
+      },
       {
         path: '/admin/permissions',
         name: 'admin.permissions.index',

@@ -373,14 +373,18 @@ const defaultQueryParams = {
                   Categories
                 </router-link>
               </li>
-              <li class="relative hover:bg-gray-100 duration-100 rounded-md">
-                <a
+              <li
+                v-show="can('blog-contents.view')"
+                class="relative hover:bg-gray-100 duration-100 rounded-md"
+              >
+                <router-link
+                  :to="{ name: 'admin.blog-contents.index', query: defaultQueryParams }"
                   class="flex font-semibold cursor-pointer items-center truncate rounded-[5px] py-3 pl-7 text-[0.8rem] outline-none transition duration-300 ease-linear"
                   :class="getSidebarMenuActiveColor('/admin/blog-contents')"
                   data-te-sidenav-link-ref
                 >
                   Contents
-                </a>
+                </router-link>
               </li>
               <li class="relative hover:bg-gray-100 duration-100 rounded-md">
                 <a
