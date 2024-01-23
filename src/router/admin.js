@@ -71,6 +71,12 @@ export default [
         ]
       },
       {
+        path: '/admin/product-reviews',
+        name: 'admin.product-reviews.index',
+        component: () => import('@/views/admin/ProductReviews/Index.vue'),
+        meta: { middleware: [authorize, permission('product-reviews.view')] }
+      },
+      {
         path: 'daily-offers',
         meta: { middleware: [authorize] },
         children: [
@@ -96,10 +102,29 @@ export default [
         ]
       },
       {
-        path: '/admin/product-reviews',
-        name: 'admin.product-reviews.index',
-        component: () => import('@/views/admin/ProductReviews/Index.vue'),
-        meta: { middleware: [authorize, permission('product-reviews.view')] }
+        path: 'coupons',
+        meta: { middleware: [authorize] },
+        children: [
+          {
+            path: '',
+            name: 'admin.coupons.index',
+            component: () => import('@/views/admin/Coupons/Index.vue'),
+            meta: { middleware: [permission('coupons.view')] }
+          },
+          {
+            path: 'create',
+            name: 'admin.coupons.create',
+            component: () => import('@/views/admin/Coupons/Create.vue'),
+            meta: { middleware: [permission('coupons.create')] }
+          },
+          {
+            path: ':slug/edit',
+            name: 'admin.coupons.edit',
+            props: (route) => ({ id: Number(route.params.id) }),
+            component: () => import('@/views/admin/Coupons/Edit.vue'),
+            meta: { middleware: [permission('coupons.edit')] }
+          }
+        ]
       },
       {
         path: '/admin/permissions',

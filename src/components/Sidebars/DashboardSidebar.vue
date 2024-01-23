@@ -28,8 +28,8 @@ const defaultQueryParams = {
 <template>
   <nav
     class="md:left-0 md:block md:fixed md:top-0 md:bottom-0 md:overflow-y-auto md:flex-row md:flex-nowrap md:overflow-hidden shadow-xl bg-white flex flex-wrap items-center justify-between relative md:w-64 z-10 py-4 px-6"
+    data-te-sidenav-init
   >
-    <!-- data-te-sidenav-init -->
     <div
       class="md:flex-col md:items-stretch md:min-h-full md:flex-nowrap px-0 flex flex-wrap items-center md:justify-between w-full mx-auto"
     >
@@ -127,7 +127,6 @@ const defaultQueryParams = {
             <a
               class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] outline-none"
               :class="getSidebarMenuActiveColor('/admin/analytics')"
-              href="#"
             >
               <div class="text-[13px] py-3 block">
                 <i class="fas fa-chart-line mr-2" />
@@ -156,7 +155,6 @@ const defaultQueryParams = {
               :to="{ name: 'admin.products.index', query: defaultQueryParams }"
               class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] outline-none"
               :class="getSidebarMenuActiveColor('/admin/products')"
-              href="#"
             >
               <div class="text-[13px] py-3 block">
                 <i class="fa-solid fa-utensils mr-2"></i>
@@ -185,7 +183,6 @@ const defaultQueryParams = {
               :to="{ name: 'admin.daily-offers.index', query: defaultQueryParams }"
               class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] outline-none"
               :class="getSidebarMenuActiveColor('/admin/daily-offers')"
-              href="#"
             >
               <div class="text-[13px] py-3 block">
                 <i class="fas fa-clock mr-2" />
@@ -195,17 +192,17 @@ const defaultQueryParams = {
           </li>
 
           <!-- Coupons -->
-          <li class="items-center">
-            <a
+          <li v-show="can('coupons.view')" class="items-center">
+            <router-link
+              :to="{ name: 'admin.coupons.index', query: defaultQueryParams }"
               class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] outline-none"
               :class="getSidebarMenuActiveColor('/admin/coupons')"
-              href="#"
             >
               <div class="text-[13px] py-3 block">
                 <i class="fas fa-ticket mr-2" />
                 Coupons
               </div>
-            </a>
+            </router-link>
           </li>
 
           <!-- Manage Shipping -->
@@ -244,7 +241,6 @@ const defaultQueryParams = {
                 <a
                   class="flex font-semibold cursor-pointer items-center truncate rounded-[5px] py-3 pl-7 text-[0.8rem] outline-none transition duration-300 ease-linear"
                   :class="getSidebarMenuActiveColor('/admin/delivery-areas')"
-                  href="#"
                   data-te-sidenav-link-ref
                 >
                   Delivery Areas
@@ -444,7 +440,6 @@ const defaultQueryParams = {
             <a
               class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] outline-none"
               :class="getSidebarMenuActiveColor('/admin/chat-box')"
-              href="#"
             >
               <div class="text-[13px] py-3 block">
                 <i class="fa-solid fa-message mr-2"></i>
@@ -471,7 +466,6 @@ const defaultQueryParams = {
             <a
               class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] outline-none"
               :class="getSidebarMenuActiveColor('/admin/pos')"
-              href="#"
             >
               <div class="text-[13px] py-3 block">
                 <i class="fas fa-calculator mr-2" />
@@ -485,7 +479,6 @@ const defaultQueryParams = {
             <a
               class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] outline-none"
               :class="getSidebarMenuActiveColor('/admin/customer-orders')"
-              href="#"
             >
               <div class="text-[13px] py-3 block">
                 <i class="fas fa-cart-plus mr-2" />
@@ -499,7 +492,6 @@ const defaultQueryParams = {
             <a
               class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] outline-none"
               :class="getSidebarMenuActiveColor('/admin/kitchen-orders')"
-              href="#"
             >
               <div class="text-[13px] py-3 block">
                 <i class="fa-solid fa-kitchen-set mr-2"></i>
@@ -513,7 +505,6 @@ const defaultQueryParams = {
             <a
               class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] outline-none"
               :class="getSidebarMenuActiveColor('/admin/counter-checkout')"
-              href="#"
             >
               <div class="text-[13px] py-3 block">
                 <i class="fas fa-desktop mr-2" />
@@ -527,7 +518,6 @@ const defaultQueryParams = {
             <a
               class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] outline-none"
               :class="getSidebarMenuActiveColor('/admin/menu-stock')"
-              href="#"
             >
               <div class="text-[13px] py-3 block">
                 <i class="fa-solid fa-wheat-awn-circle-exclamation mr-2"></i>
@@ -541,7 +531,6 @@ const defaultQueryParams = {
             <a
               class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] outline-none"
               :class="getSidebarMenuActiveColor('/admin/table-booking')"
-              href="#"
             >
               <div class="text-[13px] py-3 block">
                 <i class="fas fa-chair mr-2" />
@@ -692,7 +681,6 @@ const defaultQueryParams = {
             <a
               class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] outline-none"
               :class="getSidebarMenuActiveColor('/admin/customer-management')"
-              href="#"
             >
               <div class="text-[13px] py-3 block">
                 <i class="fa-solid fa-user mr-2"></i>
@@ -839,7 +827,6 @@ const defaultQueryParams = {
             <a
               class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] outline-none"
               :class="getSidebarMenuActiveColor('/admin/settings')"
-              href="#"
             >
               <div class="text-[13px] py-3 block">
                 <i class="fa-solid fa-gear mr-2"></i>
@@ -853,7 +840,6 @@ const defaultQueryParams = {
             <a
               class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] outline-none"
               :class="getSidebarMenuActiveColor('/admin/database-backups')"
-              href="#"
             >
               <div class="text-[13px] py-3 block">
                 <i class="fa-solid fa-database mr-2"></i>

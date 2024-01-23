@@ -39,9 +39,24 @@ export function useFormatFunctions() {
     }
   }
 
+  const formatToTitleCase = (text) => {
+    if (text) {
+      text = text.replace(/_/g, ' ').replace(/\s+/g, ' ')
+      const words = text.split(' ')
+      const titleCaseWords = words.map((word) => {
+        return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+      })
+      const titleCaseString = titleCaseWords.join(' ')
+      return titleCaseString
+    }
+
+    return
+  }
+
   return {
     formatAmount,
     formatDate,
-    formatDateTime
+    formatDateTime,
+    formatToTitleCase
   }
 }

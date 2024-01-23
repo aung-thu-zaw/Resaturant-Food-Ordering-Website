@@ -1,5 +1,4 @@
 import '@/assets/main.css'
-import 'preline/preline'
 
 import { createApp } from 'vue'
 import VueApexCharts from 'vue3-apexcharts'
