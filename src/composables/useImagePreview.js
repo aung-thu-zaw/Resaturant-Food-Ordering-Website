@@ -14,7 +14,7 @@ export function useImagePreview(existingImage = image) {
   }
 
   const removeMultiplePreviewImage = (index) => {
-    previewImages.value.splice(index, 1)
+    if (previewImages.value.length) previewImages.value.splice(index, 1)
   }
 
   return {

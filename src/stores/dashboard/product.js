@@ -113,7 +113,17 @@ export const useProductStore = defineStore('product', {
       try {
         const apiUrl = `/api/admin/products/${productSlug}`
 
-        const response = await this.$axios.patch(apiUrl, { ...formData })
+        formData._method = 'PATCH'
+
+        const response = await this.$axios.post(
+          apiUrl,
+          { ...formData },
+          {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          }
+        )
 
         if (!response) throw new Error('Response Not Found!')
 
@@ -156,6 +166,25 @@ export const useProductStore = defineStore('product', {
         this.$swal({
           icon: 'error',
           title: 'Failed to delete product. Please try again.'
+        })
+      }
+    },
+
+    async deleteAdditionalImage(additionalImageId) {
+      try {
+        const apiUrl = `/api/admin/products/additional-images/${additionalImageId}`
+
+        const response = await this.$axios.delete(apiUrl)
+
+        if (!response) throw new Error('Response Not Found!')
+
+        if (response.status === 204)
+          toast.success('Additional Image deleted successfully!', { autoClose: 2000 })
+      } catch (error) {
+        this.responseErrors = error.response?.data?.errors
+        this.$swal({
+          icon: 'error',
+          title: 'Failed to delete product additional image. Please try again.'
         })
       }
     }

@@ -29,6 +29,13 @@ watch(
     handleSearch()
   }
 )
+
+watch(
+  () => route.query,
+  () => {
+    if (!route.query.search) search.value = undefined
+  }
+)
 </script>
 
 <template>

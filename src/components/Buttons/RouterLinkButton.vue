@@ -15,6 +15,11 @@ const props = defineProps({
   targetIdentifier: {
     type: [Object],
     required: false
+  },
+
+  disabled: {
+    type: Boolean,
+    default: false
   }
 })
 
@@ -31,6 +36,7 @@ const computedClasses = computed(() => props.class)
       type="button"
       class="text-[12.5px] px-4 shadow-md py-3 font-bold rounded-[5px] duration-150 active:animate-press"
       :class="computedClasses"
+      :disabled="disabled"
     >
       <slot />
     </button>

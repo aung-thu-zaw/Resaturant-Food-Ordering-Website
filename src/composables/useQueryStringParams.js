@@ -9,7 +9,10 @@ export function useQueryStringParams() {
     page: route.query?.page ?? 1,
     per_page: route.query?.per_page ?? 5,
     sort: route.query?.sort ?? 'id',
-    direction: route.query?.direction ?? 'desc'
+    direction: route.query?.direction ?? 'desc',
+    status: route.query?.status !== '' ? route.query.status : undefined,
+    response: route.query?.response !== '' ? route.query.response : undefined,
+    category: route.query?.category !== '' ? route.query.category : undefined
   }))
 
   return {

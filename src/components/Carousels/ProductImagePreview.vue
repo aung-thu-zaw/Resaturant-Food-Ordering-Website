@@ -1,5 +1,8 @@
 <script setup>
-defineProps({
+import PreviewImage from '@/Components/Forms/PreviewImage.vue'
+import { useProductStore } from '@/stores/dashboard/product'
+
+ defineProps({
   previewImage: {
     type: String,
     required: true
@@ -8,95 +11,77 @@ defineProps({
   previewImages: {
     type: [Array, String],
     required: true
+  },
+
+  existingAdditionalImages: {
+    type: Object,
+    required: false,
+    default: () => ({})
   }
 })
 
-const emit = defineEmits(['removeImage'])
+const emit = defineEmits(['removeImage', 'removeExistingAdditionalImage'])
+const store = useProductStore()
 
 const removeAdditionalPreviewImages = (index) => emit('removeImage', index)
+
+const deleteExistingAdditionalImageInBackend = async (id, index) => {
+  await store.deleteAdditionalImage(id)
+
+  emit('removeExistingAdditionalImage', index)
+}
 </script>
 
 <template>
-  <div id="preview-carousel" class="relative" data-te-carousel-init data-te-ride="carousel">
-    <!--Carousel items-->
-    <div
-      class="relative w-full h-[350px] rounded-md overflow-hidden after:clear-both after:block after:content-[''] border"
-    >
-      <!--First item-->
-      <div
-        class="relative float-left -mr-[100%] w-full h-full transition-transform duration-[600ms] ease-in-out motion-reduce:transition-none"
-        data-te-carousel-item
-        data-te-carousel-active
-      >
-        <img :src="previewImage" class="block w-full h-full object-contain" alt="Cover Image" />
-      </div>
-      <!--Second item-->
-      <div
-        v-show="previewImages.length"
-        v-for="(image, index) in previewImages"
-        :key="index"
-        class="relative float-left -mr-[100%] hidden w-full h-full transition-transform duration-[600ms] ease-in-out motion-reduce:transition-none"
-        data-te-carousel-item
-      >
-        <img :src="image" class="block w-full h-full object-contain" alt="Additional-Images" />
+  <div class="space-y-5">
+    <div>
+      <h3 class="font-semibold text-sm text-slate-700 mb-3">Cover Image</h3>
+      <PreviewImage :src="previewImage" />
+    </div>
 
+    <div v-if="existingAdditionalImages.length">
+      <h3 class="font-semibold text-sm text-slate-700 mb-3">Existing Additional Images</h3>
+      <div
+        v-for="(additionalImage, index) in existingAdditionalImages"
+        :key="index"
+        class="relative inline-block m-2"
+      >
+        <img
+          :src="additionalImage.image"
+          :alt="'existing-additional-images' + index"
+          class="w-32 h-32 object-cover rounded-md ring-2 ring-gray-200"
+        />
         <button
           type="button"
-          @click="removeAdditionalPreviewImages(index)"
-          class="z-50 absolute top-2 right-2 bg-black bg-opacity-40 text-white hover:text-red-600 duration-150 text-xs p-2 rounded-md hover:bg-opacity-50 cursor-pointer"
+          @click="deleteExistingAdditionalImageInBackend(additionalImage.id, index)"
+          class="absolute top-2 right-2 bg-black bg-opacity-40 text-white text-xs p-2 rounded-md hover:bg-opacity-60 cursor-pointer"
         >
           <i class="fa-solid fa-trash-can"></i>
         </button>
       </div>
     </div>
 
-    <!--Carousel controls - prev item-->
-    <button
-      class="absolute bottom-0 left-0 top-0 z-[1] flex w-[15%] items-center justify-center border-0 bg-none p-0 text-center text-white opacity-50 transition-opacity duration-150 ease-[cubic-bezier(0.25,0.1,0.25,1.0)] hover:text-white hover:no-underline hover:opacity-90 hover:outline-none focus:text-white focus:no-underline focus:opacity-90 focus:outline-none motion-reduce:transition-none"
-      type="button"
-      data-te-target="#preview-carousel"
-      data-te-slide="prev"
-    >
-      <span class="inline-block h-8 w-8">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="1.5"
-          stroke="currentColor"
-          class="h-6 w-6"
-        >
-          <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
-        </svg>
-      </span>
-      <span
-        class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]"
-        >Previous</span
+    <div v-if="previewImages.length">
+      <h3 class="font-semibold text-sm text-slate-700 mb-3">Additional Images</h3>
+
+      <div
+        v-for="(previewImage, index) in previewImages"
+        :key="index"
+        class="relative inline-block m-2"
       >
-    </button>
-    <!--Carousel controls - next item-->
-    <button
-      class="absolute bottom-0 right-0 top-0 z-[1] flex w-[15%] items-center justify-center border-0 bg-none p-0 text-center text-white opacity-50 transition-opacity duration-150 ease-[cubic-bezier(0.25,0.1,0.25,1.0)] hover:text-white hover:no-underline hover:opacity-90 hover:outline-none focus:text-white focus:no-underline focus:opacity-90 focus:outline-none motion-reduce:transition-none"
-      type="button"
-      data-te-target="#preview-carousel"
-      data-te-slide="next"
-    >
-      <span class="inline-block h-8 w-8">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="1.5"
-          stroke="currentColor"
-          class="h-6 w-6"
+        <img
+          :src="previewImage"
+          :alt="'additional-images' + index"
+          class="w-32 h-32 object-cover rounded-md ring-2 ring-gray-200"
+        />
+        <button
+          type="button"
+          @click="removeAdditionalPreviewImages(index)"
+          class="absolute top-2 right-2 bg-black bg-opacity-40 text-white text-xs p-2 rounded-md hover:bg-opacity-60 cursor-pointer"
         >
-          <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-        </svg>
-      </span>
-      <span
-        class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]"
-        >Next</span
-      >
-    </button>
+          <i class="fa-solid fa-trash-can"></i>
+        </button>
+      </div>
+    </div>
   </div>
 </template>

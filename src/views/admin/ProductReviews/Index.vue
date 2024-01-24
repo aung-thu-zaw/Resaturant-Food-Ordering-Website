@@ -6,6 +6,8 @@ import TableContainer from '@/components/Tables/TableContainer.vue'
 import Table from '@/components/Tables/Table.vue'
 import DashboardTableDataSearchBox from '@/components/Forms/SearchBoxs/DashboardTableDataSearchBox.vue'
 import DashboardTableDataPerPageSelectBox from '@/components/Forms/SelectBoxs/DashboardTableDataPerPageSelectBox.vue'
+import DashboardTableDataFilterByStatus from '@/components/Forms/SelectBoxs/DashboardTableDataFilterByStatus.vue'
+import DashboardTableDataFilterByResponse from '@/components/Forms/SelectBoxs/DashboardTableDataFilterByResponse.vue'
 import SortableTableHeaderCell from '@/components/Tables/TableCells/SortableTableHeaderCell.vue'
 import TableHeaderCell from '@/components/Tables/TableCells/TableHeaderCell.vue'
 import TableDataCell from '@/components/Tables/TableCells/TableDataCell.vue'
@@ -18,6 +20,7 @@ import BlueBadge from '@/components/Badges/BlueBadge.vue'
 import RedBadge from '@/components/Badges/RedBadge.vue'
 import OrangeBadge from '@/components/Badges/OrangeBadge.vue'
 import NormalButton from '@/components/Buttons/NormalButton.vue'
+import ResetFilterButton from '@/components/Buttons/ResetFilterButton.vue'
 import Pagination from '@/components/Paginations/DashboardPagination.vue'
 import StarRating from '@/components/Ratings/StarRating.vue'
 import { useTitle } from '@vueuse/core'
@@ -30,8 +33,8 @@ import { useQueryStringParams } from '@/composables/useQueryStringParams'
 useTitle('Product Reviews - Restaurant Food Ordering')
 
 const route = useRoute()
-const swal = inject('$swal')
 const store = useProductReviewStore()
+const swal = inject('$swal')
 
 const { productReviews } = storeToRefs(store)
 const { dashboardParams } = useQueryStringParams()
@@ -83,9 +86,47 @@ watch(
         <div
           class="my-3 flex flex-col sm:flex-row space-y-5 sm:space-y-0 items-center justify-between overflow-auto p-1"
         >
-          <DashboardTableDataSearchBox placeholder="Search by product, reviewer or comment" />
-          <div class="flex items-center justify-end w-full md:space-x-3">
+          <DashboardTableDataSearchBox placeholder="Search by product name, reviewer" />
+          <div class="flex items-center justify-end w-full space-x-3">
+            <DashboardTableDataFilterByStatus
+              :options="[
+                {
+                  label: 'Pending',
+                  value: 'pending'
+                },
+                {
+                  label: 'Published',
+                  value: 'published'
+                },
+                {
+                  label: 'Hidden',
+                  value: 'hidden'
+                }
+              ]"
+              :selected="route.query?.status ?? ''"
+              placeholder="Filter By Review Status"
+            />
+
+            <DashboardTableDataFilterByResponse
+              :options="[
+                {
+                  label: 'Responded',
+                  value: 'responded'
+                },
+                {
+                  label: 'Awaiting',
+                  value: 'awaiting'
+                }
+              ]"
+              :selected="route.query?.response ?? ''"
+              placeholder="Filter By Response Status"
+            />
+
             <DashboardTableDataPerPageSelectBox />
+
+            <ResetFilterButton
+              :disabled="!route.query?.status && !route.query?.search && !route.query?.response"
+            />
           </div>
         </div>
 
@@ -122,14 +163,16 @@ watch(
 
               <TableImageCell :src="item?.product?.image" />
 
-              <TableDataCell class="min-w-[250px]">
+              <TableDataCell class="min-w-[200px]">
                 <span class="line-clamp-1">
                   {{ item?.product?.name }}
                 </span>
               </TableDataCell>
 
-              <TableDataCell class="min-w-[150px]">
-                {{ item?.reviewer?.name }}
+              <TableDataCell class="min-w-[180px]">
+                <span class="line-clamp-1">
+                  {{ item?.reviewer?.name }}
+                </span>
               </TableDataCell>
 
               <TableDataCell class="min-w-[300px]">
@@ -184,9 +227,9 @@ watch(
               />
 
               <TableActionCell class="min-w-[300px]">
-                <NormalButton v-show="can('product-reviews.edit')">
+                <NormalButton v-show="can('product-reviews.response')">
                   <i class="fa-solid fa-star"></i>
-                  Go To Reviews
+                  Go To Review
                 </NormalButton>
 
                 <NormalButton

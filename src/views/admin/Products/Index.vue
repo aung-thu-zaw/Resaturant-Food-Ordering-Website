@@ -5,6 +5,8 @@ import BreadcrumbItem from '@/components/Breadcrumbs/BreadcrumbItem.vue'
 import TableContainer from '@/components/Tables/TableContainer.vue'
 import Table from '@/components/Tables/Table.vue'
 import DashboardTableDataSearchBox from '@/components/Forms/SearchBoxs/DashboardTableDataSearchBox.vue'
+import DashboardTableDataFilterByStatus from '@/components/Forms/SelectBoxs/DashboardTableDataFilterByStatus.vue'
+import DashboardTableDataFilterByCategory from '@/components/Forms/SelectBoxs/DashboardTableDataFilterByCategory.vue'
 import DashboardTableDataPerPageSelectBox from '@/components/Forms/SelectBoxs/DashboardTableDataPerPageSelectBox.vue'
 import SortableTableHeaderCell from '@/components/Tables/TableCells/SortableTableHeaderCell.vue'
 import TableHeaderCell from '@/components/Tables/TableCells/TableHeaderCell.vue'
@@ -15,6 +17,7 @@ import TableSelectBoxCell from '@/components/Tables/TableCells/TableSelectBoxCel
 import NoTableData from '@/components/Tables/NoTableData.vue'
 import GreenBadge from '@/components/Badges/GreenBadge.vue'
 import OrangeBadge from '@/components/Badges/OrangeBadge.vue'
+import RedBadge from '@/components/Badges/RedBadge.vue'
 import RouterLinkButton from '@/components/Buttons/RouterLinkButton.vue'
 import NormalButton from '@/components/Buttons/NormalButton.vue'
 import Pagination from '@/components/Paginations/DashboardPagination.vue'
@@ -29,14 +32,18 @@ import { useFormatFunctions } from '@/composables/useFormatFunctions'
 useTitle('Products - Restaurant Food Ordering')
 
 const route = useRoute()
-const swal = inject('$swal')
 const store = useProductStore()
+const swal = inject('$swal')
 
-const { products } = storeToRefs(store)
+const { products, categories } = storeToRefs(store)
 const { dashboardParams } = useQueryStringParams()
 const { formatAmount } = useFormatFunctions()
 
-onMounted(async () => await store.getAllProducts(dashboardParams.value))
+onMounted(async () => {
+  await store.getAllProducts(dashboardParams.value)
+
+  await store.getResources()
+})
 
 const handleStatusChange = async (slug, event) => await store.changeStatus(slug, event.target.value)
 
@@ -78,11 +85,29 @@ watch(
         </Breadcrumb>
       </div>
 
-      <div class="flex items-center justify-end mb-3">
+      <div class="flex items-center justify-end mb-3 space-x-3">
         <!-- Create New Button -->
         <RouterLinkButton v-show="can('products.create')" to="admin.products.create">
           <i class="fa-solid fa-file-circle-plus mr-1"></i>
           Add A New Product
+        </RouterLinkButton>
+
+        <RouterLinkButton
+          v-show="can('products.create')"
+          to="admin.products.create"
+          class="bg-orange-600 text-white hover:bg-orange-700"
+        >
+          <i class="fa-solid fa-file-import mr-1"></i>
+          Import
+        </RouterLinkButton>
+
+        <RouterLinkButton
+          v-show="can('products.create')"
+          to="admin.products.create"
+          class="bg-indigo-600 text-white hover:bg-indigo-700"
+        >
+          <i class="fa-solid fa-file-export mr-1"></i>
+          Export
         </RouterLinkButton>
       </div>
 
@@ -91,9 +116,40 @@ watch(
         <div
           class="my-3 flex flex-col sm:flex-row space-y-5 sm:space-y-0 items-center justify-between overflow-auto p-1"
         >
-          <DashboardTableDataSearchBox />
-          <div class="flex items-center justify-end w-full md:space-x-3">
+          <DashboardTableDataSearchBox placeholder="Search by product name" />
+          <div class="flex items-center justify-end w-full space-x-3">
+            <DashboardTableDataFilterByCategory
+              :options="categories ?? {}"
+              :selected="route.query?.category ?? ''"
+            />
+
+            <DashboardTableDataFilterByStatus
+              :options="[
+                {
+                  label: 'Draft',
+                  value: 'draft'
+                },
+                {
+                  label: 'Published',
+                  value: 'published'
+                },
+                {
+                  label: 'Hidden',
+                  value: 'hidden'
+                }
+              ]"
+              :selected="route.query?.status ?? ''"
+            />
+
             <DashboardTableDataPerPageSelectBox />
+
+            <RouterLinkButton
+              to="admin.products.index"
+              class="bg-yellow-500 text-white hover:bg-yellow-600 duration-150 shadow-none disabled:bg-gray-300"
+              :disabled="!route.query.status && !route.query.category && !route.query.search"
+            >
+              Reset Filters
+            </RouterLinkButton>
           </div>
         </div>
 
@@ -135,7 +191,9 @@ watch(
               </TableDataCell>
 
               <TableDataCell class="min-w-[200px]">
-                {{ item?.name }}
+                <span class="line-clamp-1">
+                  {{ item?.name }}
+                </span>
               </TableDataCell>
 
               <TableDataCell class="min-w-[100px]">
@@ -159,21 +217,25 @@ watch(
                   <i class="fa-solid fa-circle-check animate-pulse"></i>
                   {{ item.status }}
                 </GreenBadge>
+                <RedBadge v-show="item?.status === 'hidden'">
+                  <i class="fa-solid fa-eye-slash animate-pulse"></i>
+                  {{ item.status }}
+                </RedBadge>
               </TableDataCell>
 
               <TableSelectBoxCell
                 @change="handleStatusChange(item.slug, $event)"
                 :options="[
                   {
-                    label: 'Draft',
-                    value: 'draft'
-                  },
-                  {
                     label: 'Publish',
                     value: 'published'
+                  },
+                  {
+                    label: 'Hidden',
+                    value: 'hidden'
                   }
                 ]"
-                :selected="item.status"
+                :selected="item.status !== 'draft' ? item.status : ''"
               />
 
               <TableActionCell>

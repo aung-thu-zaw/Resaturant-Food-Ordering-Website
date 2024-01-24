@@ -29,12 +29,22 @@ const props = defineProps({
   }
 })
 
-const store = useProductStore()
 const isDiscount = ref(false)
 const productAddons = ref([])
 const existingImage = ref('')
 const existingImages = ref([])
+const store = useProductStore()
+
 const { categories } = storeToRefs(store)
+const { formatDateTime } = useFormatFunctions()
+const {
+  previewImage,
+  setImagePreview,
+  previewImages,
+  setMultipleImagePreviews,
+  removeMultiplePreviewImage
+} = useImagePreview(existingImage)
+
 const form = reactive({
   category_id: '',
   image: '',
@@ -50,25 +60,6 @@ const form = reactive({
   status: 'draft',
   addons: []
 })
-
-const {
-  previewImage,
-  setImagePreview,
-  previewImages,
-  setMultipleImagePreviews,
-  removeMultiplePreviewImage
-} = useImagePreview(existingImage)
-
-const handleRemovePreviewImage = (index) => {
-  removeMultiplePreviewImage(index)
-
-  if (!previewImages.value.length) form.additional_images = []
-
-  const additionalImages = Array.from(form.additional_images)
-
-  additionalImages.splice(index, 1)
-  form.additional_images = additionalImages
-}
 
 onMounted(async () => {
   await store.getResources()
@@ -91,13 +82,36 @@ onMounted(async () => {
 
   productAddons.value = store.product?.addons
   existingImage.value = store.product?.image
-  existingImages.value = store.product?.additional_images.map(
-    (additionalImage) => additionalImage.image
-  )
   isDiscount.value = form.discount_price ? true : false
+  existingImages.value = store.product?.additional_images
 })
 
-const { formatDateTime } = useFormatFunctions()
+const addNewProductAddon = () => {
+  productAddons.value.push({
+    name: '',
+    additional_price: ''
+  })
+
+  form.addons = productAddons.value
+}
+
+const deleteAddon = (index) => productAddons.value.splice(index, 1)
+
+const handleRemovePreviewImage = (index) => {
+  removeMultiplePreviewImage(index)
+
+  if (!previewImages.value.length) form.additional_images = []
+
+  const additionalImages = Array.from(form.additional_images)
+
+  additionalImages.splice(index, 1)
+  form.additional_images = additionalImages
+}
+const removeExistingAdditionalImage = (index) => {
+  existingImages.value.splice(index, 1)
+}
+
+const handleUpdateProduct = async () => await store.updateProduct({ ...form }, props.slug)
 
 watch(
   () => form.discount_end_time,
@@ -113,19 +127,6 @@ watch(
     }
   }
 )
-
-const addNewProductAddon = () => {
-  productAddons.value.push({
-    name: '',
-    additional_price: ''
-  })
-
-  form.addons = productAddons.value
-}
-
-const deleteAddon = (index) => productAddons.value.splice(index, 1)
-
-const handleUpdateProduct = async () => await store.updateProduct({ ...form }, props.slug)
 </script>
 
 <template>
@@ -155,8 +156,9 @@ const handleUpdateProduct = async () => await store.updateProduct({ ...form }, p
               <ProductImagePreview
                 :previewImage="previewImage"
                 :previewImages="previewImages"
-                :existingImages="existingImages"
+                :existingAdditionalImages="existingImages ?? {}"
                 @removeImage="handleRemovePreviewImage(index)"
+                @removeExistingAdditionalImage="removeExistingAdditionalImage(index)"
               />
 
               <div>

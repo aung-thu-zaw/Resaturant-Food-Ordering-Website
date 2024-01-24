@@ -132,7 +132,8 @@ export const useCategoryStore = defineStore('category', {
         this.responseErrors = error.response?.data?.errors
         this.$swal({
           icon: 'error',
-          title: 'Failed to delete category. Please try again.'
+          title: 'Failed to delete category. Please try again.',
+          text: 'This category cannot be deleted because it still contains products.'
         })
       }
     }

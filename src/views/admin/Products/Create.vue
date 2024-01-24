@@ -19,15 +19,26 @@ import { useProductStore } from '@/stores/dashboard/product'
 import { useImagePreview } from '@/composables/useImagePreview'
 import { useFormatFunctions } from '@/composables/useFormatFunctions'
 import { storeToRefs } from 'pinia'
+import image from '@/assets/images/no-image.jpeg'
 
 useTitle('Create Product - Restaurant Food Ordering')
 
-const store = useProductStore()
 const isCreateAnother = ref(false)
 const isDiscount = ref(false)
 const createForm = ref(null)
 const productAddons = ref([])
+const store = useProductStore()
+
 const { categories } = storeToRefs(store)
+const { formatDateTime } = useFormatFunctions()
+const {
+  previewImage,
+  setImagePreview,
+  previewImages,
+  setMultipleImagePreviews,
+  removeMultiplePreviewImage
+} = useImagePreview(image)
+
 const form = reactive({
   category_id: '',
   image: '',
@@ -46,30 +57,13 @@ const form = reactive({
 
 onMounted(async () => await store.getResources())
 
-const { formatDateTime } = useFormatFunctions()
+const addNewProductAddon = () => {
+  productAddons.value.push({ name: '', additional_price: '' })
 
-watch(
-  () => form.discount_end_time,
-  (newDateTime) => (form.discount_end_time = formatDateTime(newDateTime))
-)
+  form.addons = productAddons.value
+}
 
-watch(
-  () => isDiscount.value,
-  () => {
-    if (!isDiscount.value) {
-      form.discount_price = ''
-      form.discount_end_time = ''
-    }
-  }
-)
-
-const {
-  previewImage,
-  setImagePreview,
-  previewImages,
-  setMultipleImagePreviews,
-  removeMultiplePreviewImage
-} = useImagePreview()
+const deleteAddon = (index) => productAddons.value.splice(index, 1)
 
 const handleRemovePreviewImage = (index) => {
   removeMultiplePreviewImage(index)
@@ -79,17 +73,6 @@ const handleRemovePreviewImage = (index) => {
   additionalImages.splice(index, 1)
   form.additional_images = additionalImages
 }
-
-const addNewProductAddon = () => {
-  productAddons.value.push({
-    name: '',
-    additional_price: ''
-  })
-
-  form.addons = productAddons.value
-}
-
-const deleteAddon = (index) => productAddons.value.splice(index, 1)
 
 const handleCreateProduct = async () => {
   await store.createProduct({ ...form }, isCreateAnother.value)
@@ -111,11 +94,28 @@ const handleCreateProduct = async () => {
     form.addons = []
 
     isDiscount.value = false
-    previewImage.value = ''
+    previewImage.value = image
     previewImages.value = []
     productAddons.value = []
+
+    await store.getResources()
   }
 }
+
+watch(
+  () => form.discount_end_time,
+  (newDateTime) => (form.discount_end_time = formatDateTime(newDateTime))
+)
+
+watch(
+  () => isDiscount.value,
+  () => {
+    if (!isDiscount.value) {
+      form.discount_price = ''
+      form.discount_end_time = ''
+    }
+  }
+)
 </script>
 
 <template>
@@ -128,7 +128,7 @@ const handleCreateProduct = async () => {
           <BreadcrumbItem label="Create" />
         </Breadcrumb>
 
-        <div class="w-auto flex items-center justify-end">
+        <div class="w-full flex items-center justify-end">
           <GoBackButton />
         </div>
       </div>

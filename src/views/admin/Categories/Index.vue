@@ -5,6 +5,7 @@ import BreadcrumbItem from '@/components/Breadcrumbs/BreadcrumbItem.vue'
 import TableContainer from '@/components/Tables/TableContainer.vue'
 import Table from '@/components/Tables/Table.vue'
 import DashboardTableDataSearchBox from '@/components/Forms/SearchBoxs/DashboardTableDataSearchBox.vue'
+import DashboardTableDataFilterByStatus from '@/components/Forms/SelectBoxs/DashboardTableDataFilterByStatus.vue'
 import DashboardTableDataPerPageSelectBox from '@/components/Forms/SelectBoxs/DashboardTableDataPerPageSelectBox.vue'
 import SortableTableHeaderCell from '@/components/Tables/TableCells/SortableTableHeaderCell.vue'
 import TableHeaderCell from '@/components/Tables/TableCells/TableHeaderCell.vue'
@@ -16,6 +17,7 @@ import GreenBadge from '@/components/Badges/GreenBadge.vue'
 import RedBadge from '@/components/Badges/RedBadge.vue'
 import RouterLinkButton from '@/components/Buttons/RouterLinkButton.vue'
 import NormalButton from '@/components/Buttons/NormalButton.vue'
+import ResetFilterButton from '@/components/Buttons/ResetFilterButton.vue'
 import Pagination from '@/components/Paginations/DashboardPagination.vue'
 import { useTitle } from '@vueuse/core'
 import { useCategoryStore } from '@/stores/dashboard/category'
@@ -27,15 +29,13 @@ import { useQueryStringParams } from '@/composables/useQueryStringParams'
 useTitle('Categories - Restaurant Food Ordering')
 
 const route = useRoute()
-const swal = inject('$swal')
 const store = useCategoryStore()
+const swal = inject('$swal')
 
 const { categories } = storeToRefs(store)
 const { dashboardParams } = useQueryStringParams()
 
 onMounted(async () => await store.getAllCategories(dashboardParams.value))
-
-const handleStatusChange = async (slug, event) => await store.changeStatus(slug, event.target.value)
 
 const handleDeleteCategory = async (categorySlug) => {
   const result = await swal({
@@ -57,6 +57,8 @@ const handleDeleteCategory = async (categorySlug) => {
   }
 }
 
+const handleStatusChange = async (slug, event) => await store.changeStatus(slug, event.target.value)
+
 watch(
   () => route.query,
   async () => await store.getAllCategories(dashboardParams.value)
@@ -65,7 +67,7 @@ watch(
 
 <template>
   <DashboardLayout>
-    <!-- Breadcrumb And Trash Button  -->
+    <!-- Breadcrumb  -->
     <div class="min-h-screen py-10">
       <div
         class="flex flex-col items-start md:flex-row md:items-center md:justify-between mb-4 md:mb-8"
@@ -88,9 +90,25 @@ watch(
         <div
           class="my-3 flex flex-col sm:flex-row space-y-5 sm:space-y-0 items-center justify-between overflow-auto p-1"
         >
-          <DashboardTableDataSearchBox />
-          <div class="flex items-center justify-end w-full md:space-x-3">
+          <DashboardTableDataSearchBox placeholder="Search by category name" />
+          <div class="flex items-center justify-end w-full space-x-3">
+            <DashboardTableDataFilterByStatus
+              :options="[
+                {
+                  label: 'Show',
+                  value: true
+                },
+                {
+                  label: 'Hide',
+                  value: false
+                }
+              ]"
+              :selected="route.query?.status ?? ''"
+            />
+
             <DashboardTableDataPerPageSelectBox />
+
+            <ResetFilterButton :disabled="!route.query?.status && !route.query?.search" />
           </div>
         </div>
 
