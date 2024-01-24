@@ -11,7 +11,7 @@ import { useTitle } from '@vueuse/core'
 import { reactive, ref } from 'vue'
 import { useDeliveryAreaStore } from '@/stores/dashboard/deliveryArea'
 
-useTitle('Create Delivery Areas - Restaurant Food Ordering')
+useTitle('Create Delivery Area - Restaurant Food Ordering')
 
 const store = useDeliveryAreaStore()
 const isCreateAnother = ref(false)

@@ -83,7 +83,7 @@ watch(
         <div
           class="my-3 flex flex-col sm:flex-row space-y-5 sm:space-y-0 items-center justify-between overflow-auto p-1"
         >
-          <DashboardTableDataSearchBox placeholder="Search by name" />
+          <DashboardTableDataSearchBox placeholder="Search by delivery area" />
           <div class="flex items-center justify-end w-full md:space-x-3">
             <DashboardTableDataPerPageSelectBox />
           </div>
@@ -95,7 +95,7 @@ watch(
             <template #table-header>
               <SortableTableHeaderCell label="# Id" sort="id" />
 
-              <SortableTableHeaderCell label="Delivery Area Name" sort="name" />
+              <SortableTableHeaderCell label="Delivery Area" sort="name" />
 
               <TableHeaderCell label="Actions" />
             </template>

@@ -11,7 +11,7 @@ import { useTitle } from '@vueuse/core'
 import { reactive, ref } from 'vue'
 import { useShippingMethodStore } from '@/stores/dashboard/shippingMethod'
 
-useTitle('Create Shipping Methods - Restaurant Food Ordering')
+useTitle('Create Shipping Method - Restaurant Food Ordering')
 
 const store = useShippingMethodStore()
 const isCreateAnother = ref(false)

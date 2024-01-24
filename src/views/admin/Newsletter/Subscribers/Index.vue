@@ -6,6 +6,7 @@ import TableContainer from '@/components/Tables/TableContainer.vue'
 import Table from '@/components/Tables/Table.vue'
 import DashboardTableDataSearchBox from '@/components/Forms/SearchBoxs/DashboardTableDataSearchBox.vue'
 import DashboardTableDataPerPageSelectBox from '@/components/Forms/SelectBoxs/DashboardTableDataPerPageSelectBox.vue'
+import DashboardTableDataFilterByStatus from '@/components/Forms/SelectBoxs/DashboardTableDataFilterByStatus.vue'
 import SortableTableHeaderCell from '@/components/Tables/TableCells/SortableTableHeaderCell.vue'
 import TableHeaderCell from '@/components/Tables/TableCells/TableHeaderCell.vue'
 import TableDataCell from '@/components/Tables/TableCells/TableDataCell.vue'
@@ -14,6 +15,7 @@ import NoTableData from '@/components/Tables/NoTableData.vue'
 import GreenBadge from '@/components/Badges/GreenBadge.vue'
 import RedBadge from '@/components/Badges/RedBadge.vue'
 import NormalButton from '@/components/Buttons/NormalButton.vue'
+import ResetFilterButton from '@/components/Buttons/ResetFilterButton.vue'
 import Pagination from '@/components/Paginations/DashboardPagination.vue'
 import { useTitle } from '@vueuse/core'
 import { useSubscriberStore } from '@/stores/dashboard/subscriber'
@@ -77,8 +79,25 @@ watch(
           class="my-3 flex flex-col sm:flex-row space-y-5 sm:space-y-0 items-center justify-between overflow-auto p-1"
         >
           <DashboardTableDataSearchBox placeholder="Search by email" />
-          <div class="flex items-center justify-end w-full md:space-x-3">
+          <div class="flex items-center justify-end w-full space-x-3">
+            <DashboardTableDataFilterByStatus
+              :options="[
+                {
+                  label: 'Subscribed',
+                  value: 'subscribed'
+                },
+                {
+                  label: 'Unubscribed',
+                  value: 'unsubscribed'
+                }
+              ]"
+              :selected="route.query?.status ?? ''"
+              placeholder="Filter By Status"
+            />
+
             <DashboardTableDataPerPageSelectBox />
+
+            <ResetFilterButton :disabled="!route.query?.search && !route.query?.status" />
           </div>
         </div>
 

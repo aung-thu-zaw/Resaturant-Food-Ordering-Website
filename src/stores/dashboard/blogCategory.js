@@ -110,7 +110,8 @@ export const useBlogCategoryStore = defineStore('blog-category', {
         this.responseErrors = error.response?.data?.errors
         this.$swal({
           icon: 'error',
-          title: 'Failed to delete blog category. Please try again.'
+          title: 'Failed to delete blog category. Please try again.',
+          text: 'This blog category cannot be deleted because it still contains blog contents.'
         })
       }
     }

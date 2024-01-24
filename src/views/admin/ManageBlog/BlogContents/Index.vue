@@ -6,6 +6,8 @@ import TableContainer from '@/components/Tables/TableContainer.vue'
 import Table from '@/components/Tables/Table.vue'
 import DashboardTableDataSearchBox from '@/components/Forms/SearchBoxs/DashboardTableDataSearchBox.vue'
 import DashboardTableDataPerPageSelectBox from '@/components/Forms/SelectBoxs/DashboardTableDataPerPageSelectBox.vue'
+import DashboardTableDataFilterByCategory from '@/components/Forms/SelectBoxs/DashboardTableDataFilterByCategory.vue'
+import DashboardTableDataFilterByStatus from '@/components/Forms/SelectBoxs/DashboardTableDataFilterByStatus.vue'
 import SortableTableHeaderCell from '@/components/Tables/TableCells/SortableTableHeaderCell.vue'
 import TableHeaderCell from '@/components/Tables/TableCells/TableHeaderCell.vue'
 import TableDataCell from '@/components/Tables/TableCells/TableDataCell.vue'
@@ -18,6 +20,7 @@ import OrangeBadge from '@/components/Badges/OrangeBadge.vue'
 import RedBadge from '@/components/Badges/RedBadge.vue'
 import RouterLinkButton from '@/components/Buttons/RouterLinkButton.vue'
 import NormalButton from '@/components/Buttons/NormalButton.vue'
+import ResetFilterButton from '@/components/Buttons/ResetFilterButton.vue'
 import Pagination from '@/components/Paginations/DashboardPagination.vue'
 import { useTitle } from '@vueuse/core'
 import { useBlogContentStore } from '@/stores/dashboard/blogContent'
@@ -32,10 +35,14 @@ const route = useRoute()
 const swal = inject('$swal')
 const store = useBlogContentStore()
 
-const { blogContents } = storeToRefs(store)
+const { blogContents, blogCategories } = storeToRefs(store)
 const { dashboardParams } = useQueryStringParams()
 
-onMounted(async () => await store.getAllBlogContents(dashboardParams.value))
+onMounted(async () => {
+  await store.getAllBlogContents(dashboardParams.value)
+
+  await store.getResources()
+})
 
 const handleStatusChange = async (slug, event) => await store.changeStatus(slug, event.target.value)
 
@@ -90,9 +97,36 @@ watch(
         <div
           class="my-3 flex flex-col sm:flex-row space-y-5 sm:space-y-0 items-center justify-between overflow-auto p-1"
         >
-          <DashboardTableDataSearchBox placeholder="Search by blog category, author or title" />
-          <div class="flex items-center justify-end w-full md:space-x-3">
+          <DashboardTableDataSearchBox placeholder="Search by blog title or author" />
+          <div class="flex items-center justify-end w-full space-x-3">
+            <DashboardTableDataFilterByCategory
+              :options="blogCategories ?? {}"
+              :selected="route.query?.category ?? ''"
+            />
+
+            <DashboardTableDataFilterByStatus
+              :options="[
+                {
+                  label: 'Draft',
+                  value: 'draft'
+                },
+                {
+                  label: 'Published',
+                  value: 'published'
+                },
+                {
+                  label: 'Hidden',
+                  value: 'hidden'
+                }
+              ]"
+              :selected="route.query?.status ?? ''"
+            />
+
             <DashboardTableDataPerPageSelectBox />
+
+            <ResetFilterButton
+              :disabled="!route.query.status && !route.query.category && !route.query.search"
+            />
           </div>
         </div>
 

@@ -11,7 +11,7 @@ import { useTitle } from '@vueuse/core'
 import { onMounted, reactive } from 'vue'
 import { useShippingMethodStore } from '@/stores/dashboard/shippingMethod'
 
-useTitle('Edit Shipping Methods - Restaurant Food Ordering')
+useTitle('Edit Shipping Method - Restaurant Food Ordering')
 
 const props = defineProps({
   slug: {

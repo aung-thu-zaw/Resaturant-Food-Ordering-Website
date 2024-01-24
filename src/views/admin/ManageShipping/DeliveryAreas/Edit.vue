@@ -11,7 +11,7 @@ import { useTitle } from '@vueuse/core'
 import { onMounted, reactive } from 'vue'
 import { useDeliveryAreaStore } from '@/stores/dashboard/deliveryArea'
 
-useTitle('Edit Delivery Areas - Restaurant Food Ordering')
+useTitle('Edit Delivery Area - Restaurant Food Ordering')
 
 const props = defineProps({
   slug: {

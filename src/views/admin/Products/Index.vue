@@ -19,6 +19,7 @@ import GreenBadge from '@/components/Badges/GreenBadge.vue'
 import OrangeBadge from '@/components/Badges/OrangeBadge.vue'
 import RedBadge from '@/components/Badges/RedBadge.vue'
 import RouterLinkButton from '@/components/Buttons/RouterLinkButton.vue'
+import ResetFilterButton from '@/components/Buttons/ResetFilterButton.vue'
 import NormalButton from '@/components/Buttons/NormalButton.vue'
 import Pagination from '@/components/Paginations/DashboardPagination.vue'
 import { useTitle } from '@vueuse/core'
@@ -143,13 +144,9 @@ watch(
 
             <DashboardTableDataPerPageSelectBox />
 
-            <RouterLinkButton
-              to="admin.products.index"
-              class="bg-yellow-500 text-white hover:bg-yellow-600 duration-150 shadow-none disabled:bg-gray-300"
+            <ResetFilterButton
               :disabled="!route.query.status && !route.query.category && !route.query.search"
-            >
-              Reset Filters
-            </RouterLinkButton>
+            />
           </div>
         </div>
 
