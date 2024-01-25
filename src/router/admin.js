@@ -376,6 +376,12 @@ export default [
             meta: { middleware: [permission('assign-role-permissions.edit')] }
           }
         ]
+      },
+      {
+        path: '/admin/database-backups',
+        name: 'admin.database-backups.index',
+        component: () => import('@/views/admin/DatabaseBackups/Index.vue'),
+        meta: { middleware: [authorize, permission('database-backups.view')] }
       }
     ]
   }

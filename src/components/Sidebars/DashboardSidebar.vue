@@ -886,8 +886,9 @@ const defaultQueryParams = {
           </li>
 
           <!-- Database Backups -->
-          <li class="items-center">
-            <a
+          <li v-show="can('database-backups.view')" class="items-center">
+            <router-link
+              :to="{ name: 'admin.database-backups.index', query: defaultQueryParams }"
               class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] outline-none"
               :class="getSidebarMenuActiveColor('/admin/database-backups')"
             >
@@ -895,7 +896,7 @@ const defaultQueryParams = {
                 <i class="fa-solid fa-database mr-2"></i>
                 Database Backups
               </div>
-            </a>
+            </router-link>
           </li>
         </ul>
       </div>
