@@ -202,6 +202,24 @@ export default [
         ]
       },
       {
+        path: 'reservation-times',
+        meta: { middleware: [authorize] },
+        children: [
+          {
+            path: '',
+            name: 'admin.reservation-times.index',
+            component: () => import('@/views/admin/ManageReservation/ReservationTimes/Index.vue'),
+            meta: { middleware: [permission('reservation-times.view')] }
+          },
+          {
+            path: 'create',
+            name: 'admin.reservation-times.create',
+            component: () => import('@/views/admin/ManageReservation/ReservationTimes/Create.vue'),
+            meta: { middleware: [permission('reservation-times.create')] }
+          }
+        ]
+      },
+      {
         path: 'blog-categories',
         meta: { middleware: [authorize] },
         children: [
