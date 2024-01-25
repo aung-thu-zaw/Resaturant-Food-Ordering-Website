@@ -43,34 +43,36 @@ const handleCreateReservationTime = async () => {
           <GoBackButton />
         </div>
       </div>
-      {{ form }}
+
       <!-- Form Start -->
       <div class="border p-10 bg-white rounded-md">
         <form @submit.prevent="handleCreateReservationTime" class="space-y-4 md:space-y-6">
-          <div>
-            <InputLabel label="Start Time" required />
+          <div class="grid grid-cols-2 gap-5">
+            <div>
+              <InputLabel label="Start Time" required />
 
-            <VueDatePicker
-              v-model="form.start_time"
-              required
-              time-picker
-              placeholder="Select Start Time"
-            />
+              <VueDatePicker
+                v-model="form.start_time"
+                required
+                time-picker
+                placeholder="Select Start Time"
+              />
 
-            <InputError :message="store.errors?.start_time" />
-          </div>
+              <InputError :message="store.errors?.start_time" />
+            </div>
 
-          <div>
-            <InputLabel label="End Time" required />
+            <div>
+              <InputLabel label="End Time" required />
 
-            <VueDatePicker
-              v-model="form.end_time"
-              required
-              time-picker
-              placeholder="Select End Time"
-            />
+              <VueDatePicker
+                v-model="form.end_time"
+                required
+                time-picker
+                placeholder="Select End Time"
+              />
 
-            <InputError :message="store.errors?.end_time" />
+              <InputError :message="store.errors?.end_time" />
+            </div>
           </div>
 
           <div class="flex items-center justify-end w-full space-x-5">

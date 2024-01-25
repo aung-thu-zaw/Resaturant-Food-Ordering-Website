@@ -282,6 +282,12 @@ export default [
         meta: { middleware: [authorize, permission('subscribers.view')] }
       },
       {
+        path: '/admin/send-newsletter',
+        name: 'admin.send-newsletter',
+        component: () => import('@/views/admin/Newsletter/SendNewsletter.vue'),
+        meta: { middleware: [authorize, permission('send-newsletter.send')] }
+      },
+      {
         path: '/admin/menu-stock',
         name: 'admin.menu-stock.index',
         component: () => import('@/views/admin/MenuStock/Index.vue')
