@@ -29,7 +29,7 @@ const defaultQueryParams = {
   <nav
     class="md:left-0 md:block md:fixed md:top-0 md:bottom-0 md:overflow-y-auto md:flex-row md:flex-nowrap md:overflow-hidden shadow-xl bg-white flex flex-wrap items-center justify-between relative md:w-64 z-10 py-4 px-6"
     data-te-sidenav-init
-    >
+  >
     <div
       class="md:flex-col md:items-stretch md:min-h-full md:flex-nowrap px-0 flex flex-wrap items-center md:justify-between w-full mx-auto"
     >
@@ -298,14 +298,18 @@ const defaultQueryParams = {
               class="show !visible relative m-0 hidden list-none p-0 data-[te-collapse-show]:block"
               data-te-sidenav-collapse-ref
             >
-              <li class="relative hover:bg-gray-100 duration-100 rounded-md">
-                <a
+              <li
+                v-show="can('tables.view')"
+                class="relative hover:bg-gray-100 duration-100 rounded-md"
+              >
+                <router-link
+                  :to="{ name: 'admin.tables.index', query: defaultQueryParams }"
                   class="flex font-semibold cursor-pointer items-center truncate rounded-[5px] py-3 pl-7 text-[0.8rem] outline-none transition duration-300 ease-linear"
-                  :class="getSidebarMenuActiveColor('/admin/reservation-tables')"
+                  :class="getSidebarMenuActiveColor('/admin/tables')"
                   data-te-sidenav-link-ref
                 >
-                  Reservation Tables
-                </a>
+                  Tables
+                </router-link>
               </li>
               <li class="relative hover:bg-gray-100 duration-100 rounded-md">
                 <a
@@ -316,6 +320,16 @@ const defaultQueryParams = {
                   Reservation Times
                 </a>
               </li>
+              <li class="relative hover:bg-gray-100 duration-100 rounded-md">
+                <a
+                  class="flex font-semibold cursor-pointer items-center truncate rounded-[5px] py-3 pl-7 text-[0.8rem] outline-none transition duration-300 ease-linear"
+                  :class="getSidebarMenuActiveColor('/admin/reservation-tables')"
+                  data-te-sidenav-link-ref
+                >
+                  Table Availabilities
+                </a>
+              </li>
+
               <li class="relative hover:bg-gray-100 duration-100 rounded-md">
                 <a
                   class="flex font-semibold cursor-pointer items-center truncate rounded-[5px] py-3 pl-7 text-[0.8rem] outline-none transition duration-300 ease-linear"

@@ -177,6 +177,31 @@ export default [
         ]
       },
       {
+        path: 'tables',
+        meta: { middleware: [authorize] },
+        children: [
+          {
+            path: '',
+            name: 'admin.tables.index',
+            component: () => import('@/views/admin/ManageReservation/Tables/Index.vue'),
+            meta: { middleware: [permission('tables.view')] }
+          },
+          {
+            path: 'create',
+            name: 'admin.tables.create',
+            component: () => import('@/views/admin/ManageReservation/Tables/Create.vue'),
+            meta: { middleware: [permission('tables.create')] }
+          },
+          {
+            path: ':slug/edit',
+            name: 'admin.tables.edit',
+            props: true,
+            component: () => import('@/views/admin/ManageReservation/Tables/Edit.vue'),
+            meta: { middleware: [permission('tables.edit')] }
+          }
+        ]
+      },
+      {
         path: 'blog-categories',
         meta: { middleware: [authorize] },
         children: [
