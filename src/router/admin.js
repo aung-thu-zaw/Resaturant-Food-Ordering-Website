@@ -355,6 +355,27 @@ export default [
             meta: { middleware: [permission('roles.edit')] }
           }
         ]
+      },
+      {
+        path: 'assign-role-permissions',
+        meta: { middleware: [authorize] },
+        children: [
+          {
+            path: '',
+            name: 'admin.assign-role-permissions.index',
+            component: () =>
+              import('@/views/admin/AuthorityManagement/AssignRolePermissions/Index.vue'),
+            meta: { middleware: [permission('assign-role-permissions.view')] }
+          },
+          {
+            path: ':id/edit',
+            name: 'admin.assign-role-permissions.edit',
+            props: (route) => ({ id: Number(route.params.id) }),
+            component: () =>
+              import('@/views/admin/AuthorityManagement/AssignRolePermissions/Edit.vue'),
+            meta: { middleware: [permission('assign-role-permissions.edit')] }
+          }
+        ]
       }
     ]
   }
