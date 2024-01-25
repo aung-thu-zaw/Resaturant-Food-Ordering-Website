@@ -288,11 +288,43 @@ export default [
         meta: { middleware: [authorize, permission('send-newsletter.send')] }
       },
       {
+        path: '/admin/registered-accounts',
+        name: 'admin.registered-accounts.index',
+        component: () => import('@/views/admin/AccountManagement/RegisteredAccounts/Index.vue'),
+        meta: { middleware: [authorize, permission('registered-accounts.view')] }
+      },
+      {
+        path: 'admin-manage',
+        meta: { middleware: [authorize] },
+        children: [
+          {
+            path: '',
+            name: 'admin.admin-manage.index',
+            component: () => import('@/views/admin/AccountManagement/AdminManage/Index.vue'),
+            meta: { middleware: [permission('admin-manage.view')] }
+          },
+          {
+            path: 'create',
+            name: 'admin.admin-manage.create',
+            component: () => import('@/views/admin/AccountManagement/AdminManage/Create.vue'),
+            meta: { middleware: [permission('admin-manage.create')] }
+          },
+          {
+            path: ':id/edit',
+            name: 'admin.admin-manage.edit',
+            props: (route) => ({ id: Number(route.params.id) }),
+            component: () => import('@/views/admin/AccountManagement/AdminManage/Edit.vue'),
+            meta: { middleware: [permission('admin-manage.edit')] }
+          }
+        ]
+      },
+      {
         path: '/admin/menu-stock',
         name: 'admin.menu-stock.index',
         component: () => import('@/views/admin/MenuStock/Index.vue')
         // meta: { middleware: [authorize, permission('subscribers.view')] }
       },
+
       {
         path: '/admin/permissions',
         name: 'admin.permissions.index',

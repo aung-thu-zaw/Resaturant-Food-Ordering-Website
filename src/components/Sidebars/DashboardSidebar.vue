@@ -768,32 +768,31 @@ const defaultQueryParams = {
               class="show !visible relative m-0 hidden list-none p-0 data-[te-collapse-show]:block"
               data-te-sidenav-collapse-ref
             >
-              <li class="relative hover:bg-gray-100 duration-100 rounded-md">
-                <a
+              <li
+                v-show="can('registered-accounts.view')"
+                class="relative hover:bg-gray-100 duration-100 rounded-md"
+              >
+                <router-link
+                  :to="{ name: 'admin.registered-accounts.index', query: defaultQueryParams }"
                   class="flex font-semibold cursor-pointer items-center truncate rounded-[5px] py-3 pl-7 text-[0.8rem] outline-none transition duration-300 ease-linear"
                   :class="getSidebarMenuActiveColor('/admin/registered-accounts')"
                   data-te-sidenav-link-ref
                 >
                   Registered Accounts
-                </a>
+                </router-link>
               </li>
-              <li class="relative hover:bg-gray-100 duration-100 rounded-md">
-                <a
+              <li
+                v-show="can('admin-manage.view')"
+                class="relative hover:bg-gray-100 duration-100 rounded-md"
+              >
+                <router-link
+                  :to="{ name: 'admin.admin-manage.index', query: defaultQueryParams }"
                   class="flex font-semibold cursor-pointer items-center truncate rounded-[5px] py-3 pl-7 text-[0.8rem] outline-none transition duration-300 ease-linear"
                   :class="getSidebarMenuActiveColor('/admin/admin-manage')"
                   data-te-sidenav-link-ref
                 >
                   Admin Manage
-                </a>
-              </li>
-              <li class="relative hover:bg-gray-100 duration-100 rounded-md">
-                <a
-                  class="flex font-semibold cursor-pointer items-center truncate rounded-[5px] py-3 pl-7 text-[0.8rem] outline-none transition duration-300 ease-linear"
-                  :class="getSidebarMenuActiveColor('/admin/assign-role-permissions')"
-                  data-te-sidenav-link-ref
-                >
-                  Assign Role Permissions
-                </a>
+                </router-link>
               </li>
             </ul>
           </li>
