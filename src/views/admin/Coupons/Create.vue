@@ -220,6 +220,7 @@ const handleCreateCoupon = async () => {
                 v-model="form.start_date"
                 text-input
                 required
+                :enable-time-picker="false"
                 placeholder="Select Coupon Start Date"
               />
 
@@ -233,6 +234,7 @@ const handleCreateCoupon = async () => {
                 v-model="form.end_date"
                 text-input
                 required
+                :enable-time-picker="false"
                 placeholder="Select Coupon Start Date"
               />
 

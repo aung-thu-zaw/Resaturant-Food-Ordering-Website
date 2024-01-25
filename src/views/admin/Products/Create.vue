@@ -299,13 +299,14 @@ watch(
               </div>
 
               <div>
-                <InputLabel label="Discount End Date ( Time )" :required="isDiscount" />
+                <InputLabel label="Discount End Date" :required="isDiscount" />
 
                 <VueDatePicker
                   v-model="form.discount_end_time"
                   text-input
                   :required="isDiscount"
-                  placeholder="Select End Date ( Time )"
+                  :enable-time-picker="false"
+                  placeholder="Select End Date"
                 />
 
                 <InputError :message="store.errors?.discount_end_time" />

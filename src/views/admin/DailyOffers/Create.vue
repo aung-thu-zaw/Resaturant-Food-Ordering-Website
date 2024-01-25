@@ -86,6 +86,7 @@ const handleCreateDailyOffer = async () => {
                 v-model="form.start_date"
                 text-input
                 required
+                :enable-time-picker="false"
                 placeholder="Select Discount Start Date"
               />
 
@@ -99,6 +100,7 @@ const handleCreateDailyOffer = async () => {
                 v-model="form.end_date"
                 text-input
                 required
+                :enable-time-picker="false"
                 placeholder="Select Discount Start Date"
               />
 

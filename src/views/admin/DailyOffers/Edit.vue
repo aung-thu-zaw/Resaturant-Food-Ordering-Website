@@ -106,6 +106,7 @@ const handleUpdateDailyOffer = async () => await store.updateDailyOffer({ ...for
                 v-model="form.end_date"
                 text-input
                 required
+                :enable-time-picker="false"
                 placeholder="Select Discount Start Date"
               />
 
@@ -121,6 +122,7 @@ const handleUpdateDailyOffer = async () => await store.updateDailyOffer({ ...for
               name="product-price"
               placeholder="Enter Product Discount Percentage"
               required
+              :enable-time-picker="false"
               v-model="form.discount_percentage"
             />
 
