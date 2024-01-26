@@ -7,6 +7,7 @@ export const useCouponStore = defineStore('coupon', {
   state: () => ({
     data: [],
     specificData: null,
+    resources: null,
     responseErrors: null
   }),
 
@@ -43,6 +44,20 @@ export const useCouponStore = defineStore('coupon', {
       }
     },
 
+    async getResources() {
+      try {
+        const apiUrl = `api/admin/resources/for-coupon`
+
+        const response = await this.$axios.get(apiUrl)
+
+        if (!response) throw new Error('Response Not Found!')
+
+        this.resources = response.data
+      } catch (error) {
+        this.responseErrors = error.response?.data?.errors
+      }
+    },
+
     async changeStatus(couponSlug, updatedStatus) {
       try {
         const apiUrl = `/api/admin/coupons/${couponSlug}/change-status`
@@ -65,7 +80,7 @@ export const useCouponStore = defineStore('coupon', {
       }
     },
 
-    async createCategory(formData, createAnother) {
+    async createCoupon(formData, createAnother) {
       try {
         const apiUrl = `/api/admin/coupons`
 
@@ -86,7 +101,7 @@ export const useCouponStore = defineStore('coupon', {
       }
     },
 
-    async updateCategory(formData, couponSlug) {
+    async updateCoupon(formData, couponSlug) {
       try {
         const apiUrl = `/api/admin/coupons/${couponSlug}`
 
@@ -103,7 +118,7 @@ export const useCouponStore = defineStore('coupon', {
       }
     },
 
-    async deleteCategory(couponSlug) {
+    async deleteCoupon(couponSlug) {
       try {
         const apiUrl = `/api/admin/coupons/${couponSlug}`
 
@@ -137,6 +152,7 @@ export const useCouponStore = defineStore('coupon', {
   },
 
   getters: {
+    products: (state) => state.resources,
     coupons: (state) => state.data,
     coupon: (state) => state.specificData,
     errors: (state) => state.responseErrors

@@ -41,7 +41,7 @@ export default [
           {
             path: ':slug/edit',
             name: 'admin.categories.edit',
-            props: true,
+            props: (route) => ({ slug: String(route.params.slug) }),
             component: () => import('@/views/admin/Categories/Edit.vue'),
             meta: { middleware: [authorizePermission('categories.edit')] }
           }
@@ -67,7 +67,7 @@ export default [
           {
             path: ':slug/edit',
             name: 'admin.products.edit',
-            props: true,
+            props: (route) => ({ slug: String(route.params.slug) }),
             component: () => import('@/views/admin/Products/Edit.vue'),
             meta: { middleware: [authorizePermission('products.edit')] }
           }
@@ -127,7 +127,7 @@ export default [
           {
             path: ':slug/edit',
             name: 'admin.coupons.edit',
-            props: (route) => ({ id: Number(route.params.id) }),
+            props: (route) => ({ slug: String(route.params.slug) }),
             component: () => import('@/views/admin/Coupons/Edit.vue'),
             meta: { middleware: [authorizePermission('coupons.edit')] }
           }
@@ -153,7 +153,7 @@ export default [
           {
             path: ':slug/edit',
             name: 'admin.delivery-areas.edit',
-            props: true,
+            props: (route) => ({ slug: String(route.params.slug) }),
             component: () => import('@/views/admin/ManageShipping/DeliveryAreas/Edit.vue'),
             meta: { middleware: [authorizePermission('delivery-areas.edit')] }
           }
@@ -179,7 +179,7 @@ export default [
           {
             path: ':slug/edit',
             name: 'admin.shipping-methods.edit',
-            props: true,
+            props: (route) => ({ slug: String(route.params.slug) }),
             component: () => import('@/views/admin/ManageShipping/ShippingMethods/Edit.vue'),
             meta: { middleware: [authorizePermission('shipping-methods.edit')] }
           }
@@ -205,7 +205,7 @@ export default [
           {
             path: ':slug/edit',
             name: 'admin.tables.edit',
-            props: true,
+            props: (route) => ({ slug: String(route.params.slug) }),
             component: () => import('@/views/admin/ManageReservation/Tables/Edit.vue'),
             meta: { middleware: [authorizePermission('tables.edit')] }
           }
@@ -250,7 +250,7 @@ export default [
           {
             path: ':slug/edit',
             name: 'admin.blog-categories.edit',
-            props: true,
+            props: (route) => ({ slug: String(route.params.slug) }),
             component: () => import('@/views/admin/ManageBlog/BlogCategories/Edit.vue'),
             meta: { middleware: [authorizePermission('blog-categories.edit')] }
           }
@@ -276,7 +276,7 @@ export default [
           {
             path: ':slug/edit',
             name: 'admin.blog-contents.edit',
-            props: true,
+            props: (route) => ({ slug: String(route.params.slug) }),
             component: () => import('@/views/admin/ManageBlog/BlogContents/Edit.vue'),
             meta: { middleware: [authorizePermission('blog-contents.edit')] }
           }

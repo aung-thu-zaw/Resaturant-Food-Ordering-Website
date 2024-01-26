@@ -9,14 +9,20 @@ import SelectBox from '@/components/Forms/Fields/SelectBox.vue'
 import FormButton from '@/components/Buttons/FormButton.vue'
 import GoBackButton from '@/components/Buttons/GoBackButton.vue'
 import { useTitle } from '@vueuse/core'
-import { onMounted, reactive, ref, watch } from 'vue'
+import { onMounted, reactive, watch } from 'vue'
 import { useCouponStore } from '@/stores/dashboard/coupon'
 import { storeToRefs } from 'pinia'
 
-useTitle('Create Coupon - Restaurant Food Ordering')
+useTitle('Edit Coupon - Restaurant Food Ordering')
+
+const props = defineProps({
+  slug: {
+    type: String,
+    required: true
+  }
+})
 
 const store = useCouponStore()
-const isCreateAnother = ref(false)
 const { products } = storeToRefs(store)
 const form = reactive({
   code: '',
@@ -32,26 +38,22 @@ const form = reactive({
   status: ''
 })
 
-onMounted(async () => await store.getResources())
+onMounted(async () => {
+  await store.getResources()
+  await store.getCoupon(props.slug)
 
-const handleCreateCoupon = async () => {
-  await store.createCoupon({ ...form }, isCreateAnother.value)
-  if (isCreateAnother.value && !store.errors) {
-    form.code = ''
-    form.description = ''
-    form.type = ''
-    form.discount_amount = ''
-    form.minimum_order_amount = ''
-    form.usage_limit = ''
-    form.free_item_id = ''
-    form.validity_period = ''
-    form.start_date = ''
-    form.end_date = ''
-    form.status = ''
-
-    store.getResources()
-  }
-}
+  form.code = store.coupon?.code
+  form.description = store.coupon?.description
+  form.type = store.coupon?.type
+  form.discount_amount = store.coupon?.discount_amount
+  form.minimum_order_amount = store.coupon?.minimum_order_amount
+  form.usage_limit = store.coupon?.usage_limit
+  form.free_item_id = store.coupon?.free_item_id
+  form.validity_period = store.coupon?.validity_period
+  form.start_date = store.coupon?.start_date
+  form.end_date = store.coupon?.end_date
+  form.status = store.coupon?.status
+})
 
 watch(
   () => form.type,
@@ -70,6 +72,8 @@ watch(
     if (newPeriod === 'once' || newPeriod === 'forever') form.usage_limit = ''
   }
 )
+
+const handleUpdateCoupon = async () => await store.updateCoupon({ ...form }, props.slug)
 </script>
 
 <template>
@@ -79,7 +83,8 @@ watch(
         class="flex flex-col items-start md:flex-row md:items-center md:justify-between mb-4 md:mb-8"
       >
         <Breadcrumb to="admin.coupons.index" icon="fa-ticket" label="Coupons">
-          <BreadcrumbItem label="Create" />
+          <BreadcrumbItem :label="store.coupon ? store.coupon?.code : ''" />
+          <BreadcrumbItem label="Edit" />
         </Breadcrumb>
 
         <div class="w-full flex items-center justify-end">
@@ -89,7 +94,7 @@ watch(
 
       <!-- Form Start -->
       <div class="border p-10 bg-white rounded-md">
-        <form @submit.prevent="handleCreateCoupon" class="space-y-4 md:space-y-6">
+        <form @submit.prevent="handleUpdateCoupon" class="space-y-4 md:space-y-6">
           <div>
             <InputLabel label="Coupon Code" required />
 
@@ -140,6 +145,7 @@ watch(
                 ]"
                 required
                 v-model="form.type"
+                :selected="form.type"
               />
 
               <InputError :message="store.errors?.type" />
@@ -166,6 +172,7 @@ watch(
                 ]"
                 required
                 v-model="form.validity_period"
+                :selected="form.validity_period"
               />
 
               <InputError :message="store.errors?.validity_period" />
@@ -226,6 +233,7 @@ watch(
                 :options="products ?? {}"
                 required
                 v-model="form.free_item_id"
+                :selected="form.free_item_id"
               />
 
               <InputError :message="store.errors?.free_item_id" />
@@ -279,25 +287,16 @@ watch(
               ]"
               required
               v-model="form.status"
+              :selected="form.status"
             />
 
             <InputError :message="store.errors?.status" />
           </div>
 
           <div class="flex items-center justify-end w-full space-x-5">
-            <FormButton
-              @click="isCreateAnother = true"
-              class="w-[200px] text-white bg-slate-600 hover:bg-slate-700 rounded-md"
-            >
-              Save And Create Another
-            </FormButton>
-
-            <FormButton
-              @click="isCreateAnother = false"
-              class="w-[100px] text-white bg-blue-600 hover:bg-blue-700 rounded-md"
-            >
+            <FormButton class="w-[150px] text-white bg-blue-600 hover:bg-blue-700 rounded-md">
               <i class="fa-solid fa-save"></i>
-              Save
+              Save Changes
             </FormButton>
           </div>
         </form>
