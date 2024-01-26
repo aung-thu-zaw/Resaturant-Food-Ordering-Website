@@ -17,7 +17,11 @@ useTitle('Menu Stock - Restaurant Food Ordering')
       <div
         class="flex flex-col items-start md:flex-row md:items-center md:justify-between mb-4 md:mb-8"
       >
-        <Breadcrumb to="admin.dashboard" icon="fa-wheat-awn-circle-exclamation" label="Menu Stock">
+        <Breadcrumb
+          to="admin.menu-stock.index"
+          icon="fa-wheat-awn-circle-exclamation"
+          label="Menu Stock"
+        >
           <BreadcrumbItem label="List" />
         </Breadcrumb>
       </div>

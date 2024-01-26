@@ -81,7 +81,7 @@ watch(
       <div
         class="flex flex-col items-start md:flex-row md:items-center md:justify-between mb-4 md:mb-8"
       >
-        <Breadcrumb to="admin.dashboard" icon="fa-utensils" label="Products">
+        <Breadcrumb to="admin.products.index" icon="fa-utensils" label="Products">
           <BreadcrumbItem label="List" />
         </Breadcrumb>
       </div>

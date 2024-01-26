@@ -53,7 +53,7 @@ const handleCreateDailyOffer = async () => {
       <div
         class="flex flex-col items-start md:flex-row md:items-center md:justify-between mb-4 md:mb-8"
       >
-        <Breadcrumb to="admin.categories.index" icon="fa-clock" label="Daily Offers">
+        <Breadcrumb to="admin.daily-offers.index" icon="fa-clock" label="Daily Offers">
           <BreadcrumbItem label="Create" />
         </Breadcrumb>
 

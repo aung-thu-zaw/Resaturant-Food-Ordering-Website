@@ -44,7 +44,11 @@ watch(
       <div
         class="flex flex-col items-start md:flex-row md:items-center md:justify-between mb-4 md:mb-8"
       >
-        <Breadcrumb to="admin.dashboard" icon="fa-shield" label="Assign Role Permissions">
+        <Breadcrumb
+          to="admin.assign-role-permissions.index"
+          icon="fa-shield"
+          label="Assign Role Permissions"
+        >
           <BreadcrumbItem label="List" />
         </Breadcrumb>
       </div>

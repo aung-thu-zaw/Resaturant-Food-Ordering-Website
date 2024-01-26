@@ -38,7 +38,7 @@ const handleUpdateBlogCategory = async () => await store.updateBlogCategory({ ..
       <div
         class="flex flex-col items-start md:flex-row md:items-center md:justify-between mb-4 md:mb-8"
       >
-        <Breadcrumb to="admin.categories.index" icon="fa-pen-nib" label="Categories">
+        <Breadcrumb to="admin.blog-categories.index" icon="fa-pen-nib" label="Blog Categories">
           <BreadcrumbItem :label="store.blogCategory ? store.blogCategory?.name : ''" />
           <BreadcrumbItem label="Edit" />
         </Breadcrumb>

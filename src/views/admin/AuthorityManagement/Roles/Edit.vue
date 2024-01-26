@@ -38,7 +38,7 @@ const handleUpdateRole = async () => await store.updateRole({ ...form }, props.i
       <div
         class="flex flex-col items-start md:flex-row md:items-center md:justify-between mb-4 md:mb-8"
       >
-        <Breadcrumb to="admin.categories.index" icon="fa-list" label="Categories">
+        <Breadcrumb to="admin.roles.index" icon="fa-shield" label="Roles">
           <BreadcrumbItem :label="store.role ? store.role?.name : ''" />
           <BreadcrumbItem label="Edit" />
         </Breadcrumb>

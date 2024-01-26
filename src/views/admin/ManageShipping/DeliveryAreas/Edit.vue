@@ -38,7 +38,7 @@ const handleUpdateDeliveryArea = async () => await store.updateDeliveryArea({ ..
       <div
         class="flex flex-col items-start md:flex-row md:items-center md:justify-between mb-4 md:mb-8"
       >
-        <Breadcrumb to="admin.categories.index" icon="fa-truck-fast" label="Delivery Areas">
+        <Breadcrumb to="admin.delivery-areas.index" icon="fa-truck-fast" label="Delivery Areas">
           <BreadcrumbItem :label="store.deliveryArea ? store.deliveryArea?.name : ''" />
           <BreadcrumbItem label="Edit" />
         </Breadcrumb>

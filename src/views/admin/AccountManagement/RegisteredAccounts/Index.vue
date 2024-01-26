@@ -74,7 +74,11 @@ watch(
       <div
         class="flex flex-col items-start md:flex-row md:items-center md:justify-between mb-4 md:mb-8"
       >
-        <Breadcrumb to="admin.dashboard" icon="fa-user-gear" label="Registered Accounts">
+        <Breadcrumb
+          to="admin.registered-accounts.index"
+          icon="fa-user-gear"
+          label="Registered Accounts"
+        >
           <BreadcrumbItem label="List" />
         </Breadcrumb>
       </div>

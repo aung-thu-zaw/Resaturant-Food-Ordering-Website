@@ -69,7 +69,7 @@ watch(
       <div
         class="flex flex-col items-start md:flex-row md:items-center md:justify-between mb-4 md:mb-8"
       >
-        <Breadcrumb to="admin.dashboard" icon="fa-pen-nib" label="Blog Comments">
+        <Breadcrumb to="admin.blog-comments.index" icon="fa-pen-nib" label="Blog Comments">
           <BreadcrumbItem label="List" />
         </Breadcrumb>
       </div>

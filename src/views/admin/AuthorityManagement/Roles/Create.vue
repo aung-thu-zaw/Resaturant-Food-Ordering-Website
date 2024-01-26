@@ -32,7 +32,7 @@ const handleCreateRole = async () => {
       <div
         class="flex flex-col items-start md:flex-row md:items-center md:justify-between mb-4 md:mb-8"
       >
-        <Breadcrumb to="admin.roles.index" icon="fa-list" label="Roles">
+        <Breadcrumb to="admin.roles.index" icon="fa-shield" label="Roles">
           <BreadcrumbItem label="Create" />
         </Breadcrumb>
 
