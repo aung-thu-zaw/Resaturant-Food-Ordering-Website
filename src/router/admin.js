@@ -349,6 +349,59 @@ export default [
         meta: { middleware: [authorizePermission('subscribers.view')] }
       },
 
+      /***** Employee Positions *****/
+      {
+        path: 'employee-positions',
+        children: [
+          {
+            path: '',
+            name: 'admin.employee-positions.index',
+            component: () => import('@/views/admin/EmployeeManagement/EmployeePositions/Index.vue'),
+            meta: { middleware: [authorizePermission('employee-positions.view')] }
+          },
+          {
+            path: 'create',
+            name: 'admin.employee-positions.create',
+            component: () =>
+              import('@/views/admin/EmployeeManagement/EmployeePositions/Create.vue'),
+            meta: { middleware: [authorizePermission('employee-positions.create')] }
+          },
+          {
+            path: ':slug/edit',
+            name: 'admin.employee-positions.edit',
+            props: (route) => ({ slug: String(route.params.slug) }),
+            component: () => import('@/views/admin/EmployeeManagement/EmployeePositions/Edit.vue'),
+            meta: { middleware: [authorizePermission('employee-positions.edit')] }
+          }
+        ]
+      },
+
+      /***** Employees *****/
+      // {
+      //   path: 'employees',
+      //   children: [
+      //     {
+      //       path: '',
+      //       name: 'admin.employees.index',
+      //       component: () => import('@/views/admin/EmployeeManagement/Employees/Index.vue'),
+      //       meta: { middleware: [authorizePermission('employees.view')] }
+      //     },
+      //     {
+      //       path: 'create',
+      //       name: 'admin.employees.create',
+      //       component: () => import('@/views/admin/EmployeeManagement/Employees/Create.vue'),
+      //       meta: { middleware: [authorizePermission('employees.create')] }
+      //     },
+      //     {
+      //       path: ':id/edit',
+      //       name: 'admin.employees.edit',
+      //       props: (route) => ({ id: Number(route.params.id) }),
+      //       component: () => import('@/views/admin/EmployeeManagement/Employees/Edit.vue'),
+      //       meta: { middleware: [authorizePermission('employees.edit')] }
+      //     }
+      //   ]
+      // },
+
       /***** Permissions *****/
       {
         path: '/admin/permissions',

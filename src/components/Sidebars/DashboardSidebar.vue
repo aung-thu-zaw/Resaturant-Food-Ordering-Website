@@ -639,6 +639,19 @@ const defaultQueryParams = {
               class="show !visible relative m-0 hidden list-none p-0 data-[te-collapse-show]:block"
               data-te-sidenav-collapse-ref
             >
+              <li
+                v-show="can('employee-positions.view')"
+                class="relative hover:bg-gray-100 duration-100 rounded-md"
+              >
+                <router-link
+                  :to="{ name: 'admin.employee-positions.index', query: defaultQueryParams }"
+                  class="flex font-semibold cursor-pointer items-center truncate rounded-[5px] py-3 pl-7 text-[0.8rem] outline-none transition duration-300 ease-linear"
+                  :class="getSidebarMenuActiveColor('/admin/employee-positions')"
+                  data-te-sidenav-link-ref
+                >
+                  Positions
+                </router-link>
+              </li>
               <li class="relative hover:bg-gray-100 duration-100 rounded-md">
                 <a
                   class="flex font-semibold cursor-pointer items-center truncate rounded-[5px] py-3 pl-7 text-[0.8rem] outline-none transition duration-300 ease-linear"
