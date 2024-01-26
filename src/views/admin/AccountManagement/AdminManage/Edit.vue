@@ -149,7 +149,7 @@ const handleUpdateAdmin = async () => await store.updateAdmin({ ...form }, props
               <InputError :message="store.errors?.password_confirmation" />
             </div>
           </div>
-          {{ form }}
+
           <div>
             <InputLabel label="Role" required />
 

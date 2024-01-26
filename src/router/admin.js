@@ -377,30 +377,30 @@ export default [
       },
 
       /***** Employees *****/
-      // {
-      //   path: 'employees',
-      //   children: [
-      //     {
-      //       path: '',
-      //       name: 'admin.employees.index',
-      //       component: () => import('@/views/admin/EmployeeManagement/Employees/Index.vue'),
-      //       meta: { middleware: [authorizePermission('employees.view')] }
-      //     },
-      //     {
-      //       path: 'create',
-      //       name: 'admin.employees.create',
-      //       component: () => import('@/views/admin/EmployeeManagement/Employees/Create.vue'),
-      //       meta: { middleware: [authorizePermission('employees.create')] }
-      //     },
-      //     {
-      //       path: ':id/edit',
-      //       name: 'admin.employees.edit',
-      //       props: (route) => ({ id: Number(route.params.id) }),
-      //       component: () => import('@/views/admin/EmployeeManagement/Employees/Edit.vue'),
-      //       meta: { middleware: [authorizePermission('employees.edit')] }
-      //     }
-      //   ]
-      // },
+      {
+        path: 'employees',
+        children: [
+          {
+            path: '',
+            name: 'admin.employees.index',
+            component: () => import('@/views/admin/EmployeeManagement/Employees/Index.vue'),
+            meta: { middleware: [authorizePermission('employees.view')] }
+          },
+          {
+            path: 'create',
+            name: 'admin.employees.create',
+            component: () => import('@/views/admin/EmployeeManagement/Employees/Create.vue'),
+            meta: { middleware: [authorizePermission('employees.create')] }
+          },
+          {
+            path: ':id/edit',
+            name: 'admin.employees.edit',
+            props: (route) => ({ id: Number(route.params.id) }),
+            component: () => import('@/views/admin/EmployeeManagement/Employees/Edit.vue'),
+            meta: { middleware: [authorizePermission('employees.edit')] }
+          }
+        ]
+      },
 
       /***** Permissions *****/
       {
