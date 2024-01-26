@@ -150,7 +150,7 @@ watch(
 
               <SortableTableHeaderCell label="Response Status" sort="response_status" />
 
-              <TableHeaderCell label="Change Status" />
+              <TableHeaderCell v-show="can('product-reviews.edit')" label="Change Status" />
 
               <TableHeaderCell label="Actions" />
             </template>
@@ -212,6 +212,7 @@ watch(
               </TableDataCell>
 
               <TableSelectBoxCell
+                v-show="can('product-reviews.edit')"
                 @change="handleStatusChange(item.id, $event)"
                 :options="[
                   {

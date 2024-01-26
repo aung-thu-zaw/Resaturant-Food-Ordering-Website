@@ -120,7 +120,7 @@ watch(
 
               <SortableTableHeaderCell label="Status" sort="status" />
 
-              <TableHeaderCell label="Change Status" />
+              <TableHeaderCell v-show="can('coupons.edit')" label="Change Status" />
 
               <TableHeaderCell label="Actions" />
             </template>
@@ -177,6 +177,7 @@ watch(
               </TableDataCell>
 
               <TableSelectBoxCell
+                v-show="can('coupons.edit')"
                 @change="handleStatusChange(item.slug, $event)"
                 :options="[
                   {

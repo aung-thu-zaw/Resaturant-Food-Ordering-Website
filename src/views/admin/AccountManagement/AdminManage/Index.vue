@@ -129,7 +129,7 @@ watch(
 
               <SortableTableHeaderCell label="Status" sort="status" />
 
-              <TableHeaderCell label="Change Status" />
+              <TableHeaderCell v-show="can('admin-manage.edit')" label="Change Status" />
 
               <TableHeaderCell label="Actions" />
             </template>
@@ -166,6 +166,7 @@ watch(
               </TableDataCell>
 
               <TableSelectBoxCell
+                v-show="can('admin-manage.edit')"
                 @change="handleStatusChange(item.id, $event)"
                 :options="[
                   {

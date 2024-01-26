@@ -304,7 +304,7 @@ export default [
         path: '/admin/send-newsletter',
         name: 'admin.send-newsletter',
         component: () => import('@/views/admin/Newsletter/SendNewsletter.vue'),
-        meta: { middleware: [authorizePermission('send-newsletter.send')] }
+        meta: { middleware: [authorizePermission('newsletter.send')] }
       },
 
       /***** Registered Account *****/
