@@ -1,6 +1,6 @@
 import { useAuthStore } from '@/stores/auth'
 
-export default async function authorizeMiddleware(to, from, next) {
+export default async function authorize(to, from, next) {
   const authStore = useAuthStore()
 
   if (!authStore.currentUser) await authStore.getAuthenticatedUser()

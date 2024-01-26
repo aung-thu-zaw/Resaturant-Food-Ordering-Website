@@ -66,7 +66,7 @@ const handleUpdateAssignRolePermissions = async () =>
           <BreadcrumbItem label="Edit" />
         </Breadcrumb>
 
-        <div class="w-auto flex items-center justify-end">
+        <div class="w-full flex items-center justify-end">
           <GoBackButton />
         </div>
       </div>

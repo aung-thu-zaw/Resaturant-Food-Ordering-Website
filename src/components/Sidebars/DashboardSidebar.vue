@@ -206,7 +206,10 @@ const defaultQueryParams = {
           </li>
 
           <!-- Manage Shipping -->
-          <li class="items-center">
+          <li
+            v-show="can('delivery-areas.view') || can('shipping-methods.view')"
+            class="items-center"
+          >
             <a
               class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] text-slate-600 hover:text-slate-800 outline-none transition duration-300 ease-linear"
               data-te-sidenav-link-ref
@@ -267,7 +270,7 @@ const defaultQueryParams = {
           </li>
 
           <!-- Manage Reservations -->
-          <li class="items-center">
+          <li v-show="can('tables.view') || can('reservation-times.view')" class="items-center">
             <a
               class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] text-slate-600 hover:text-slate-800 outline-none transition duration-300 ease-linear"
               data-te-sidenav-link-ref
@@ -347,7 +350,12 @@ const defaultQueryParams = {
           </li>
 
           <!-- Manage Blogs -->
-          <li class="items-center">
+          <li
+            v-show="
+              can('blog-categories.view') || can('blog-contents.view') || can('blog-comments.view')
+            "
+            class="items-center"
+          >
             <a
               class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] text-slate-600 hover:text-slate-800 outline-none transition duration-300 ease-linear"
               data-te-sidenav-link-ref
@@ -421,7 +429,7 @@ const defaultQueryParams = {
           </li>
 
           <!-- Manage Shipping -->
-          <li class="items-center">
+          <li v-show="can('subscribers.view') || can('newsletter.send')" class="items-center">
             <a
               class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] text-slate-600 hover:text-slate-800 outline-none transition duration-300 ease-linear"
               data-te-sidenav-link-ref
@@ -737,7 +745,10 @@ const defaultQueryParams = {
           </li>
 
           <!-- Account Management -->
-          <li class="items-center">
+          <li
+            v-show="can('registered-accounts.view') || can('admin-manage.view')"
+            class="items-center"
+          >
             <a
               class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] text-slate-600 hover:text-slate-800 outline-none transition duration-300 ease-linear"
               data-te-sidenav-link-ref
@@ -798,7 +809,12 @@ const defaultQueryParams = {
           </li>
 
           <!-- Authority Management -->
-          <li class="items-center">
+          <li
+            v-show="
+              can('permissions.view') || can('roles.view') || can('assign-role-permissions.view')
+            "
+            class="items-center"
+          >
             <a
               class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] text-slate-600 hover:text-slate-800 outline-none transition duration-300 ease-linear"
               data-te-sidenav-link-ref
