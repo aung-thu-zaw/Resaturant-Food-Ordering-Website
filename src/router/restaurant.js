@@ -6,6 +6,13 @@ export default [
     component: () => import('@/views/restaurant/Home.vue')
   },
 
+  /***** Chef *****/
+  {
+    path: '/chefs',
+    name: 'chefs',
+    component: () => import('@/views/restaurant/Chefs.vue')
+  },
+
   /***** Menu *****/
   {
     path: '/menu',

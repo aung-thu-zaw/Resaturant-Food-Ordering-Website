@@ -127,11 +127,13 @@ const router = useRouter()
               >
             </li>
             <li>
-              <a
-                href="#"
+              <router-link
+                :to="{ name: 'chefs' }"
                 class="block py-2 pl-3 pr-4 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-orange-500 md:p-0"
-                >Chefs</a
+                :class="{ 'text-orange-500': router.currentRoute.value.path === '/chefs' }"
               >
+                Chefs
+              </router-link>
             </li>
 
             <li>
