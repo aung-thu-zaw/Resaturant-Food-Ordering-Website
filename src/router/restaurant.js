@@ -23,5 +23,12 @@ export default [
     path: '/blogs/:slug',
     name: 'blogs.detail',
     component: () => import('@/views/restaurant/Blogs/Show.vue')
+  },
+
+  /***** Contact *****/
+  {
+    path: '/contact',
+    name: 'contact',
+    component: () => import('@/views/restaurant/Contact.vue')
   }
 ]
