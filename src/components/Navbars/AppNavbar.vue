@@ -2,8 +2,10 @@
 import FoodSearchBox from '@/components/Forms/SearchBoxs/FoodSearchBox.vue'
 import UserDropdown from '@/components/Dropdowns/UserDropdown.vue'
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 
 const searchBox = ref(false)
+const router = useRouter()
 </script>
 
 <template>
@@ -109,13 +111,13 @@ const searchBox = ref(false)
             class="flex flex-col p-4 md:p-0 mt-4 border text-slate-800 border-gray-100 rounded-lg bg-transparent md:flex-row md:space-x-8 md:mt-0 md:border-0"
           >
             <li>
-              <a
-                href="#"
+              <router-link
+                :to="{ name: 'home' }"
                 class="block py-2 pl-3 pr-4 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-orange-500 md:p-0"
-                aria-current="page"
+                :class="{ 'text-orange-500': router.currentRoute.value.path === '/' }"
               >
                 Home
-              </a>
+              </router-link>
             </li>
             <li>
               <a
@@ -133,11 +135,13 @@ const searchBox = ref(false)
             </li>
 
             <li>
-              <a
-                href="#"
+              <router-link
+                :to="{ name: 'menu' }"
                 class="block py-2 pl-3 pr-4 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-orange-500 md:p-0"
-                >Menu</a
+                :class="{ 'text-orange-500': router.currentRoute.value.path === '/menu' }"
               >
+                Menu
+              </router-link>
             </li>
             <li>
               <a
@@ -204,7 +208,7 @@ const searchBox = ref(false)
           <li>
             <a
               href="#"
-              class="block py-2 pl-3 pr-4 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0"
+              class="block py-2 pl-3 pr-4 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-purpleDark md:p-0"
               aria-current="page"
               >Home</a
             >
@@ -212,14 +216,14 @@ const searchBox = ref(false)
           <li>
             <a
               href="#"
-              class="block py-2 pl-3 pr-4 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0"
+              class="block py-2 pl-3 pr-4 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-purpleDark md:p-0"
               >About</a
             >
           </li>
           <li>
             <a
               href="#"
-              class="block py-2 pl-3 pr-4 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0"
+              class="block py-2 pl-3 pr-4 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-purpleDark md:p-0"
               >Chefs</a
             >
           </li>
@@ -227,14 +231,14 @@ const searchBox = ref(false)
           <li>
             <a
               href="#"
-              class="block py-2 pl-3 pr-4 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0"
+              class="block py-2 pl-3 pr-4 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-purpleDark md:p-0"
               >Blogs</a
             >
           </li>
           <li>
             <a
               href="#"
-              class="block py-2 pl-3 pr-4 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0"
+              class="block py-2 pl-3 pr-4 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-purpleDark md:p-0"
               >Menus</a
             >
           </li>
@@ -242,7 +246,7 @@ const searchBox = ref(false)
           <li>
             <a
               href="#"
-              class="block py-2 pl-3 pr-4 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0"
+              class="block py-2 pl-3 pr-4 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-purpleDark md:p-0"
               >Contact</a
             >
           </li>

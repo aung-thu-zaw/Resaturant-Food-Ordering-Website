@@ -1,0 +1,77 @@
+<script setup>
+// import { ref, watch } from 'vue'
+// import { useRoute, useRouter } from 'vue-router'
+
+const props = defineProps({
+  options: {
+    type: Object,
+    required: true
+  },
+  selected: {
+    type: [String, Boolean],
+    required: true
+  },
+  disabled: {
+    type: Boolean,
+    default: false
+  },
+  modelValue: {
+    type: [String, Number, Boolean],
+    default: ''
+  },
+  placeholder: {
+    type: String,
+    default: 'Filter By Category'
+  }
+})
+
+// const route = useRoute()
+// const router = useRouter()
+// const currentCategory = ref(route.query.category ?? '')
+
+// watch(
+//   () => currentCategory.value,
+//   (newCategory) => {
+//     router.push({ query: { ...route.query, category: newCategory } })
+//   }
+// )
+
+defineEmits(['update:modelValue'])
+
+const optionLabel = (option) => {
+  return option.name || option.label
+}
+
+const optionValue = (option) => {
+  return option.slug || option.value
+}
+
+const isSelected = (option) => {
+  return props.selected === optionValue(option)
+}
+
+// watch(
+//   () => route.query,
+//   () => {
+//     if (!route.query.category) currentCategory.value = ''
+//   }
+// )
+</script>
+
+<template>
+  <select
+    id="filter-by-category"
+    class="p-3 py-[17.5px] font-semibold text-sm text-gray-700 rounded-md bg-gray-50 outline-none focus:ring-2 focus:ring-slate-300 border border-gray-300 focus:border-slate-400"
+  >
+    <option value="" :selected="modelValue === ''" disabled>{{ placeholder }}</option>
+    <option
+      v-for="(option, index) in options"
+      :key="index"
+      :value="optionValue(option)"
+      :selected="isSelected(option)"
+      @input="$emit('update:modelValue', $event.target.value)"
+    >
+      {{ optionLabel(option) }}
+    </option>
+  </select>
+</template>
