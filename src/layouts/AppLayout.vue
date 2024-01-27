@@ -1,8 +1,12 @@
 <script setup>
+import AppNavbar from '@/components/Navbars/AppNavbar.vue'
+import AppFooter from '@/components/AppFooter.vue'
+import ScrollToTopButton from '@/components/Buttons/ScrollToTopButton.vue'
 import { useAuthStore } from '@/stores/auth'
 import { onMounted } from 'vue'
 import { toast } from 'vue3-toastify'
 import 'vue3-toastify/dist/index.css'
+import { Dropdown, Ripple, Sidenav, Carousel, Select, initTE } from 'tw-elements'
 
 const authStore = useAuthStore()
 
@@ -10,20 +14,19 @@ onMounted(async () => {
   if (authStore.message) toast.success(authStore.message, { autoClose: 2000 })
 
   if (!authStore.isAuthenticated) await authStore.getAuthenticatedUser()
+
+  initTE({ Dropdown, Ripple, Sidenav, Carousel, Select })
 })
 </script>
 
 <template>
-  <div>
-    =========================
-    <br />
-    {{ authStore.currentUser }}
-    <br />
+  <div class="min-h-screen bg-white font-roboto">
+    <ScrollToTopButton />
 
-    {{ authStore.isAuthenticated }}
-    =========================
+    <AppNavbar />
 
-    <button v-show="authStore.isAuthenticated" @click="authStore.logout">Logout</button>
     <slot />
+
+    <AppFooter />
   </div>
 </template>

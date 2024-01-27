@@ -23,7 +23,7 @@ const authStore = useAuthStore()
             src="https://rare-gallery.com/thumbs/5408546-woman-female-girl-photographer-camera-beanie-pine-holding-hand-jean-jacket-red-film-caucasian-blonde-photography-nature-exterior-hat-vintage-contax-creative-commons-images.jpg"
           />
         </span>
-        <span class="font-bold text-sm ml-2 text-slate-600 hidden md:block">Aung Thu Zaw</span>
+        <!-- <span class="font-bold text-md ml-2 text-slate-600 hidden md:block">Aung Thu Zaw</span> -->
       </div>
     </button>
 

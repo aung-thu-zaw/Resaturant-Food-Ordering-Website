@@ -7,7 +7,7 @@ defineProps({ rating: [Number, String] })
     <template v-for="starIndex in 5" :key="starIndex">
       <svg
         :class="{
-          'text-yellow-400': rating >= starIndex,
+          'text-orange-500': rating >= starIndex,
           'text-gray-300': rating < starIndex
         }"
         class="flex-shrink-0 w-3.5 h-3.5"
