@@ -1,10 +1,9 @@
 <script setup>
 import AppLayout from '@/layouts/AppLayout.vue'
-import ProductCard from '@/components/Cards/ProductCard.vue'
+import BlogCard from '@/components/Cards/BlogCard.vue'
 import InputField from '@/components/Forms/Fields/InputField.vue'
 import FilterByCategory from '@/components/Forms/SelectBoxs/FilterByCategory.vue'
-import MenuFilterByRating from '@/components/Forms/SelectBoxs/MenuFilterByRating.vue'
-import MenuSortBy from '@/components/Forms/SelectBoxs/MenuSortBy.vue'
+import BlogSortBy from '@/components/Forms/SelectBoxs/BlogSortBy.vue'
 </script>
 
 <template>
@@ -12,11 +11,11 @@ import MenuSortBy from '@/components/Forms/SelectBoxs/MenuSortBy.vue'
     <section class="background">
       <div class="bg-purpleDark bg-opacity-60">
         <div class="container mx-auto py-24 space-y-5">
-          <h1 class="font-bold text-5xl text-white">Our Foods Menu</h1>
+          <h1 class="font-bold text-5xl text-white">Our News & Blogs</h1>
           <div class="font-bold text-md space-x-3">
             <span class="text-white">Home</span>
             <span class="text-white"> <i class="fa-solid fa-arrow-right"></i> </span>
-            <span class="text-orange-500">Menu</span>
+            <span class="text-orange-500">Blogs</span>
           </div>
         </div>
       </div>
@@ -27,30 +26,28 @@ import MenuSortBy from '@/components/Forms/SelectBoxs/MenuSortBy.vue'
         <div class="bg-white border p-5 rounded-md">
           <div class="flex items-center justify-between">
             <div class="w-[350px]">
-              <InputField type="text" name="search" placeholder="Search menu..." />
+              <InputField type="text" name="search" placeholder="Search blog..." />
             </div>
             <div class="space-x-5">
               <FilterByCategory />
 
-              <MenuFilterByRating />
-
-              <MenuSortBy />
+              <BlogSortBy />
             </div>
           </div>
 
           <div></div>
         </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <BlogCard />
+          <BlogCard />
+          <BlogCard />
+          <BlogCard />
+          <BlogCard />
+          <BlogCard />
+          <BlogCard />
+          <BlogCard />
+          <BlogCard />
+          <BlogCard />
         </div>
       </div>
     </section>
@@ -59,7 +56,7 @@ import MenuSortBy from '@/components/Forms/SelectBoxs/MenuSortBy.vue'
 
 <style scoped>
 .background {
-  background-image: url('https://images7.alphacoders.com/132/1324477.png');
+  background-image: url('https://www.highspeedtraining.co.uk/hub/wp-content/uploads/2021/05/how-to-become-a-food-blogger-fi-1.jpg');
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;

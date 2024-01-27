@@ -144,11 +144,13 @@ const router = useRouter()
               </router-link>
             </li>
             <li>
-              <a
-                href="#"
+              <router-link
+                :to="{ name: 'blogs.index' }"
                 class="block py-2 pl-3 pr-4 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-orange-500 md:p-0"
-                >Blogs</a
+                :class="{ 'text-orange-500': router.currentRoute.value.path === '/blogs' }"
               >
+                Blogs
+              </router-link>
             </li>
 
             <li>
