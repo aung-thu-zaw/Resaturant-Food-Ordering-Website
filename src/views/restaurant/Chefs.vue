@@ -39,9 +39,8 @@ import OurTeamCard from '@/components/Cards/OurTeamCard.vue'
 
 <style scoped>
 .background {
-  background-image: url('https://images7.alphacoders.com/132/1324477.png');
+  background-image: url('https://www.thechefisonthetable.com/wp-content/uploads/2019/09/restaurant-chef.jpg');
   background-repeat: no-repeat;
-  background-position: center;
   background-size: cover;
 }
 </style>

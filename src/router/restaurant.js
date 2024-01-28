@@ -6,6 +6,13 @@ export default [
     component: () => import('@/views/restaurant/Home.vue')
   },
 
+  /***** About *****/
+  {
+    path: '/about-us',
+    name: 'about-us',
+    component: () => import('@/views/restaurant/About.vue')
+  },
+
   /***** Chef *****/
   {
     path: '/chefs',
@@ -17,7 +24,12 @@ export default [
   {
     path: '/menu',
     name: 'menu',
-    component: () => import('@/views/restaurant/Menu.vue')
+    component: () => import('@/views/restaurant/Menu/Index.vue')
+  },
+  {
+    path: '/menu/detail',
+    name: 'menu.detail',
+    component: () => import('@/views/restaurant/Menu/Show.vue')
   },
 
   /***** Blog *****/

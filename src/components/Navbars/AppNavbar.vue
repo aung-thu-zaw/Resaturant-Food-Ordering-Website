@@ -13,7 +13,7 @@ const router = useRouter()
     <div class="bg-purpleDark h-[50px]">
       <h1></h1>
     </div>
-    <div class="w-full bg-white">
+    <div class="w-full bg-white border-b border-gray-20 shadow shadow-gray-200">
       <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl p-4">
         <a href="" class="flex items-center">
           <img src="../../assets/images/logo-color.png" class="h-12 mr-3" alt="restaurant" />
@@ -120,11 +120,13 @@ const router = useRouter()
               </router-link>
             </li>
             <li>
-              <a
-                href="#"
+              <router-link
+                :to="{ name: 'about-us' }"
                 class="block py-2 pl-3 pr-4 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-orange-500 md:p-0"
-                >About</a
+                :class="{ 'text-orange-500': router.currentRoute.value.path === '/about-us' }"
               >
+                About
+              </router-link>
             </li>
             <li>
               <router-link
@@ -140,7 +142,11 @@ const router = useRouter()
               <router-link
                 :to="{ name: 'menu' }"
                 class="block py-2 pl-3 pr-4 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-orange-500 md:p-0"
-                :class="{ 'text-orange-500': router.currentRoute.value.path === '/menu' }"
+                :class="{
+                  'text-orange-500':
+                    router.currentRoute.value.path === '/menu' ||
+                    router.currentRoute.value.path.startsWith('/menu')
+                }"
               >
                 Menu
               </router-link>
