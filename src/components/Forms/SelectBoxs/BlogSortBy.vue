@@ -15,12 +15,15 @@
 </script>
 
 <template>
-  <select
-    id="menu-sortby"
-    class="p-3 py-[17.5px] font-semibold text-sm text-gray-700 rounded-md bg-gray-50 outline-none focus:ring-2 focus:ring-slate-300 border border-gray-300 focus:border-slate-400"
-  >
-    <option selected disabled>Sort By</option>
-    <option value="1">Latest</option>
-    <option value="2">Earliest</option>
-  </select>
+  <div>
+    <label for="sort" class="font-bold text-sm text-slate-800"> Sort By : </label>
+    <select
+      id="menu-sortby"
+      class="px-3 py-3.5 font-semibold text-sm text-gray-700 rounded-md bg-gray-50 outline-none focus:ring-2 focus:ring-slate-300 border border-gray-300 focus:border-slate-400"
+    >
+      <option selected disabled>Sort By</option>
+      <option value="1">Latest</option>
+      <option value="2">Earliest</option>
+    </select>
+  </div>
 </template>

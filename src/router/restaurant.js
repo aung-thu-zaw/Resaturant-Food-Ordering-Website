@@ -39,7 +39,7 @@ export default [
     component: () => import('@/views/restaurant/Blogs/Index.vue')
   },
   {
-    path: '/blogs/:slug',
+    path: '/blogs/detail',
     name: 'blogs.detail',
     component: () => import('@/views/restaurant/Blogs/Show.vue')
   },
