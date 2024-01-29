@@ -17,8 +17,10 @@ const getCategorySlug = (slug) => (categorySlug.value = slug)
 
 watch(
   () => categorySlug.value,
-  () =>
+  () => {
     router.push({ name: 'blogs.index', query: { ...route.query, category: categorySlug.value } })
+    window.scrollTo(0, 0)
+  }
 )
 </script>
 

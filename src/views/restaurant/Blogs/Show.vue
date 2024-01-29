@@ -12,13 +12,17 @@ import { useTitle } from '@vueuse/core'
 import { useBlogStore } from '@/stores/restaurant/blog'
 import { storeToRefs } from 'pinia'
 import { onMounted, watch } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 
 const props = defineProps({ slug: String })
 const store = useBlogStore()
+const router = useRouter()
 const route = useRoute()
 
 const { blog, relatedBlogs } = storeToRefs(store)
+
+const blogFilteredByTag = (tag) =>
+  router.push({ name: 'blogs.index', query: { ...route.query, tag } })
 
 const fetchData = async () => {
   await store.getBlog(props?.slug)
@@ -118,6 +122,7 @@ watch(
                     :key="tag.id"
                     type="button"
                     class="px-3 py-1 bg-orange-600 rounded-full text-white text-xs capitalize font-bold hover:bg-orange-700 transition-all"
+                    @click="blogFilteredByTag(tag.name)"
                   >
                     {{ tag.name }}
                   </button>

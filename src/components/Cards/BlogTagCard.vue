@@ -17,7 +17,10 @@ const getTag = (tag) => (currentTag.value = tag)
 
 watch(
   () => currentTag.value,
-  () => router.push({ name: 'blogs.index', query: { ...route.query, tag: currentTag.value } })
+  () => {
+    router.push({ name: 'blogs.index', query: { ...route.query, tag: currentTag.value } })
+    window.scrollTo(0, 0)
+  }
 )
 </script>
 
