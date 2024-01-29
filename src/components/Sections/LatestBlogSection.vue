@@ -19,7 +19,7 @@ onMounted(async () => await store.getAllResources())
         <p class="text-2xl md:text-4xl font-extrabold text-purpleDark">Our Latest Foods Blog</p>
       </div>
       <div class="">
-        <BlogCarousel :latestBlogs="latestBlogs" />
+        <BlogCarousel :latestBlogs="latestBlogs" data-aos="zoom-out" data-aos-duration="1000" />
       </div>
     </div>
   </section>

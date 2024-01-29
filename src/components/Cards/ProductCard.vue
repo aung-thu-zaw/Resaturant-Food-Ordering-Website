@@ -18,18 +18,36 @@ const avgRating = computed(() => {
 
   return null
 })
+
+const discountPercentage = computed(() => {
+  const discountPercentage =
+    ((props.product?.base_price - props.product?.discount_price) / props.product?.base_price) * 100
+
+  return Math.round(discountPercentage)
+})
 </script>
 
 <template>
   <div
-    class="rounded-[5px] bg-white border border-gray-200 shadow-sm text-center flex flex-col items-center justify-start w-[300px] h-[400px]"
+    class="group rounded-[5px] bg-white border border-gray-200 shadow-sm text-center flex flex-col items-center justify-start h-[400px] overflow-hidden"
   >
-    <a href="#!" class="w-full h-[220px]">
+    <a
+      href="#!"
+      class="relative w-full h-[220px] overflow-hidden"
+      data-te-ripple-init
+      data-te-ripple-color="light"
+    >
       <img
-        class="rounded-t-[5px] w-full h-full object-cover"
+        class="rounded-t-[5px] w-full h-full object-cover group-hover:scale-110 duration-300 transition-all"
         :src="product?.image"
         :alt="product?.name"
       />
+      <span
+        v-show="product?.discount_price"
+        class="absolute top-0 end-0 rounded-se-md rounded-es-xl text-xs font-medium bg-orange-500 text-white py-1.5 px-3"
+      >
+        {{ discountPercentage }}% OFF
+      </span>
     </a>
 
     <div class="p-5">

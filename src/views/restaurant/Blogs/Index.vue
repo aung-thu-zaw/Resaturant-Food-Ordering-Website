@@ -45,7 +45,7 @@ const handleUpdatedData = (data) => {
 
 <template>
   <AppLayout>
-    <section class="background">
+    <section class="background" data-aos="zoom-out" data-aos-duration="1000">
       <div class="bg-purpleDark bg-opacity-60">
         <div class="container mx-auto py-24 space-y-5">
           <h1 class="font-bold text-5xl text-white">Our News & Blogs</h1>
@@ -107,10 +107,22 @@ const handleUpdatedData = (data) => {
                 v-if="route.query?.view === 'grid'"
                 class="grid grid-cols-1 md:grid-cols-3 gap-3"
               >
-                <BlogGridCard v-for="blog in blogs.data" :key="blog.id" :blog="blog" />
+                <BlogGridCard
+                  v-for="blog in blogs.data"
+                  :key="blog.id"
+                  :blog="blog"
+                  data-aos="fade-in"
+                  data-aos-duration="1000"
+                />
               </div>
               <div v-if="route.query?.view === 'list'">
-                <BlogListCard v-for="blog in blogs.data" :key="blog.id" :blog="blog" />
+                <BlogListCard
+                  v-for="blog in blogs.data"
+                  :key="blog.id"
+                  :blog="blog"
+                  data-aos="fade-in"
+                  data-aos-duration="1000"
+                />
               </div>
 
               <div class="flex items-center justify-center mt-14">
@@ -150,7 +162,7 @@ const handleUpdatedData = (data) => {
 
 <style scoped>
 .background {
-  background-image: url('https://www.highspeedtraining.co.uk/hub/wp-content/uploads/2021/05/how-to-become-a-food-blogger-fi-1.jpg');
+  background-image: url('../../../assets/images/blog-cover.webp');
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;

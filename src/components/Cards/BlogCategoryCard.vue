@@ -27,6 +27,8 @@ watch(
 <template>
   <div
     class="p-5 border border-gray-300 rounded-md bg-white flex flex-col w-full items-center space-y-5"
+    data-aos="fade-in"
+    data-aos-duration="1000"
   >
     <h1 class="font-bold text-orange-500 text-lg pb-3 border-b-2 border-b-orange-400 w-full">
       - Categories

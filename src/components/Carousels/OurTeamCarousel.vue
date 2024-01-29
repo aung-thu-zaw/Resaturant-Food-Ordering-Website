@@ -53,7 +53,7 @@ const goPrev = () => {
             :key="chef?.id"
             class="flex flex-shrink-0 relative rounded-md overflow-hidden"
           >
-            <OurTeamCard :chef="chef" />
+            <OurTeamCard :chef="chef" data-aos="zoom-out" data-aos-duration="800" />
           </div>
         </div>
       </div>

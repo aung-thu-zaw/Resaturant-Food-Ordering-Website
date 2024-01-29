@@ -12,7 +12,7 @@ onMounted(() => window.scrollTo(0, 0))
 
 <template>
   <AppLayout>
-    <section class="background">
+    <section class="background" data-aos="zoom-out" data-aos-duration="1000">
       <div class="bg-purpleDark bg-opacity-60">
         <div class="container mx-auto py-24 space-y-5">
           <h1 class="font-bold text-5xl text-white">Our Foods Menu</h1>
@@ -27,7 +27,7 @@ onMounted(() => window.scrollTo(0, 0))
 
     <section class="py-10 bg-gray-50">
       <div class="container mx-auto space-y-10">
-        <div class="bg-white border p-5 rounded-md">
+        <div class="bg-white border p-5 rounded-md" data-aos="zoom-in" data-aos-duration="1000">
           <div class="flex items-center justify-between">
             <div class="w-[350px]">
               <InputField type="text" name="search" placeholder="Search menu..." />
@@ -44,16 +44,16 @@ onMounted(() => window.scrollTo(0, 0))
           <div></div>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
+          <ProductCard data-aos="fade-in" data-aos-duration="1000" />
+          <ProductCard data-aos="fade-in" data-aos-duration="1000" />
+          <ProductCard data-aos="fade-in" data-aos-duration="1000" />
+          <ProductCard data-aos="fade-in" data-aos-duration="1000" />
+          <ProductCard data-aos="fade-in" data-aos-duration="1000" />
+          <ProductCard data-aos="fade-in" data-aos-duration="1000" />
+          <ProductCard data-aos="fade-in" data-aos-duration="1000" />
+          <ProductCard data-aos="fade-in" data-aos-duration="1000" />
+          <ProductCard data-aos="fade-in" data-aos-duration="1000" />
+          <ProductCard data-aos="fade-in" data-aos-duration="1000" />
         </div>
       </div>
     </section>
@@ -62,7 +62,7 @@ onMounted(() => window.scrollTo(0, 0))
 
 <style scoped>
 .background {
-  background-image: url('https://images7.alphacoders.com/132/1324477.png');
+  background-image: url('../../../assets/images/menu-cover.png');
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;

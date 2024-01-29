@@ -3,9 +3,9 @@ defineProps({ chef: Object })
 </script>
 
 <template>
-  <div class="text-center bg-white p-5 rounded-xl">
+  <div class="text-center bg-white p-5 rounded-lg border border-gray-200 shadow">
     <img
-      class="rounded-xl sm:w-48 sm:h-48 lg:w-60 lg:h-60 mx-auto object-cover"
+      class="rounded-lg sm:w-48 sm:h-48 lg:w-60 lg:h-60 mx-auto object-cover"
       :src="chef?.image"
       :alt="chef?.name"
     />

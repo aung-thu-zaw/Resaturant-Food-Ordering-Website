@@ -3,7 +3,11 @@
 </script>
 
 <template>
-  <div class="border border-gray-300 p-5 bg-white rounded-md space-y-5">
+  <div
+    class="border border-gray-300 p-5 bg-white rounded-md space-y-5"
+    data-aos="fade-in"
+    data-aos-duration="1000"
+  >
     <h1 class="font-bold text-orange-500 text-lg pb-3 border-b-2 border-b-orange-400 w-full">
       - Follow Us
     </h1>

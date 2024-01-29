@@ -19,7 +19,13 @@ onMounted(async () => await store.getAllResources())
         <p class="text-2xl md:text-4xl font-extrabold text-purpleDark">Popular Delicious Foods</p>
       </div>
       <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <ProductCard v-for="product in popularFoods" :key="product?.id" :product="product" />
+        <ProductCard
+          v-for="product in popularFoods"
+          :key="product?.id"
+          :product="product"
+          data-aos="zoom-in"
+          data-aos-duration="1000"
+        />
       </div>
     </div>
   </section>

@@ -48,7 +48,7 @@ const observer = new IntersectionObserver(
 
 <template>
   <AppLayout>
-    <section class="background">
+    <section class="background" data-aos="zoom-out" data-aos-duration="1000">
       <div class="bg-purpleDark bg-opacity-60">
         <div class="container mx-auto py-24 space-y-5">
           <h1 class="font-bold text-5xl text-white">Meet Our Chefs</h1>
@@ -64,7 +64,13 @@ const observer = new IntersectionObserver(
     <section class="py-10 bg-gray-50">
       <div class="container mx-auto space-y-10">
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
-          <OurTeamCard v-for="chef in items" :key="chef.id" :chef="chef" />
+          <OurTeamCard
+            v-for="chef in items"
+            :key="chef.id"
+            :chef="chef"
+            data-aos="fade-in"
+            data-aos-duration="1000"
+          />
         </div>
 
         <div>
@@ -81,7 +87,7 @@ const observer = new IntersectionObserver(
 
 <style scoped>
 .background {
-  background-image: url('https://www.thechefisonthetable.com/wp-content/uploads/2019/09/restaurant-chef.jpg');
+  background-image: url('../../assets/images/chef-cover.jpeg');
   background-repeat: no-repeat;
   background-size: cover;
 }

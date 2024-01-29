@@ -9,6 +9,7 @@ import 'sweetalert2/dist/sweetalert2.min.css'
 import AxiosPlugin from '@/plugins/axios'
 import { Can } from '@/plugins/can'
 import { pinia } from '@/plugins/pinia'
+import 'aos/dist/aos.css'
 
 import App from '@/App.vue'
 import router from '@/router'

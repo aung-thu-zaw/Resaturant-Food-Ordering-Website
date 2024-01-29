@@ -30,7 +30,7 @@ const handleSendContactEmail = async () => {
 
 <template>
   <AppLayout>
-    <section class="background">
+    <section class="background" data-aos="zoom-out" data-aos-duration="1000">
       <div class="bg-purpleDark bg-opacity-60">
         <div class="container mx-auto py-24 space-y-5">
           <h1 class="font-bold text-5xl text-white">Contact With Us</h1>
@@ -229,7 +229,7 @@ const handleSendContactEmail = async () => {
 
 <style scoped>
 .background {
-  background-image: url('https://www.naturemade.com/cdn/shop/articles/healthy-foods-to-eat.jpg?v=1611988563');
+  background-image: url('../../assets/images/contact-cover.jpeg');
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;

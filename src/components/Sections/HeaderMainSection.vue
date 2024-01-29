@@ -28,7 +28,11 @@
       <div
         class="flex flex-col md:flex-row items-center justify-center h-full md:space-x-5 py-28 md:p-28"
       >
-        <div class="space-y-10 w-full md:w-1/2 p-5 md:p-0 text-center md:text-left">
+        <div
+          class="space-y-10 w-full md:w-1/2 p-5 md:p-0 text-center md:text-left"
+          data-aos="fade-right"
+          data-aos-duration="1500"
+        >
           <h3 class="text-orange-500 font-pacifico text-3xl font-extrabold">
             Satisfy Your Cravings
           </h3>
@@ -56,7 +60,7 @@
           </div>
         </div>
 
-        <div class="w-full md:w-1/2 p-5 md:p-0">
+        <div class="w-full md:w-1/2 p-5 md:p-0" data-aos="fade-left" data-aos-duration="1500">
           <div class="relative flex items-center justify-center">
             <div
               class="border-[14px] md:border-[18px] border-gray-500 border-opacity-20 rounded-full overflow-hidden w-[350px] h-[350px] md:w-[450px] md:h-[450px] flex items-center justify-center"

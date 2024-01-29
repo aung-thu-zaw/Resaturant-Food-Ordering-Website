@@ -7,7 +7,7 @@ onMounted(() => window.scrollTo(0, 0))
 
 <template>
   <AppLayout>
-    <section class="background">
+    <section class="background" data-aos="zoom-out" data-aos-duration="1000">
       <div class="bg-purpleDark bg-opacity-60">
         <div class="container mx-auto py-24 space-y-5">
           <h1 class="font-bold text-5xl text-white">About Us</h1>
@@ -28,7 +28,7 @@ onMounted(() => window.scrollTo(0, 0))
 
 <style scoped>
 .background {
-  background-image: url('https://qul.imgix.net/5692a72f-29e9-4d77-bca5-b8728e7cdae6/473698_sld.jpg');
+  background-image: url('../../assets/images/about-cover.jpeg');
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
