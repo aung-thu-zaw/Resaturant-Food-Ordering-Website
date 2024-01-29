@@ -54,7 +54,7 @@ export const useBlogStore = defineStore('blog', {
       } catch (error) {
         this.responseErrors = error.response?.data?.errors
       }
-    }
+    },
   },
 
   getters: {

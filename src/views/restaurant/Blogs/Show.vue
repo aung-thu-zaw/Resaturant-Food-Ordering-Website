@@ -7,6 +7,7 @@ import RelatedBlogCard from '@/Components/Cards/RelatedBlogCard.vue'
 import Breadcrumb from '@/components/Breadcrumbs/MainBreadcrumb.vue'
 import BreadcrumbLinkItem from '@/components/Breadcrumbs/BreadcrumbLinkItem.vue'
 import BreadcrumbItem from '@/components/Breadcrumbs/BreadcrumbItem.vue'
+import BlogCommentSection from '@/components/Sections/BlogCommentSection.vue'
 import { useTitle } from '@vueuse/core'
 import { useBlogStore } from '@/stores/restaurant/blog'
 import { storeToRefs } from 'pinia'
@@ -125,7 +126,7 @@ watch(
               <!-- Blog Tags End -->
 
               <!-- Blog Comments Section -->
-              <!-- <BlogCommentSection :blogContent="blogContent" :blogComments="blogComments" /> -->
+              <BlogCommentSection :blog="blog ?? {}" />
             </div>
             <div class="w-full py-5 col-span-1 space-y-8">
               <!-- Related Blog -->

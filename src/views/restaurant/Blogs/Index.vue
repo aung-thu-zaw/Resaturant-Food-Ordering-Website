@@ -36,6 +36,11 @@ watch(
   () => route.query,
   async () => await store.getAllBlogs(blogParams.value)
 )
+
+const handleUpdatedData = (data) => {
+  store.$patch({ data: data })
+  window.scrollTo(0, 290)
+}
 </script>
 
 <template>
@@ -107,8 +112,9 @@ watch(
               <div v-if="route.query?.view === 'list'">
                 <BlogListCard v-for="blog in blogs.data" :key="blog.id" :blog="blog" />
               </div>
+
               <div class="flex items-center justify-center mt-14">
-                <Pagination :links="blogs.links" />
+                <Pagination :data="blogs" @updatedData="handleUpdatedData" />
               </div>
             </div>
 
