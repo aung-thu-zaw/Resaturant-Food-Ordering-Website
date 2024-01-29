@@ -1,7 +1,7 @@
 <script setup>
 import OurTeamCard from '@/components/Cards/OurTeamCard.vue'
 
-// defineProps({ productBanners: Object });
+defineProps({ ourChefs: Object })
 
 let defaultTransform = 0
 
@@ -48,35 +48,12 @@ const goPrev = () => {
           id="our-team"
           class="h-full flex gap-8 items-center justify-start transition ease-out duration-700"
         >
-          <div class="flex flex-shrink-0 relative rounded-md overflow-hidden">
-            <OurTeamCard />
-          </div>
-          <div class="flex flex-shrink-0 relative rounded-md overflow-hidden">
-            <OurTeamCard />
-          </div>
-          <div class="flex flex-shrink-0 relative rounded-md overflow-hidden">
-            <OurTeamCard />
-          </div>
-          <div class="flex flex-shrink-0 relative rounded-md overflow-hidden">
-            <OurTeamCard />
-          </div>
-          <div class="flex flex-shrink-0 relative rounded-md overflow-hidden">
-            <OurTeamCard />
-          </div>
-          <div class="flex flex-shrink-0 relative rounded-md overflow-hidden">
-            <OurTeamCard />
-          </div>
-          <div class="flex flex-shrink-0 relative rounded-md overflow-hidden">
-            <OurTeamCard />
-          </div>
-          <div class="flex flex-shrink-0 relative rounded-md overflow-hidden">
-            <OurTeamCard />
-          </div>
-          <div class="flex flex-shrink-0 relative rounded-md overflow-hidden">
-            <OurTeamCard />
-          </div>
-          <div class="flex flex-shrink-0 relative rounded-md overflow-hidden">
-            <OurTeamCard />
+          <div
+            v-for="chef in ourChefs"
+            :key="chef?.id"
+            class="flex flex-shrink-0 relative rounded-md overflow-hidden"
+          >
+            <OurTeamCard :chef="chef" />
           </div>
         </div>
       </div>

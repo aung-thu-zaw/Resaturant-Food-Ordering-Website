@@ -6,6 +6,9 @@ import StarRating from '@/components/Ratings/StarRating.vue'
 import Breadcrumb from '@/components/Breadcrumbs/MainBreadcrumb.vue'
 import BreadcrumbItem from '@/components/Breadcrumbs/BreadcrumbItem.vue'
 import ProductInformationTab from '@/components/Tabs/ProductInformationTab.vue'
+import { onMounted } from 'vue'
+
+onMounted(() => window.scrollTo(0, 0))
 </script>
 
 <template>

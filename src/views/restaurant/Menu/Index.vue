@@ -5,6 +5,9 @@ import InputField from '@/components/Forms/Fields/InputField.vue'
 import FilterByCategory from '@/components/Forms/SelectBoxs/FilterByCategory.vue'
 import MenuFilterByRating from '@/components/Forms/SelectBoxs/MenuFilterByRating.vue'
 import MenuSortBy from '@/components/Forms/SelectBoxs/MenuSortBy.vue'
+import { onMounted } from 'vue'
+
+onMounted(() => window.scrollTo(0, 0))
 </script>
 
 <template>

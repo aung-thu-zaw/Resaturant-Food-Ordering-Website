@@ -1,5 +1,14 @@
 <script setup>
 import dailyOfferCarousel from '@/components/Carousels/dailyOfferCarousel.vue'
+import { useHomeStore } from '@/stores/restaurant/home'
+import { storeToRefs } from 'pinia'
+import { onMounted } from 'vue'
+
+const store = useHomeStore()
+
+const { dailyOffers } = storeToRefs(store)
+
+onMounted(async () => await store.getAllResources())
 </script>
 
 <template>
@@ -12,7 +21,7 @@ import dailyOfferCarousel from '@/components/Carousels/dailyOfferCarousel.vue'
         </p>
       </div>
       <div>
-        <dailyOfferCarousel />
+        <dailyOfferCarousel :dailyOffers="dailyOffers" />
       </div>
     </div>
   </section>

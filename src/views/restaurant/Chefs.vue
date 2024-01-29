@@ -19,6 +19,7 @@ onMounted(async () => {
   await store.getAllChefs()
   observer.observe(landmark.value)
   items.value = chefs.value?.data
+  window.scrollTo(0, 0)
 })
 
 const loadMoreItem = async () => {

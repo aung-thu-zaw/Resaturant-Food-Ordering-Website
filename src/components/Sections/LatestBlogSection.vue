@@ -1,5 +1,14 @@
 <script setup>
 import BlogCarousel from '@/components/Carousels/BlogCarousel.vue'
+import { useHomeStore } from '@/stores/restaurant/home'
+import { storeToRefs } from 'pinia'
+import { onMounted } from 'vue'
+
+const store = useHomeStore()
+
+const { latestBlogs } = storeToRefs(store)
+
+onMounted(async () => await store.getAllResources())
 </script>
 
 <template>
@@ -9,8 +18,8 @@ import BlogCarousel from '@/components/Carousels/BlogCarousel.vue'
         <h1 class="font-bold font-pacifico text-2xl text-orange-500">News & Blogs</h1>
         <p class="text-2xl md:text-4xl font-extrabold text-purpleDark">Our Latest Foods Blog</p>
       </div>
-      <div>
-        <BlogCarousel />
+      <div class="">
+        <BlogCarousel :latestBlogs="latestBlogs" />
       </div>
     </div>
   </section>

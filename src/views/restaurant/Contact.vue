@@ -5,7 +5,7 @@ import InputError from '@/components/Forms/Fields/InputError.vue'
 import InputField from '@/components/Forms/Fields/InputField.vue'
 import TextareaField from '@/components/Forms/Fields/TextareaField.vue'
 import FormButton from '@/components/Buttons/FormButton.vue'
-import { reactive } from 'vue'
+import { onMounted, reactive } from 'vue'
 import { useContactUsStore } from '@/stores/restaurant/contact'
 
 const store = useContactUsStore()
@@ -15,6 +15,8 @@ const form = reactive({
   phone: '',
   message: ''
 })
+
+onMounted(() => window.scrollTo(0, 0))
 
 const handleSendContactEmail = async () => {
   await store.sendContactEmail({ ...form })

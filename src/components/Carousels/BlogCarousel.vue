@@ -1,7 +1,7 @@
 <script setup>
 import BlogGridCard from '@/components/Cards/BlogGridCard.vue'
 
-// defineProps({ productBanners: Object });
+defineProps({ latestBlogs: Object })
 
 let defaultTransform = 0
 
@@ -48,35 +48,12 @@ const goPrev = () => {
           id="blog-carousel"
           class="h-full flex gap-8 items-center justify-start transition ease-out duration-700"
         >
-          <div class="flex flex-shrink-0 relative rounded-md overflow-hidden">
-            <BlogGridCard />
-          </div>
-          <div class="flex flex-shrink-0 relative rounded-md overflow-hidden">
-            <BlogGridCard />
-          </div>
-          <div class="flex flex-shrink-0 relative rounded-md overflow-hidden">
-            <BlogGridCard />
-          </div>
-          <div class="flex flex-shrink-0 relative rounded-md overflow-hidden">
-            <BlogGridCard />
-          </div>
-          <div class="flex flex-shrink-0 relative rounded-md overflow-hidden">
-            <BlogGridCard />
-          </div>
-          <div class="flex flex-shrink-0 relative rounded-md overflow-hidden">
-            <BlogGridCard />
-          </div>
-          <div class="flex flex-shrink-0 relative rounded-md overflow-hidden">
-            <BlogGridCard />
-          </div>
-          <div class="flex flex-shrink-0 relative rounded-md overflow-hidden">
-            <BlogGridCard />
-          </div>
-          <div class="flex flex-shrink-0 relative rounded-md overflow-hidden">
-            <BlogGridCard />
-          </div>
-          <div class="flex flex-shrink-0 relative rounded-md overflow-hidden">
-            <BlogGridCard />
+          <div
+            v-for="blog in latestBlogs"
+            :key="blog.id"
+            class="flex flex-shrink-0 relative rounded-md overflow-hidden"
+          >
+            <BlogGridCard :blog="blog" />
           </div>
         </div>
       </div>

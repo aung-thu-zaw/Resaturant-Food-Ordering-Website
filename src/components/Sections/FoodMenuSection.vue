@@ -1,5 +1,14 @@
 <script setup>
 import ProductCard from '@/components/Cards/ProductCard.vue'
+import { useHomeStore } from '@/stores/restaurant/home'
+import { storeToRefs } from 'pinia'
+import { onMounted } from 'vue'
+
+const store = useHomeStore()
+
+const { popularFoods } = storeToRefs(store)
+
+onMounted(async () => await store.getAllResources())
 </script>
 
 <template>
@@ -10,18 +19,7 @@ import ProductCard from '@/components/Cards/ProductCard.vue'
         <p class="text-2xl md:text-4xl font-extrabold text-purpleDark">Popular Delicious Foods</p>
       </div>
       <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
+        <ProductCard v-for="product in popularFoods" :key="product?.id" :product="product" />
       </div>
     </div>
   </section>
