@@ -9,7 +9,7 @@ defineProps({ blog: Object, response: Object })
         <img
           :src="response.user?.avatar"
           :alt="response.user.name"
-          class="w-10 h-10 object-cover rounded-full mr-2"
+          class="w-10 h-10 object-cover rounded-full mr-2 border border-slate-400 ring-2 ring-slate-300"
         />
 
         <div class="flex flex-col items-start">

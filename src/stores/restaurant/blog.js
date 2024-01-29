@@ -52,9 +52,42 @@ export const useBlogStore = defineStore('blog', {
 
         this.specificData = response.data
       } catch (error) {
+        if (error.response.status === 404)
+          this.router.push({ name: 'errors', query: { status: 404 } })
+
         this.responseErrors = error.response?.data?.errors
       }
     },
+
+    async createComment(blogSlug, comment) {
+      try {
+        const apiUrl = `/api/blogs/${blogSlug}/comments`
+
+        const response = await this.$axios.post(apiUrl, { comment })
+
+        if (!response) throw new Error('Response Not Found!')
+
+        // console.log('This is a new comment', response.data)
+        // this.data = response.data
+      } catch (error) {
+        this.responseErrors = error.response?.data?.errors
+      }
+    },
+
+    async createReply(blogSlug, commentId, reply) {
+      try {
+        const apiUrl = `/api/blogs/${blogSlug}/comments/${commentId}/replies`
+
+        const response = await this.$axios.post(apiUrl, { reply })
+
+        if (!response) throw new Error('Response Not Found!')
+
+        // console.log('This is a new reply', response.data)
+        // this.data = response.data
+      } catch (error) {
+        this.responseErrors = error.response?.data?.errors
+      }
+    }
   },
 
   getters: {

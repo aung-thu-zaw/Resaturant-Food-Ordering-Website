@@ -28,7 +28,7 @@ const { currentUser, isAuthenticated } = storeToRefs(authStore)
 
 const handleUpdatedData = (data) => {
   blogStore.$patch({ specificData: data })
-  window.scrollTo(0, 980)
+  window.scrollTo(0, 930)
 }
 </script>
 
@@ -36,7 +36,7 @@ const handleUpdatedData = (data) => {
   <section>
     <div class="border border-gray-300 bg-white rounded-sm shadow">
       <div class="border-b p-5">
-        <p class="text-md font-semibold text-slate-600 mb-5">
+        <p class="text-md font-semibold text-slate-700 mb-5">
           Total Comments ({{ comments?.total }})
         </p>
 

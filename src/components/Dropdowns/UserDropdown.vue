@@ -1,7 +1,11 @@
 <script setup>
 import { useAuthStore } from '@/stores/auth'
+import { storeToRefs } from 'pinia'
+import defaultUserImage from '@/assets/images/anonymous-user.jpg'
 
 const authStore = useAuthStore()
+
+const { currentUser } = storeToRefs(authStore)
 </script>
 
 <template>
@@ -15,26 +19,28 @@ const authStore = useAuthStore()
     >
       <div class="items-center flex">
         <span
-          class="w-12 h-12 text-sm text-white bg-slate-200 inline-flex items-center justify-center rounded-full ring-2"
+          class="w-12 h-12 text-sm text-white bg-slate-200 inline-flex items-center justify-center rounded-full border border-slate-400 ring-2 ring-slate-300"
         >
           <img
-            class="w-full h-full object-cover rounded-full align-middle border-none shadow-lg ring-1 ring-red-300"
+            class="w-full h-full object-cover rounded-full align-middle border-none"
             alt="user-photo"
-            src="https://rare-gallery.com/thumbs/5408546-woman-female-girl-photographer-camera-beanie-pine-holding-hand-jean-jacket-red-film-caucasian-blonde-photography-nature-exterior-hat-vintage-contax-creative-commons-images.jpg"
+            :src="currentUser?.avatar ?? defaultUserImage"
           />
         </span>
-        <!-- <span class="font-bold text-md ml-2 text-slate-600 hidden md:block">Aung Thu Zaw</span> -->
+        <span class="font-semibold text-md ml-2 text-slate-700 hidden md:block">{{
+          currentUser?.name
+        }}</span>
       </div>
     </button>
 
     <ul
-      class="absolute z-[1000] float-left m-0 hidden min-w-max list-none overflow-hidden rounded-lg border-none bg-white bg-clip-padding text-left text-base shadow-md [&[data-te-dropdown-show]]:block border border-gray-800 p-2"
+      class="absolute z-[1000] float-left m-0 hidden min-w-max list-none overflow-hidden rounded-lg border-none bg-white bg-clip-padding text-left text-base shadow-md [&[data-te-dropdown-show]]:block border border-slate-800 p-2"
       aria-labelledby="user-dropdown"
       data-te-dropdown-menu-ref
     >
       <li>
         <a
-          class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-bold text-gray-700 hover:bg-gray-100 rounded-md"
+          class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-bold text-slate-700 hover:bg-slate-100 rounded-md"
           href="#"
           data-te-dropdown-item-ref
         >
@@ -45,7 +51,7 @@ const authStore = useAuthStore()
 
       <li>
         <a
-          class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-bold text-gray-700 hover:bg-gray-100 rounded-md"
+          class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-bold text-slate-700 hover:bg-slate-100 rounded-md"
           href="#"
           data-te-dropdown-item-ref
         >
@@ -55,7 +61,7 @@ const authStore = useAuthStore()
       </li>
       <li>
         <a
-          class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-bold text-gray-700 hover:bg-gray-100 rounded-md"
+          class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-bold text-slate-700 hover:bg-slate-100 rounded-md"
           href="#"
           data-te-dropdown-item-ref
         >
@@ -70,7 +76,7 @@ const authStore = useAuthStore()
         <button
           @click="authStore.logout"
           type="button"
-          class="block w-full whitespace-nowrap bg-transparent text-left px-4 py-2 text-sm font-bold text-gray-700 hover:bg-gray-100 rounded-md"
+          class="block w-full whitespace-nowrap bg-transparent text-left px-4 py-2 text-sm font-bold text-slate-700 hover:bg-slate-100 rounded-md"
           data-te-dropdown-item-ref
         >
           <i class="fa-solid fa-right-from-bracket mr-1" />

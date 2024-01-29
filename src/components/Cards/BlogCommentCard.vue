@@ -16,7 +16,11 @@ const isReplyBoxOpened = ref(false)
   <div class="p-4">
     <div class="flex items-start justify-between">
       <div class="flex items-center mb-2">
-        <img :src="comment.user?.avatar" alt="" class="w-10 h-10 object-cover rounded-full mr-2" />
+        <img
+          :src="comment.user?.avatar"
+          alt=""
+          class="w-10 h-10 object-cover rounded-full mr-2 border border-slate-400 ring-2 ring-slate-300"
+        />
 
         <div class="flex flex-col items-start">
           <h3 class="font-bold text-slate-700">{{ comment.user?.name }}</h3>

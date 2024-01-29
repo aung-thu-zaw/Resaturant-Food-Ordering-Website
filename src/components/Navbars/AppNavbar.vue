@@ -69,14 +69,6 @@ const router = useRouter()
                 </div>
               </div>
             </div>
-
-            <button
-              type="button"
-              class="hidden md:block px-5 py-3 text-white bg-orange-500 rounded-full text-sm capitalize font-bold font-roboto border-none hover:bg-orange-500"
-            >
-              <i class="fa-solid fa-calendar-check text-md"></i>
-              Reservation
-            </button>
           </div>
 
           <button
@@ -200,14 +192,6 @@ const router = useRouter()
                 </button>
               </div>
             </div>
-
-            <button
-              type="button"
-              class="px-5 py-3 text-white bg-orange-500 rounded-full text-sm capitalize font-bold font-roboto border-none hover:bg-orange-500"
-            >
-              <i class="fa-solid fa-calendar-check text-md"></i>
-              Reservation
-            </button>
           </div>
         </div>
       </div>
