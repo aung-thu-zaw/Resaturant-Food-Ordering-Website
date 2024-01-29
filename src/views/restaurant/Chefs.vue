@@ -1,6 +1,48 @@
 <script setup>
 import AppLayout from '@/layouts/AppLayout.vue'
 import OurTeamCard from '@/components/Cards/OurTeamCard.vue'
+import { useChefStore } from '@/stores/restaurant/chef'
+import { storeToRefs } from 'pinia'
+import { useTitle } from '@vueuse/core'
+import { onMounted, ref } from 'vue'
+import axios from 'axios'
+
+useTitle('Chefs - Restaurant Food Ordering')
+
+const landmark = ref(null)
+const items = ref(null)
+const store = useChefStore()
+
+const { chefs } = storeToRefs(store)
+
+onMounted(async () => {
+  await store.getAllChefs()
+  observer.observe(landmark.value)
+  items.value = chefs.value?.data
+})
+
+const loadMoreItem = async () => {
+  if (!chefs.value?.next_page_url) return
+
+  const response = await axios.get(chefs.value?.next_page_url)
+
+  if (response.data) items.value = [...items.value, ...response.data.data]
+
+  store.$patch({ data: response?.data })
+}
+
+const observer = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        loadMoreItem()
+      }
+    })
+  },
+  {
+    rootMargin: '0px 0px 150px 0px'
+  }
+)
 </script>
 
 <template>
@@ -19,20 +61,19 @@ import OurTeamCard from '@/components/Cards/OurTeamCard.vue'
     </section>
 
     <section class="py-10 bg-gray-50">
-      <div class="container mx-auto">
+      <div class="container mx-auto space-y-10">
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
-          <OurTeamCard />
-          <OurTeamCard />
-          <OurTeamCard />
-          <OurTeamCard />
-          <OurTeamCard />
-          <OurTeamCard />
-          <OurTeamCard />
-          <OurTeamCard />
-          <OurTeamCard />
-          <OurTeamCard />
+          <OurTeamCard v-for="chef in items" :key="chef.id" :chef="chef" />
+        </div>
+
+        <div>
+          <p class="text-center text-slate-700 font-medium text-sm">
+            You've reached the end of the page.
+          </p>
         </div>
       </div>
+
+      <div ref="landmark"></div>
     </section>
   </AppLayout>
 </template>
