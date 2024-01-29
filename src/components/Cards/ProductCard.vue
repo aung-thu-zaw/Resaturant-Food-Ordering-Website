@@ -20,7 +20,6 @@ const avgRating = computed(() => {
 })
 </script>
 
-
 <template>
   <div
     class="rounded-[5px] bg-white border border-gray-200 shadow-sm text-center flex flex-col items-center justify-start w-[300px] h-[400px]"

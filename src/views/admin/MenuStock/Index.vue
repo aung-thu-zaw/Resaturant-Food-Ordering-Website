@@ -416,7 +416,3 @@ useTitle('Menu Stock - Restaurant Food Ordering')
     </div>
   </DashboardLayout>
 </template>
-
-
-
-

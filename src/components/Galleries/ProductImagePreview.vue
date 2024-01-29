@@ -2,7 +2,7 @@
 import PreviewImage from '@/Components/Forms/PreviewImage.vue'
 import { useProductStore } from '@/stores/dashboard/product'
 
- defineProps({
+defineProps({
   previewImage: {
     type: String,
     required: true

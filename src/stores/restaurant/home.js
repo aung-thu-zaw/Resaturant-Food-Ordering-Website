@@ -14,7 +14,6 @@ export const useHomeStore = defineStore('home', {
         if (!response) throw new Error('Response Not Found!')
 
         this.data = response.data
-
       } catch (error) {
         this.responseErrors = error.response?.data?.errors
       }

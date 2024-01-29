@@ -82,32 +82,6 @@ export default [
         meta: { middleware: [authorizePermission('product-reviews.view')] }
       },
 
-      /***** Daily Offer *****/
-      {
-        path: 'daily-offers',
-        children: [
-          {
-            path: '',
-            name: 'admin.daily-offers.index',
-            component: () => import('@/views/admin/DailyOffers/Index.vue'),
-            meta: { middleware: [authorizePermission('daily-offers.view')] }
-          },
-          {
-            path: 'create',
-            name: 'admin.daily-offers.create',
-            component: () => import('@/views/admin/DailyOffers/Create.vue'),
-            meta: { middleware: [authorizePermission('daily-offers.create')] }
-          },
-          {
-            path: ':id/edit',
-            name: 'admin.daily-offers.edit',
-            props: (route) => ({ id: Number(route.params.id) }),
-            component: () => import('@/views/admin/DailyOffers/Edit.vue'),
-            meta: { middleware: [authorizePermission('daily-offers.edit')] }
-          }
-        ]
-      },
-
       /***** Coupon *****/
       {
         path: 'coupons',

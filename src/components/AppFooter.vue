@@ -1,5 +1,4 @@
-<script setup>
-</script>
+<script setup></script>
 
 <template>
   <footer class="w-full bg-purpleDark px-10 md:px-20 py-10">

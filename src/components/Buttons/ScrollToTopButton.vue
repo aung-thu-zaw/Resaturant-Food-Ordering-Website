@@ -22,7 +22,6 @@ const goToTop = () => {
 }
 </script>
 
-
 <template>
   <div
     id="scrollBtn"

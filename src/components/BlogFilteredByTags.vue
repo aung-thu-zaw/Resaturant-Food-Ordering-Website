@@ -16,7 +16,6 @@ const handleRemoveCategory = () => router.push({ query: { ...route.query, catego
 const handleRemoveTag = () => router.push({ query: { ...route.query, tag: undefined } })
 </script>
 
-
 <template>
   <div class="px-2 flex items-center mb-5">
     <div v-show="route.query?.tag || route.query?.category" class="flex items-center">

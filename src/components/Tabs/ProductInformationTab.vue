@@ -2,7 +2,6 @@
 // Your Code
 </script>
 
-
 <template>
   <div>
     <div class="border border-gray-300 bg-white rounded-md">

@@ -39,7 +39,6 @@ const onFileChange = (event) => {
 }
 </script>
 
-
 <template>
   <div class="flex items-center justify-center w-full">
     <label

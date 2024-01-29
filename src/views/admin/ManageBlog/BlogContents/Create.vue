@@ -213,4 +213,3 @@ const handleCreateBlogContent = async () => {
   background: rgb(249, 250, 251) !important;
 }
 </style>
-
