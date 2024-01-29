@@ -17,6 +17,6 @@ import HeaderMainSection from '@/components/Sections/HeaderMainSection.vue'
 
     <OurTeamSection />
 
-    <LatestBlogSection />
+    <!-- <LatestBlogSection /> -->
   </AppLayout>
 </template>

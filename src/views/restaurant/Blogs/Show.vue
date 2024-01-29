@@ -5,7 +5,32 @@ import BlogTagCard from '@/components/Cards/BlogTagCard.vue'
 import FollowUsCard from '@/components/Cards/FollowUsCard.vue'
 import RelatedBlogCard from '@/Components/Cards/RelatedBlogCard.vue'
 import Breadcrumb from '@/components/Breadcrumbs/MainBreadcrumb.vue'
+import BreadcrumbLinkItem from '@/components/Breadcrumbs/BreadcrumbLinkItem.vue'
 import BreadcrumbItem from '@/components/Breadcrumbs/BreadcrumbItem.vue'
+import { useTitle } from '@vueuse/core'
+import { useBlogStore } from '@/stores/restaurant/blog'
+import { storeToRefs } from 'pinia'
+import { onMounted, watch } from 'vue'
+import { useRoute } from 'vue-router'
+
+const props = defineProps({ slug: String })
+const store = useBlogStore()
+const route = useRoute()
+
+const { blog, relatedBlogs } = storeToRefs(store)
+
+const fetchData = async () => {
+  await store.getBlog(props?.slug)
+  useTitle(blog.value?.title + '- Restaurant Food Ordering')
+  window.scrollTo(0, 0)
+}
+
+onMounted(async () => await fetchData())
+
+watch(
+  () => route.params,
+  async () => await fetchData()
+)
 </script>
 
 <template>
@@ -14,8 +39,8 @@ import BreadcrumbItem from '@/components/Breadcrumbs/BreadcrumbItem.vue'
       <div class="container mx-auto pt-10 py-20">
         <div class="mb-5">
           <Breadcrumb to="home" icon="fa-home" label="Home">
-            <BreadcrumbItem label="Blogs" />
-            <BreadcrumbItem label="Maxican Pizza Test Better" />
+            <BreadcrumbLinkItem label="Blogs" to="blogs.index" />
+            <BreadcrumbItem :label="blog?.title ?? ''" />
           </Breadcrumb>
         </div>
 
@@ -24,13 +49,14 @@ import BreadcrumbItem from '@/components/Breadcrumbs/BreadcrumbItem.vue'
             <div class="w-full py-5 col-span-3">
               <div class="border border-slate-300 shadow-lg rounded-md p-2">
                 <img
-                  src="https://www.proideators.com/wp-content/uploads/2022/07/How-To-Make-Your-Career-As-A-Food-Blogger-In-India-ProiDeators.jpg"
+                  :src="blog?.thumbnail"
+                  :alt="blog?.title"
                   class="w-full max-h-[600px] object-cover"
                 />
               </div>
 
               <h1 class="font-bold text-3xl text-purpleDark mt-8 mb-6">
-                This is Our First Food Blog
+                {{ blog?.title }}
               </h1>
 
               <div class="flex items-center justify-between mb-3">
@@ -38,17 +64,17 @@ import BreadcrumbItem from '@/components/Breadcrumbs/BreadcrumbItem.vue'
                   <span
                     class="text-xs font-bold bg-orange-500 text-white py-1 px-3 rounded-sm shadow"
                   >
-                    FoodMenu
+                    {{ blog?.blog_category?.name }}
                   </span>
 
                   <span class="font-bold text-slate-700 text-sm">
                     <i class="fa-solid fa-user"></i>
-                    Admin
+                    {{ blog?.author?.name }}
                   </span>
 
                   <span class="font-bold text-slate-700 text-sm">
                     <i class="fa-solid fa-clock"></i>
-                    12-September-2023
+                    {{ blog?.published_at }}
                   </span>
                 </div>
 
@@ -80,62 +106,19 @@ import BreadcrumbItem from '@/components/Breadcrumbs/BreadcrumbItem.vue'
               <hr class="my-3" />
 
               <!-- Blog Description -->
-              <p class="text-slate-800 mb-5">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi facilis
-                distinctio iste, perspiciatis voluptas repellendus ea reprehenderit libero odit nemo
-                harum assumenda, mollitia et repellat ratione quaerat velit, quasi vero?
-
-                <br />
-
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eveniet, inventore
-                voluptate. Minima suscipit delectus laboriosam? Consectetur explicabo repellat odio
-                beatae commodi nobis perferendis aspernatur temporibus expedita quam fugit at
-                repellendus libero placeat nulla necessitatibus, soluta nihil. Eius, cumque sapiente
-                aspernatur quos veniam rerum ratione eos eveniet, quidem enim blanditiis beatae?
-
-                <br />
-
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Provident vitae odit
-                molestias nisi incidunt vero! Quam commodi, placeat nisi atque voluptatem odit
-                eveniet iste labore nulla, magnam similique voluptate sint necessitatibus culpa
-                autem dicta nobis nostrum dolorum sapiente corporis ducimus molestiae?
-                Exercitationem iste numquam dolorem facere ipsam, earum ullam. Eligendi quisquam
-                enim magnam quae perspiciatis sit inventore adipisci minima quidem, nobis quia
-                consequatur sapiente unde blanditiis voluptas optio non dolorem praesentium laborum
-                veniam repudiandae ratione! Dolores, laudantium? Voluptatibus impedit repellendus
-                quam, ex ipsa perspiciatis nesciunt! Fuga pariatur sunt amet mollitia, quam autem ut
-                illo? Voluptatem vel repellat architecto et pariatur?
-
-                <br />
-
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Id perferendis quisquam
-                dignissimos suscipit ipsam consectetur praesentium, excepturi impedit dolorum ullam
-                exercitationem! Quidem sit accusantium ad? Quibusdam soluta non in delectus aperiam
-                tempore corporis quasi illo, repellendus harum dicta maiores modi iure deserunt amet
-                sint odio laboriosam, saepe, dolore odit magnam!
-              </p>
+              <p v-html="blog?.content" class="text-slate-800 mb-5"></p>
 
               <!-- Blog Tags Start -->
-              <div class="flex items-center mb-5">
+              <div v-show="blog?.blog_tags?.length" class="flex items-center mb-5">
                 <span class="font-bold text-slate-800 mr-3">Blog Tags :</span>
                 <div class="flex items-center space-x-2">
                   <button
+                    v-for="tag in blog?.blog_tags"
+                    :key="tag.id"
                     type="button"
                     class="px-3 py-1 bg-orange-600 rounded-full text-white text-xs capitalize font-bold hover:bg-orange-700 transition-all"
                   >
-                    Restaurant
-                  </button>
-                  <button
-                    type="button"
-                    class="px-3 py-1 bg-orange-600 rounded-full text-white text-xs capitalize font-bold hover:bg-orange-700 transition-all"
-                  >
-                    Food Menu
-                  </button>
-                  <button
-                    type="button"
-                    class="px-3 py-1 bg-orange-600 rounded-full text-white text-xs capitalize font-bold hover:bg-orange-700 transition-all"
-                  >
-                    Burger
+                    {{ tag.name }}
                   </button>
                 </div>
               </div>
@@ -147,7 +130,7 @@ import BreadcrumbItem from '@/components/Breadcrumbs/BreadcrumbItem.vue'
             <div class="w-full py-5 col-span-1 space-y-8">
               <!-- Related Blog -->
               <div>
-                <RelatedBlogCard />
+                <RelatedBlogCard :relatedBlogs="relatedBlogs" />
               </div>
 
               <!-- Categories -->

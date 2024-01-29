@@ -1,6 +1,6 @@
 <script setup>
 import FormButton from '@/components/Buttons/FormButton.vue'
-import GuestLayout from '@/layouts/GuestLayout.vue'
+import AppLayout from '@/layouts/AppLayout.vue'
 import InputLabel from '@/components/Forms/Fields/InputLabel.vue'
 import InputError from '@/components/Forms/Fields/InputError.vue'
 import InputField from '@/components/Forms/Fields/InputField.vue'
@@ -31,7 +31,7 @@ const handleRegister = async () => {
 </script>
 
 <template>
-  <GuestLayout>
+  <AppLayout>
     <div class="mx-auto p-5 md:p-10 flex items-center justify-center">
       <div
         class="w-auto md:w-[1200px] relative flex flex-col md:flex-row items-center justify-between bg-white border rounded-md shadow-md max-w-[1200px] p-10 pb-14"
@@ -118,5 +118,5 @@ const handleRegister = async () => {
         </div>
       </div>
     </div>
-  </GuestLayout>
+  </AppLayout>
 </template>

@@ -1,7 +1,7 @@
 <script setup>
 import FormButton from '@/components/Buttons/FormButton.vue'
 import Checkbox from '@/components/Forms/Fields/Checkbox.vue'
-import GuestLayout from '@/layouts/GuestLayout.vue'
+import AppLayout from '@/layouts/AppLayout.vue'
 import InputLabel from '@/components/Forms/Fields/InputLabel.vue'
 import InputError from '@/components/Forms/Fields/InputError.vue'
 import InputField from '@/components/Forms/Fields/InputField.vue'
@@ -10,7 +10,7 @@ import image from '@/assets/images/login.jpg'
 import { reactive } from 'vue'
 import { useAuthStore } from '@/stores/auth'
 
-useTitle('Register - Restaurant Food Ordering')
+useTitle('Login - Restaurant Food Ordering')
 
 const authStore = useAuthStore()
 
@@ -30,7 +30,7 @@ const handleLogin = async () => {
 </script>
 
 <template>
-  <GuestLayout>
+  <AppLayout>
     <div class="mx-auto p-5 md:p-10 flex items-center justify-center">
       <div
         class="w-auto md:w-[1200px] relative flex flex-col md:flex-row items-center justify-between bg-white border rounded-md shadow-md max-w-[1200px] p-10 pb-14"
@@ -113,5 +113,5 @@ const handleLogin = async () => {
         </div>
       </div>
     </div>
-  </GuestLayout>
+  </AppLayout>
 </template>

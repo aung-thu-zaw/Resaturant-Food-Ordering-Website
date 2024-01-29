@@ -1,5 +1,5 @@
 <script setup>
-import BlogCard from '@/components/Cards/BlogCard.vue'
+import BlogGridCard from '@/components/Cards/BlogGridCard.vue'
 
 // defineProps({ productBanners: Object });
 
@@ -49,34 +49,34 @@ const goPrev = () => {
           class="h-full flex gap-8 items-center justify-start transition ease-out duration-700"
         >
           <div class="flex flex-shrink-0 relative rounded-md overflow-hidden">
-            <BlogCard />
+            <BlogGridCard />
           </div>
           <div class="flex flex-shrink-0 relative rounded-md overflow-hidden">
-            <BlogCard />
+            <BlogGridCard />
           </div>
           <div class="flex flex-shrink-0 relative rounded-md overflow-hidden">
-            <BlogCard />
+            <BlogGridCard />
           </div>
           <div class="flex flex-shrink-0 relative rounded-md overflow-hidden">
-            <BlogCard />
+            <BlogGridCard />
           </div>
           <div class="flex flex-shrink-0 relative rounded-md overflow-hidden">
-            <BlogCard />
+            <BlogGridCard />
           </div>
           <div class="flex flex-shrink-0 relative rounded-md overflow-hidden">
-            <BlogCard />
+            <BlogGridCard />
           </div>
           <div class="flex flex-shrink-0 relative rounded-md overflow-hidden">
-            <BlogCard />
+            <BlogGridCard />
           </div>
           <div class="flex flex-shrink-0 relative rounded-md overflow-hidden">
-            <BlogCard />
+            <BlogGridCard />
           </div>
           <div class="flex flex-shrink-0 relative rounded-md overflow-hidden">
-            <BlogCard />
+            <BlogGridCard />
           </div>
           <div class="flex flex-shrink-0 relative rounded-md overflow-hidden">
-            <BlogCard />
+            <BlogGridCard />
           </div>
         </div>
       </div>

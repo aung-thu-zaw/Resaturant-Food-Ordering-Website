@@ -12,7 +12,6 @@ const authStore = useAuthStore()
 
 onMounted(async () => {
   if (authStore.message) toast.success(authStore.message, { autoClose: 2000 })
-
   if (!authStore.isAuthenticated) await authStore.getAuthenticatedUser()
 
   initTE({ Dropdown, Ripple, Sidenav, Carousel, Select, Tab })

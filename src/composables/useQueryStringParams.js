@@ -17,7 +17,17 @@ export function useQueryStringParams() {
     position: route.query?.position !== '' ? route.query.position : undefined
   }))
 
+  const blogParams = computed(() => ({
+    search: route.query?.search,
+    page: route.query?.page ?? 1,
+    sort: route.query?.sort ?? 'latest',
+    view: route.query?.view ?? 'grid',
+    category: route.query?.category !== '' ? route.query.category : undefined,
+    tag: route.query?.tag !== '' ? route.query.tag : undefined
+  }))
+
   return {
-    dashboardParams
+    dashboardParams,
+    blogParams
   }
 }

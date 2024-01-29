@@ -1,11 +1,41 @@
 <script setup>
 import AppLayout from '@/layouts/AppLayout.vue'
-import BlogCard from '@/components/Cards/BlogCard.vue'
-import InputField from '@/components/Forms/Fields/InputField.vue'
+import BlogGridCard from '@/components/Cards/BlogGridCard.vue'
+import BlogListCard from '@/components/Cards/BlogListCard.vue'
 import BlogCategoryCard from '@/components/Cards/BlogCategoryCard.vue'
 import FollowUsCard from '@/components/Cards/FollowUsCard.vue'
 import BlogTagCard from '@/components/Cards/BlogTagCard.vue'
 import BlogSortBy from '@/components/Forms/SelectBoxs/BlogSortBy.vue'
+import Pagination from '@/components/Paginations/AppPagination.vue'
+import FilterSearchBox from '@/components/Forms/SearchBoxs/FilterSearchBox.vue'
+import BlogFilteredByTags from '@/components/BlogFilteredByTags.vue'
+import { useTitle } from '@vueuse/core'
+import { useBlogStore } from '@/stores/restaurant/blog'
+import { storeToRefs } from 'pinia'
+import { onMounted, watch } from 'vue'
+import { useQueryStringParams } from '@/composables/useQueryStringParams'
+import { useRoute, useRouter } from 'vue-router'
+
+useTitle('Blogs - Restaurant Food Ordering')
+
+const router = useRouter()
+const route = useRoute()
+const store = useBlogStore()
+
+const { blogs } = storeToRefs(store)
+const { blogParams } = useQueryStringParams()
+
+onMounted(async () => {
+  await store.getAllBlogs(blogParams.value)
+  window.scrollTo(0, 0)
+})
+
+const handleView = (view) => router.push({ query: { ...route.query, view } })
+
+watch(
+  () => route.query,
+  async () => await store.getAllBlogs(blogParams.value)
+)
 </script>
 
 <template>
@@ -28,10 +58,8 @@ import BlogSortBy from '@/components/Forms/SelectBoxs/BlogSortBy.vue'
         <div class="grid grid-cols-1 md:grid-cols-4 gap-x-5">
           <div class="w-full py-5 col-span-3 space-y-5">
             <div class="border-b border-b-gray-300 pb-5">
-              <div class="flex flex-wrap items-center justify-between space-y-3">
-                <div class="w-[350px]">
-                  <InputField type="text" name="search" placeholder="Search blog..." />
-                </div>
+              <div class="flex flex-wrap items-center justify-between">
+                <FilterSearchBox placeholder="Search blog..." />
 
                 <div class="space-x-5 flex items-center">
                   <BlogSortBy />
@@ -39,37 +67,56 @@ import BlogSortBy from '@/components/Forms/SelectBoxs/BlogSortBy.vue'
                   <div class="p-3">
                     <label for="view" class="font-bold text-sm text-slate-800"> View : </label>
 
-                    <a
-                      href=""
-                      class="px-2 py-1.5 rounded-md cursor-pointer transition-none mr-2 bg-orange-500 text-white hover:bg-orange-600"
+                    <button
+                      @click="handleView('grid')"
+                      type="button"
+                      class="px-2 py-1 rounded-md cursor-pointer bg-gray-200 text-gray-600 hover:bg-gray-300 transition-none"
+                      :class="{
+                        'bg-orange-500 text-white hover:bg-orange-600':
+                          route.query?.view === 'grid' || !route.query?.view
+                      }"
                     >
                       <i class="fa-solid fa-grip"></i>
-                    </a>
+                    </button>
 
-                    <a
-                      href="#"
-                      class="px-2 py-1.5 rounded-md cursor-pointer bg-gray-200 text-gray-600 hover:bg-gray-300 transition-none"
+                    <button
+                      @click="handleView('list')"
+                      type="button"
+                      class="px-2 py-1 rounded-md cursor-pointer bg-gray-200 text-gray-600 hover:bg-gray-300 transition-none ml-2"
+                      :class="{
+                        'bg-orange-500 text-white hover:bg-orange-600': route.query?.view === 'list'
+                      }"
                     >
                       <i class="fa-solid fa-list"></i>
-                    </a>
+                    </button>
                   </div>
                 </div>
               </div>
-
-              <div></div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-              <BlogCard />
-              <BlogCard />
-              <BlogCard />
-              <BlogCard />
-              <BlogCard />
-              <BlogCard />
-              <BlogCard />
-              <BlogCard />
-              <BlogCard />
-              <BlogCard />
+            <!-- Filtered By -->
+            <BlogFilteredByTags :total="blogs?.total" />
+
+            <div v-if="blogs?.data?.length">
+              <div
+                v-if="route.query?.view === 'grid'"
+                class="grid grid-cols-1 md:grid-cols-3 gap-3"
+              >
+                <BlogGridCard v-for="blog in blogs.data" :key="blog.id" :blog="blog" />
+              </div>
+              <div v-if="route.query?.view === 'list'">
+                <BlogListCard v-for="blog in blogs.data" :key="blog.id" :blog="blog" />
+              </div>
+              <div class="flex items-center justify-center mt-14">
+                <Pagination :links="blogs.links" />
+              </div>
+            </div>
+
+            <div v-else class="py-20">
+              <p class="text-center font-bold text-md text-red-600">
+                <i class="fa-solid fa-file-circle-xmark"></i>
+                "We're sorry we can't find any matches for your filter term.
+              </p>
             </div>
           </div>
 
@@ -87,20 +134,6 @@ import BlogSortBy from '@/components/Forms/SelectBoxs/BlogSortBy.vue'
             <!-- Follow Us -->
             <div>
               <FollowUsCard />
-            </div>
-
-            <div>
-              <img
-                src="https://d1csarkz8obe9u.cloudfront.net/posterpreviews/delicious-food-banner-template-design-cd3994e39458960f4f33e73b8c60edb9_screen.jpg?ts=1645769305"
-                alt=""
-              />
-            </div>
-
-            <div>
-              <img
-                src="https://d1csarkz8obe9u.cloudfront.net/posterpreviews/food-flyer-design-template-e0d64e8c474bb172a3f2fbce1135c9e6_screen.jpg?ts=1704443572"
-                alt=""
-              />
             </div>
           </div>
         </div>

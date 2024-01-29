@@ -39,8 +39,9 @@ export default [
     component: () => import('@/views/restaurant/Blogs/Index.vue')
   },
   {
-    path: '/blogs/detail',
-    name: 'blogs.detail',
+    path: '/blogs/:slug',
+    name: 'blogs.show',
+    props: (route) => ({ slug: String(route.params.slug) }),
     component: () => import('@/views/restaurant/Blogs/Show.vue')
   },
 

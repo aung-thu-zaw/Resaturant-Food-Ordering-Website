@@ -3,7 +3,9 @@ import FoodSearchBox from '@/components/Forms/SearchBoxs/FoodSearchBox.vue'
 import UserDropdown from '@/components/Dropdowns/UserDropdown.vue'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { useAuthStore } from '@/stores/auth'
 
+const authStore = useAuthStore()
 const searchBox = ref(false)
 const router = useRouter()
 </script>
@@ -39,33 +41,33 @@ const router = useRouter()
           </div> -->
 
             <div class="inline-block">
-              <UserDropdown />
+              <UserDropdown v-if="authStore.isAuthenticated && authStore.currentUser" />
 
-              <!-- <div class="text-orange-500 flex items-center">
-              <div>
-                <button
-                  type="button"
-                  class="text-sm font-bold hover:text-orange-600 hover:bg-orange-200 transition-all px-3 py-2 rounded-full"
-                >
-                  <i class="fa-solid fa-right-to-bracket mr-1"></i>
+              <div v-else class="text-orange-500 flex items-center">
+                <div>
+                  <router-link
+                    :to="{ name: 'login' }"
+                    class="text-sm font-bold hover:text-orange-600 hover:bg-orange-200 transition-all px-3 py-2 rounded-full"
+                  >
+                    <i class="fa-solid fa-right-to-bracket mr-1"></i>
 
-                  Login
-                </button>
+                    Login
+                  </router-link>
+                </div>
+
+                <span class="mx-2 hidden md:block">|</span>
+
+                <div class="hidden md:block">
+                  <router-link
+                    :to="{ name: 'register' }"
+                    class="text-sm font-bold hover:text-orange-600 hover:bg-orange-200 transition-all px-3 py-2 rounded-full"
+                  >
+                    <i class="fa-solid fa-user mr-1"></i>
+
+                    Sign Up
+                  </router-link>
+                </div>
               </div>
-
-              <span class="mx-2 hidden md:block">|</span>
-
-              <div class="hidden md:block">
-                <button
-                  type="button"
-                  class="text-sm font-bold hover:text-orange-600 hover:bg-orange-200 transition-all px-3 py-2 rounded-full"
-                >
-                  <i class="fa-solid fa-user mr-1"></i>
-
-                  Sign Up
-                </button>
-              </div>
-            </div> -->
             </div>
 
             <button

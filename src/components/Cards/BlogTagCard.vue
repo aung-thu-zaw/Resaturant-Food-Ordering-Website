@@ -1,7 +1,25 @@
 <script setup>
-// Your Code
-</script>
+import { useBlogStore } from '@/stores/restaurant/blog'
+import { storeToRefs } from 'pinia'
+import { onMounted, ref, watch } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
 
+const route = useRoute()
+const router = useRouter()
+const store = useBlogStore()
+const currentTag = ref(null)
+
+const { tags } = storeToRefs(store)
+
+onMounted(async () => await store.getResources())
+
+const getTag = (tag) => (currentTag.value = tag)
+
+watch(
+  () => currentTag.value,
+  () => router.push({ name: 'blogs.index', query: { ...route.query, tag: currentTag.value } })
+)
+</script>
 
 <template>
   <div
@@ -12,26 +30,16 @@
     </h1>
 
     <div class="flex items-center flex-wrap w-full">
-      <div
+      <button
+        v-for="tag in tags"
+        :key="tag.id"
+        type="button"
         class="bg-gray-50 px-3.5 py-2 mx-1.5 rounded-full border border-orange-400 hover:text-white hover:bg-orange-500 mb-3 font-bold text-xs text-slate-700 flex items-center justify-between hover:scale-105 duration-150"
+        :class="{ 'bg-orange-500 text-white': tag.name === route.query?.tag }"
+        @click="getTag(tag.name)"
       >
-        Recipe Corner
-      </div>
-      <div
-        class="bg-gray-50 px-3.5 py-2 mx-1.5 rounded-full border border-orange-400 hover:text-white hover:bg-orange-500 mb-3 font-bold text-xs text-slate-700 flex items-center justify-between hover:scale-105 duration-150"
-      >
-        Recipe
-      </div>
-      <div
-        class="bg-gray-50 px-3.5 py-2 mx-1.5 rounded-full border border-orange-400 hover:text-white hover:bg-orange-500 mb-3 font-bold text-xs text-slate-700 flex items-center justify-between hover:scale-105 duration-150"
-      >
-        Recipe
-      </div>
-      <div
-        class="bg-gray-50 px-3.5 py-2 mx-1.5 rounded-full border border-orange-400 hover:text-white hover:bg-orange-500 mb-3 font-bold text-xs text-slate-700 flex items-center justify-between hover:scale-105 duration-150"
-      >
-        Recipe Corner
-      </div>
+        {{ tag?.name }}
+      </button>
     </div>
   </div>
 </template>

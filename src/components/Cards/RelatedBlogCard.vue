@@ -1,7 +1,6 @@
 <script setup>
-// Your Code
+defineProps({ relatedBlogs: Object })
 </script>
-
 
 <template>
   <div
@@ -13,140 +12,27 @@
 
     <div class="space-y-3 w-full">
       <div
+        v-for="relatedBlog in relatedBlogs"
+        :key="relatedBlog.id"
         class="bg-gray-50 p-3 round-md border border-gray-200 w-full font-semibold text-sm text-slate-700 rounded-md flex items-start justify-between hover:scale-105 duration-150 space-x-3"
       >
         <img
-          src="https://media.istockphoto.com/id/1241881284/photo/hands-of-cook-photographing-mexican-tacos.jpg?s=612x612&w=0&k=20&c=zFkJ71PlN32cgEpEiuKxVwb5f89fZoI9xt4xfyRhQUM="
-          alt=""
+          :src="relatedBlog?.thumbnail"
+          :alt="relatedBlog.title"
           class="w-16 h-16 rounded-md object-cover"
         />
         <div class="space-y-1.5">
-          <h3 class="font-bold text-md line-clamp-2">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia accusantium alias porro
-            at, iure vel minima ullam hic distinctio libero unde maxime fugiat magni dicta dolor
-            fuga illum odit nam.
-          </h3>
+          <router-link :to="{ name: 'blogs.show', params: { slug: relatedBlog?.slug } }">
+            <h3 class="font-bold text-md line-clamp-2">
+              {{ relatedBlog?.title }}
+            </h3>
+          </router-link>
 
           <div class="text-xs font-medium space-x-1.5">
             <span class="text-orange-500">
               <i class="fa-solid fa-calendar"></i>
             </span>
-            <span class="font-medium"> 23-September-2034 </span>
-          </div>
-        </div>
-      </div>
-      <div
-        class="bg-gray-50 p-3 round-md border border-gray-200 w-full font-semibold text-sm text-slate-700 rounded-md flex items-start justify-between hover:scale-105 duration-150 space-x-3"
-      >
-        <img
-          src="https://media.istockphoto.com/id/1241881284/photo/hands-of-cook-photographing-mexican-tacos.jpg?s=612x612&w=0&k=20&c=zFkJ71PlN32cgEpEiuKxVwb5f89fZoI9xt4xfyRhQUM="
-          alt=""
-          class="w-16 h-16 rounded-md object-cover"
-        />
-        <div class="space-y-1.5">
-          <h3 class="font-bold text-md line-clamp-2">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia accusantium alias porro
-            at, iure vel minima ullam hic distinctio libero unde maxime fugiat magni dicta dolor
-            fuga illum odit nam.
-          </h3>
-
-          <div class="text-xs font-medium space-x-1.5">
-            <span class="text-orange-500">
-              <i class="fa-solid fa-calendar"></i>
-            </span>
-            <span class="font-medium"> 23-September-2034 </span>
-          </div>
-        </div>
-      </div>
-      <div
-        class="bg-gray-50 p-3 round-md border border-gray-200 w-full font-semibold text-sm text-slate-700 rounded-md flex items-start justify-between hover:scale-105 duration-150 space-x-3"
-      >
-        <img
-          src="https://media.istockphoto.com/id/1241881284/photo/hands-of-cook-photographing-mexican-tacos.jpg?s=612x612&w=0&k=20&c=zFkJ71PlN32cgEpEiuKxVwb5f89fZoI9xt4xfyRhQUM="
-          alt=""
-          class="w-16 h-16 rounded-md object-cover"
-        />
-        <div class="space-y-1.5">
-          <h3 class="font-bold text-md line-clamp-2">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia accusantium alias porro
-            at, iure vel minima ullam hic distinctio libero unde maxime fugiat magni dicta dolor
-            fuga illum odit nam.
-          </h3>
-
-          <div class="text-xs font-medium space-x-1.5">
-            <span class="text-orange-500">
-              <i class="fa-solid fa-calendar"></i>
-            </span>
-            <span class="font-medium"> 23-September-2034 </span>
-          </div>
-        </div>
-      </div>
-      <div
-        class="bg-gray-50 p-3 round-md border border-gray-200 w-full font-semibold text-sm text-slate-700 rounded-md flex items-start justify-between hover:scale-105 duration-150 space-x-3"
-      >
-        <img
-          src="https://media.istockphoto.com/id/1241881284/photo/hands-of-cook-photographing-mexican-tacos.jpg?s=612x612&w=0&k=20&c=zFkJ71PlN32cgEpEiuKxVwb5f89fZoI9xt4xfyRhQUM="
-          alt=""
-          class="w-16 h-16 rounded-md object-cover"
-        />
-        <div class="space-y-1.5">
-          <h3 class="font-bold text-md line-clamp-2">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia accusantium alias porro
-            at, iure vel minima ullam hic distinctio libero unde maxime fugiat magni dicta dolor
-            fuga illum odit nam.
-          </h3>
-
-          <div class="text-xs font-medium space-x-1.5">
-            <span class="text-orange-500">
-              <i class="fa-solid fa-calendar"></i>
-            </span>
-            <span class="font-medium"> 23-September-2034 </span>
-          </div>
-        </div>
-      </div>
-      <div
-        class="bg-gray-50 p-3 round-md border border-gray-200 w-full font-semibold text-sm text-slate-700 rounded-md flex items-start justify-between hover:scale-105 duration-150 space-x-3"
-      >
-        <img
-          src="https://media.istockphoto.com/id/1241881284/photo/hands-of-cook-photographing-mexican-tacos.jpg?s=612x612&w=0&k=20&c=zFkJ71PlN32cgEpEiuKxVwb5f89fZoI9xt4xfyRhQUM="
-          alt=""
-          class="w-16 h-16 rounded-md object-cover"
-        />
-        <div class="space-y-1.5">
-          <h3 class="font-bold text-md line-clamp-2">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia accusantium alias porro
-            at, iure vel minima ullam hic distinctio libero unde maxime fugiat magni dicta dolor
-            fuga illum odit nam.
-          </h3>
-
-          <div class="text-xs font-medium space-x-1.5">
-            <span class="text-orange-500">
-              <i class="fa-solid fa-calendar"></i>
-            </span>
-            <span class="font-medium"> 23-September-2034 </span>
-          </div>
-        </div>
-      </div>
-      <div
-        class="bg-gray-50 p-3 round-md border border-gray-200 w-full font-semibold text-sm text-slate-700 rounded-md flex items-start justify-between hover:scale-105 duration-150 space-x-3"
-      >
-        <img
-          src="https://media.istockphoto.com/id/1241881284/photo/hands-of-cook-photographing-mexican-tacos.jpg?s=612x612&w=0&k=20&c=zFkJ71PlN32cgEpEiuKxVwb5f89fZoI9xt4xfyRhQUM="
-          alt=""
-          class="w-16 h-16 rounded-md object-cover"
-        />
-        <div class="space-y-1.5">
-          <h3 class="font-bold text-md line-clamp-2">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia accusantium alias porro
-            at, iure vel minima ullam hic distinctio libero unde maxime fugiat magni dicta dolor
-            fuga illum odit nam.
-          </h3>
-
-          <div class="text-xs font-medium space-x-1.5">
-            <span class="text-orange-500">
-              <i class="fa-solid fa-calendar"></i>
-            </span>
-            <span class="font-medium"> 23-September-2034 </span>
+            <span class="font-medium"> {{ relatedBlog?.published_at }} </span>
           </div>
         </div>
       </div>

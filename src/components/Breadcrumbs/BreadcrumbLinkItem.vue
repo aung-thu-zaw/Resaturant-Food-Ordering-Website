@@ -23,7 +23,7 @@ defineProps({
 </script>
 
 <template>
-  <li class="text-slate-700 hover:text-primary duration-150">
+  <li class="text-slate-700 hover:text-orange-500 duration-150">
     <div class="flex items-center">
       <i class="fa-solid fa-angle-right text-gray-500"></i>
 
