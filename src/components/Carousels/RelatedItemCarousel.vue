@@ -1,7 +1,7 @@
 <script setup>
 import ProductCard from '@/components/Cards/ProductCard.vue'
 
-// defineProps({ productBanners: Object });
+defineProps({ relatedItems: Object })
 
 let defaultTransform = 0
 
@@ -48,35 +48,12 @@ const goPrev = () => {
           id="related-items"
           class="h-full flex gap-6 items-center justify-start transition ease-out duration-700"
         >
-          <div class="flex flex-shrink-0 relative rounded-md overflow-hidden">
-            <ProductCard />
-          </div>
-          <div class="flex flex-shrink-0 relative rounded-md overflow-hidden">
-            <ProductCard />
-          </div>
-          <div class="flex flex-shrink-0 relative rounded-md overflow-hidden">
-            <ProductCard />
-          </div>
-          <div class="flex flex-shrink-0 relative rounded-md overflow-hidden">
-            <ProductCard />
-          </div>
-          <div class="flex flex-shrink-0 relative rounded-md overflow-hidden">
-            <ProductCard />
-          </div>
-          <div class="flex flex-shrink-0 relative rounded-md overflow-hidden">
-            <ProductCard />
-          </div>
-          <div class="flex flex-shrink-0 relative rounded-md overflow-hidden">
-            <ProductCard />
-          </div>
-          <div class="flex flex-shrink-0 relative rounded-md overflow-hidden">
-            <ProductCard />
-          </div>
-          <div class="flex flex-shrink-0 relative rounded-md overflow-hidden">
-            <ProductCard />
-          </div>
-          <div class="flex flex-shrink-0 relative rounded-md overflow-hidden">
-            <ProductCard />
+          <div
+            v-for="product in relatedItems"
+            :key="product?.id"
+            class="flex flex-shrink-0 relative rounded-md overflow-hidden"
+          >
+            <ProductCard :product="product" data-aos="fade-in" data-aos-duration="1000" />
           </div>
         </div>
       </div>

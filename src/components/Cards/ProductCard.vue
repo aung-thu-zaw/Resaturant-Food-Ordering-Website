@@ -29,10 +29,10 @@ const discountPercentage = computed(() => {
 
 <template>
   <div
-    class="group rounded-[5px] bg-white border border-gray-200 shadow-sm text-center flex flex-col items-center justify-start h-[400px] overflow-hidden"
+    class="group rounded-[5px] bg-white border border-gray-200 shadow-sm text-center flex flex-col items-center justify-start w-[300px] max-w-[300px] h-[400px] overflow-hidden"
   >
-    <a
-      href="#!"
+    <router-link
+      :to="{ name: 'menus.show', params: { slug: product?.slug }, query: { tab: 'description' } }"
       class="relative w-full h-[220px] overflow-hidden"
       data-te-ripple-init
       data-te-ripple-color="light"
@@ -48,14 +48,15 @@ const discountPercentage = computed(() => {
       >
         {{ discountPercentage }}% OFF
       </span>
-    </a>
+    </router-link>
 
     <div class="p-5">
-      <h5
-        class="text-lg font-bold leading-tight text-slate-900 line-clamp-2 mb-2 hover:text-orange-500 duration-150"
+      <router-link
+        :to="{ name: 'menus.show', params: { slug: product?.slug }, query: { tab: 'description' } }"
+        class="text-lg font-bold leading-tight text-slate-900 line-clamp-2 mb-2 hover:text-orange-500 duration-150 cursor-pointer"
       >
         {{ product?.name }}
-      </h5>
+      </router-link>
 
       <p class="text-slate-600 text-xs font-semibold mb-4">
         {{ product?.ingredients }}

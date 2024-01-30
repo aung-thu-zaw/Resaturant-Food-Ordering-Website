@@ -29,6 +29,7 @@ export default [
   {
     path: '/menus/:slug',
     name: 'menus.show',
+    props: (route) => ({ slug: String(route.params.slug) }),
     component: () => import('@/views/restaurant/Menus/Show.vue')
   },
 

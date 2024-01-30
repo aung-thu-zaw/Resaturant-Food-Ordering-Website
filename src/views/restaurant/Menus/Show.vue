@@ -4,14 +4,59 @@ import RelatedItemCarousel from '@/components/Carousels/RelatedItemCarousel.vue'
 import ProductDetailImageGallery from '@/components/Galleries/ProductDetailImageGallery.vue'
 import StarRating from '@/components/Ratings/StarRating.vue'
 import Breadcrumb from '@/components/Breadcrumbs/MainBreadcrumb.vue'
+import BreadcrumbLinkItem from '@/components/Breadcrumbs/BreadcrumbLinkItem.vue'
 import BreadcrumbItem from '@/components/Breadcrumbs/BreadcrumbItem.vue'
 import ProductInformationTab from '@/components/Tabs/ProductInformationTab.vue'
-import { onMounted } from 'vue'
+import GreenBadge from '@/components/Badges/GreenBadge.vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import { useTitle } from '@vueuse/core'
+import { useMenuStore } from '@/stores/restaurant/menu'
+import { storeToRefs } from 'pinia'
+import { useFormatFunctions } from '@/composables/useFormatFunctions'
 
-useTitle('Menus - Restaurant Food Ordering')
+const props = defineProps({
+  slug: {
+    type: String,
+    required: true
+  }
+})
 
-onMounted(() => window.scrollTo(0, 0))
+const store = useMenuStore()
+
+const { menu, relatedItems } = storeToRefs(store)
+const { formatAmount } = useFormatFunctions()
+
+const fetchData = async () => {
+  await store.getMenu(props?.slug)
+  useTitle(menu.value?.name + '- Restaurant Food Ordering')
+  window.scrollTo(0, 0)
+}
+
+onMounted(async () => await fetchData())
+
+const avgRating = computed(() => {
+  const rawAvgRating = menu.value?.product_reviews_avg_rating
+
+  const avgRatingValue = parseFloat(rawAvgRating)
+
+  if (!Number.isNaN(avgRatingValue)) {
+    return avgRatingValue.toFixed(1)
+  }
+
+  return null
+})
+
+watch(
+  () => props.slug,
+  async () => await fetchData()
+)
+
+const quantity = ref(1)
+
+const increment = () =>
+  quantity.value >= menu?.value?.qty ? (quantity.value = menu?.value?.qty) : quantity.value++
+
+const decrement = () => (quantity.value <= 1 ? 1 : quantity.value--)
 </script>
 
 <template>
@@ -20,36 +65,58 @@ onMounted(() => window.scrollTo(0, 0))
       <div class="container mx-auto pt-10 py-20">
         <div class="mb-10 md:px-16">
           <Breadcrumb to="home" icon="fa-home" label="Home">
-            <BreadcrumbItem label="Menu" />
-            <BreadcrumbItem label="Maxican Pizza Test Better" />
+            <BreadcrumbLinkItem label="Menus" to="menus.index" />
+            <BreadcrumbItem :label="menu?.name ?? ''" />
           </Breadcrumb>
         </div>
 
         <section class="mb-20 space-y-5">
           <div class="flex flex-col md:flex-row items-start md:space-x-5 space-y-5 md:space-y-0">
-            <div class="w-full md:w-1/2">
-              <ProductDetailImageGallery />
+            <div class="w-full md:w-1/2" data-aos="fade-right" data-aos-duration="800">
+              <ProductDetailImageGallery :product="menu ?? {}" />
             </div>
-            <div class="w-full md:w-1/2 space-y-4 md:space-y-8">
+            <div
+              class="w-full md:w-1/2 space-y-4 md:space-y-8"
+              data-aos="fade-left"
+              data-aos-duration="800"
+            >
               <div class="space-y-5">
                 <h1 class="font-extrabold text-3xl md:text-4xl text-purpleDark">
-                  Maxican Pizza Test Better
+                  {{ menu?.name }}
                 </h1>
-
                 <div class="flex items-center justify-start space-x-3 text-sm md:text-md">
-                  <StarRating rating="5" />
-                  <span class="font-semibold text-slate-600 text-sm">| &nbsp;&nbsp;45 Reviews</span>
+                  <StarRating :rating="avgRating" />
+                  <span class="font-semibold text-slate-600 text-sm">
+                    | &nbsp;&nbsp;{{ menu?.product_reviews_count ?? 0 }} Reviews
+                  </span>
                 </div>
               </div>
 
-              <div class="space-x-3">
-                <span class="text-purpleDark font-extrabold text-lg md:text-xl">$ 320.00</span>
+              <div class="flex items-center">
+                <div>
+                  <span class="text-gray-700 font-semibold text-sm mr-3">
+                    Total {{ menu?.qty }} item(s) Available
+                  </span>
+                  <GreenBadge> In stock </GreenBadge>
+                </div>
+              </div>
+
+              <div v-if="menu?.discount_price" class="space-x-3">
+                <span class="text-purpleDark font-extrabold text-lg md:text-xl">
+                  $ {{ formatAmount(menu?.discount_price) }}
+                </span>
                 <span class="text-orange-500 line-through text-sm md:text-md font-medium">
-                  $ 100
+                  $ {{ formatAmount(menu?.base_price) }}
                 </span>
               </div>
 
-              <div class="flex items-center justify-start space-x-5 w-full">
+              <div v-else class="space-x-3">
+                <span class="text-purpleDark font-extrabold text-lg md:text-xl">
+                  $ {{ formatAmount(menu?.base_price) }}
+                </span>
+              </div>
+
+              <!-- <div class="flex items-center justify-start space-x-5 w-full">
                 <p class="font-semibold text-slate-800 text-sm md:mb-0 mb-3">Select Size :</p>
 
                 <div class="flex items-center md:space-x-3 flex-wrap">
@@ -72,29 +139,22 @@ onMounted(() => window.scrollTo(0, 0))
                     Large ( + 1.5$ )
                   </button>
                 </div>
-              </div>
+              </div> -->
 
-              <div class="flex items-center justify-start space-x-5 w-full">
-                <p class="font-semibold text-slate-800 text-sm md:mb-0 mb-3">Add-ons :</p>
+              <div
+                v-show="menu?.addons?.length"
+                class="flex items-center justify-start space-x-5 w-full"
+              >
+                <p class="font-semibold text-slate-800 text-sm md:mb-0 mb-3 w-[100px]">Add-ons :</p>
 
-                <div class="flex items-center space-x-3 flex-wrap">
+                <div class="flex items-center space-x-3 flex-wrap md:flex-nowrap">
                   <button
+                    v-for="addon in menu?.addons"
+                    :key="addon?.id"
                     type="button"
-                    class="px-4 py-2 text-xs rounded-md font-semibold md:mb-0 md:ml-0 ml-3 mb-3 border border-orange-300 text-orange-500"
+                    class="px-4 py-2 text-xs rounded-md font-semibold md:ml-0 ml-3 mb-3 border border-orange-300 text-orange-500"
                   >
-                    Spicy ( + 1.5$ )
-                  </button>
-                  <button
-                    type="button"
-                    class="px-4 py-2 text-xs rounded-md font-semibold md:mb-0 md:ml-0 ml-3 mb-3 border border-gray-300"
-                  >
-                    Extra Spicy ( + 2$ )
-                  </button>
-                  <button
-                    type="button"
-                    class="px-4 py-2 text-xs rounded-md font-semibold md:mb-0 md:ml-0 ml-3 mb-3 border border-gray-300"
-                  >
-                    Extra Cheese ( + 5$ )
+                    {{ addon?.name }} ( + {{ formatAmount(addon?.additional_price) }}$ )
                   </button>
                 </div>
               </div>
@@ -104,6 +164,8 @@ onMounted(() => window.scrollTo(0, 0))
 
                 <div class="flex items-center space-x-1.5 border border-gray-300 p-1 rounded-full">
                   <button
+                    @click="increment"
+                    type="button"
                     class="focus:ring-2 focus:ring-orange-300 bg-orange-500 hover:bg-orange-600 rounded-full text-xs w-8 h-8 flex items-center justify-center"
                   >
                     <i class="fa-solid fa-plus text-white"></i>
@@ -112,9 +174,12 @@ onMounted(() => window.scrollTo(0, 0))
                   <input
                     type="number"
                     class="w-[50px] border-none font-semibold text-sm text-gray-800 outline-none border text-center bg-transparent"
+                    v-model="quantity"
                   />
 
                   <button
+                    @click="decrement"
+                    type="button"
                     class="focus:ring-2 focus:ring-orange-300 bg-orange-500 hover:bg-orange-600 mr-2 rounded-full text-xs w-8 h-8 flex items-center justify-center"
                   >
                     <i class="fa-solid fa-minus text-white"></i>
@@ -144,14 +209,14 @@ onMounted(() => window.scrollTo(0, 0))
             </div>
           </div>
 
-          <ProductInformationTab />
+          <ProductInformationTab :description="menu?.description" />
         </section>
 
-        <section class="space-y-10">
+        <section v-if="relatedItems?.length" class="space-y-10">
           <h1 class="font-bold text-md text-purpleDark text-3xl">Related Items</h1>
 
           <div>
-            <RelatedItemCarousel />
+            <RelatedItemCarousel :relatedItems="relatedItems" />
           </div>
         </section>
       </div>
