@@ -7,6 +7,9 @@ import Breadcrumb from '@/components/Breadcrumbs/MainBreadcrumb.vue'
 import BreadcrumbItem from '@/components/Breadcrumbs/BreadcrumbItem.vue'
 import ProductInformationTab from '@/components/Tabs/ProductInformationTab.vue'
 import { onMounted } from 'vue'
+import { useTitle } from '@vueuse/core'
+
+useTitle('Menus - Restaurant Food Ordering')
 
 onMounted(() => window.scrollTo(0, 0))
 </script>

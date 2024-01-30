@@ -1,6 +1,6 @@
 <script setup>
-// import { ref, watch } from 'vue'
-// import { useRoute, useRouter } from 'vue-router'
+import { ref, watch } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 
 const props = defineProps({
   options: {
@@ -9,7 +9,7 @@ const props = defineProps({
   },
   selected: {
     type: [String, Boolean],
-    required: true
+    required: false
   },
   disabled: {
     type: Boolean,
@@ -25,16 +25,16 @@ const props = defineProps({
   }
 })
 
-// const route = useRoute()
-// const router = useRouter()
-// const currentCategory = ref(route.query.category ?? '')
+const route = useRoute()
+const router = useRouter()
+const currentCategory = ref(route.query.category ?? '')
 
-// watch(
-//   () => currentCategory.value,
-//   (newCategory) => {
-//     router.push({ query: { ...route.query, category: newCategory } })
-//   }
-// )
+watch(
+  () => currentCategory.value,
+  (newCategory) => {
+    router.push({ query: { ...route.query, category: newCategory } })
+  }
+)
 
 defineEmits(['update:modelValue'])
 
@@ -50,18 +50,19 @@ const isSelected = (option) => {
   return props.selected === optionValue(option)
 }
 
-// watch(
-//   () => route.query,
-//   () => {
-//     if (!route.query.category) currentCategory.value = ''
-//   }
-// )
+watch(
+  () => route.query,
+  () => {
+    if (!route.query.category) currentCategory.value = ''
+  }
+)
 </script>
 
 <template>
   <select
     id="filter-by-category"
-    class="p-3 py-[17.5px] font-semibold text-sm text-gray-700 rounded-md bg-gray-50 outline-none focus:ring-2 focus:ring-slate-300 border border-gray-300 focus:border-slate-400"
+    class="p-3 py-4 font-semibold text-sm text-gray-700 rounded-md bg-gray-50 outline-none focus:ring-2 focus:ring-slate-300 border border-gray-300 focus:border-slate-400"
+    v-model="currentCategory"
   >
     <option value="" :selected="modelValue === ''" disabled>{{ placeholder }}</option>
     <option

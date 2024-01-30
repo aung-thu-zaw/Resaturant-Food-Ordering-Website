@@ -1,6 +1,9 @@
 <script setup>
 import AppLayout from '@/layouts/AppLayout.vue'
 import { onMounted } from 'vue'
+import { useTitle } from '@vueuse/core'
+
+useTitle('About - Restaurant Food Ordering')
 
 onMounted(() => window.scrollTo(0, 0))
 </script>

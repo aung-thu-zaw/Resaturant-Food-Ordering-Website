@@ -7,6 +7,9 @@ import TextareaField from '@/components/Forms/Fields/TextareaField.vue'
 import FormButton from '@/components/Buttons/FormButton.vue'
 import { onMounted, reactive } from 'vue'
 import { useContactUsStore } from '@/stores/restaurant/contact'
+import { useTitle } from '@vueuse/core'
+
+useTitle('Contact - Restaurant Food Ordering')
 
 const store = useContactUsStore()
 const form = reactive({

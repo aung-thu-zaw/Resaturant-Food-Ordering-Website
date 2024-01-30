@@ -26,8 +26,17 @@ export function useQueryStringParams() {
     tag: route.query?.tag !== '' ? route.query.tag : undefined
   }))
 
+  const menuParams = computed(() => ({
+    search: route.query?.search,
+    page: route.query?.page ?? 1,
+    sort: route.query?.sort ?? 'latest',
+    category: route.query?.category !== '' ? route.query.category : undefined,
+    rating: route.query?.rating !== '' ? route.query.rating : undefined
+  }))
+
   return {
     dashboardParams,
-    blogParams
+    blogParams,
+    menuParams
   }
 }

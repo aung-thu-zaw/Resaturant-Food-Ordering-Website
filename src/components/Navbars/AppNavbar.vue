@@ -134,15 +134,15 @@ const router = useRouter()
 
             <li>
               <router-link
-                :to="{ name: 'menu' }"
+                :to="{ name: 'menus.index' }"
                 class="block py-2 pl-3 pr-4 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-orange-500 md:p-0"
                 :class="{
                   'text-orange-500':
-                    router.currentRoute.value.path === '/menu' ||
-                    router.currentRoute.value.path.startsWith('/menu')
+                    router.currentRoute.value.path === '/menus' ||
+                    router.currentRoute.value.path.startsWith('/menus')
                 }"
               >
-                Menu
+                Menus
               </router-link>
             </li>
             <li>

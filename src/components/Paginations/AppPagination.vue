@@ -24,7 +24,7 @@ const fetchData = async (url, pageNumber, currentPage) => {
       newPage = currentPage - 1
     }
 
-    if (route.query?.length) router.push({ query: { ...route.query, page: newPage } })
+    router.push({ query: { ...route.query, page: newPage } })
 
     emit('updatedData', response.data)
   } catch (error) {

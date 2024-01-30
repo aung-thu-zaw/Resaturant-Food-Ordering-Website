@@ -22,14 +22,14 @@ export default [
 
   /***** Menu *****/
   {
-    path: '/menu',
-    name: 'menu',
-    component: () => import('@/views/restaurant/Menu/Index.vue')
+    path: '/menus',
+    name: 'menus.index',
+    component: () => import('@/views/restaurant/Menus/Index.vue')
   },
   {
-    path: '/menu/detail',
-    name: 'menu.detail',
-    component: () => import('@/views/restaurant/Menu/Show.vue')
+    path: '/menus/:slug',
+    name: 'menus.show',
+    component: () => import('@/views/restaurant/Menus/Show.vue')
   },
 
   /***** Blog *****/
