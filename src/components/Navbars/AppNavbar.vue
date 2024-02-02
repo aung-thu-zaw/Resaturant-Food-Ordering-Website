@@ -17,9 +17,9 @@ const router = useRouter()
     </div>
     <div class="w-full bg-white border-b border-gray-20 shadow shadow-gray-200">
       <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl p-4">
-        <a href="" class="flex items-center">
+        <router-link :to="{ name: 'home' }" class="flex items-center">
           <img src="../../assets/images/logo-color.png" class="h-12 mr-3" alt="restaurant" />
-        </a>
+        </router-link>
 
         <div class="md:order-2 flex items-center space-x-5 w-auto">
           <div class="flex items-center space-x-8">
@@ -36,9 +36,18 @@ const router = useRouter()
               <FoodSearchBox :search="searchBox" @closedSearchBox="searchBox = false" />
             </div>
 
-            <!-- <div class="inline-block">
-            <CartDropdown />
-          </div> -->
+            <div class="inline-block">
+              <router-link :to="{ name: 'cart' }" class="relative">
+                <span class="text-purpleDark hover:text-indigo-950">
+                  <i class="fa-solid fa-shopping-cart"></i>
+                </span>
+                <span
+                  class="text-white bg-purpleDark text-[.6rem] font-bold w-3.5 h-3.5 rounded-full absolute -top-2 -right-2 flex items-center justify-center"
+                >
+                  2
+                </span>
+              </router-link>
+            </div>
 
             <div class="inline-block">
               <UserDropdown v-if="authStore.isAuthenticated && authStore.currentUser" />

@@ -1,0 +1,144 @@
+<script setup>
+import AppLayout from '@/layouts/AppLayout.vue'
+import InputLabel from '@/components/Forms/Fields/InputLabel.vue'
+// import InputError from '@/components/Forms/Fields/InputError.vue'
+import InputField from '@/components/Forms/Fields/InputField.vue'
+import SelectBox from '@/components/Forms/Fields/SelectBox.vue'
+import TextAreaField from '@/components/Forms/Fields/TextAreaField.vue'
+import FormButton from '@/components/Buttons/FormButton.vue'
+import { useTitle } from '@vueuse/core'
+import { onMounted } from 'vue'
+
+useTitle('Payment - Restaurant Food Ordering')
+
+onMounted(() => window.scrollTo(0, 0))
+</script>
+
+<template>
+  <AppLayout>
+    <section class="py-10 bg-gray-50">
+      <div class="container mx-auto space-y-10">
+        <h1 class="font-bold text-4xl text-purpleDark">Choose Payment</h1>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <div data-aos="fade-right" data-aos-duration="1000" class="col-span-2">
+            <div
+              class="flex md:flex-row flex-col items-center space-y-5 md:space-y-0 md:space-x-10"
+            >
+              <button class="border rounded-md overflow-hidden hover:scale-105 duration-200">
+                <img
+                  src="https://i.pcmag.com/imagery/reviews/068BjcjwBw0snwHIq0KNo5m-15..v1602794215.png"
+                  alt="paypal"
+                  class="w-48 h-24 object-cover"
+                />
+              </button>
+
+              <button
+                class="border border-gray-200 rounded-md overflow-hidden hover:scale-105 duration-200"
+              >
+                <img
+                  src="https://www.spuerkeess.lu/fileadmin/_processed_/9/b/csm_3_Cartes_800X450_a83ae13af0.png"
+                  alt="credit"
+                  class="w-48 h-24 object-cover"
+                />
+              </button>
+
+              <button
+                class="border border-gray-200 rounded-md overflow-hidden hover:scale-105 duration-200"
+              >
+                <img
+                  src="https://www.shutterstock.com/image-vector/cash-on-delivery-tags-collection-600nw-1537188653.jpg"
+                  alt="cod"
+                  class="w-48 h-24 object-cover"
+                />
+              </button>
+            </div>
+          </div>
+          <div class="col-span-1" data-aos="fade-left" data-aos-duration="1000">
+            <div class="border border-gray-200 bg-white shadow-sm rounded-md mb-5 p-5">
+              <h2 class="text-center mb-5 font-bold text-xl text-gray-800">Order Summary</h2>
+              <ul class="space-y-3 text-sm font-semibold mb-5">
+                <li class="flex justify-between text-gray-700">
+                  <span>Total Items:</span>
+                  <span>5 Items</span>
+                </li>
+
+                <li class="flex justify-between text-gray-700">
+                  <span>Total Items Price:</span>
+                  <span>$ 100</span>
+                </li>
+
+                <li class="flex justify-between text-gray-700">
+                  <span>Delivery:</span>
+                  <span>$ 10</span>
+                </li>
+
+                <li class="flex justify-between text-gray-700">
+                  <span>Coupon Code:</span>
+                  <span class="text-yellow-600 text-sm font-bold">
+                    Global Usage
+                    <button class="text-gray-700 cursor-pointer hover:text-red-600">
+                      <i class="fas fa-xmark"></i>
+                    </button>
+                  </span>
+                </li>
+
+                <!-- <li v-show="coupon" class="flex justify-between text-gray-700">
+                    <span>Coupon Discount:</span>
+                    <span v-if="coupon?.type === 'fixed'" class="text-gray-700 text-sm font-bold">
+                      - $ {{ formatAmount(coupon.value) }}
+                    </span>
+                    <span
+                      v-else-if="coupon?.type === 'percentage'"
+                      class="text-gray-700 text-sm font-bold"
+                    >
+                      - % {{ coupon.value }}
+                    </span>
+                  </li> -->
+
+                <li class="text-lg font-bold border-t flex justify-between mt-3 pt-3">
+                  <span>Total Price:</span>
+                  <span> $ 150.45</span>
+                </li>
+              </ul>
+            </div>
+
+            <div class="border border-gray-200 bg-white shadow-sm rounded-md mb-5 p-5">
+              <span class="font-bold text-orange-600 text-sm my-4"> Coupon code is applied </span>
+
+              <form @submit.prevent="" class="space-y-3">
+                <div>
+                  <InputField type="text" name="coupon-code" placeholder="Enter Coupon Code" />
+                </div>
+
+                <button
+                  type="submit"
+                  class="px-4 py-3 inline-block text-sm w-full text-center font-semibold text-white bg-orange-600 shadow-sm border border-gray-200 rounded-md hover:bg-orange-700 duration-200"
+                >
+                  Apply
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </AppLayout>
+</template>
+
+<style scoped>
+.background {
+  background-image: url('../../assets/images/chef-cover.jpeg');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  display: none;
+}
+
+.scrollbar::-webkit-scrollbar {
+  height: 10px;
+}
+</style>

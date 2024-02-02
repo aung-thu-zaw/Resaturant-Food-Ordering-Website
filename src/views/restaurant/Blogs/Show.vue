@@ -40,7 +40,7 @@ watch(
 
 <template>
   <AppLayout>
-    <div class="bg-gray-50">
+    <div class="bg-gray-50" data-aos="fade-in" data-aos-duration="1000">
       <div class="container mx-auto pt-10 py-20">
         <div class="mb-5">
           <Breadcrumb to="home" icon="fa-home" label="Home">

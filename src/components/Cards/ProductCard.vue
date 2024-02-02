@@ -44,7 +44,7 @@ const discountPercentage = computed(() => {
       />
       <span
         v-show="product?.discount_price"
-        class="absolute top-0 end-0 rounded-se-md rounded-es-xl text-xs font-medium bg-orange-500 text-white py-1.5 px-3"
+        class="absolute top-0 end-0 rounded-se-[5px] rounded-es-xl text-xs font-medium bg-orange-500 text-white py-1.5 px-3"
       >
         {{ discountPercentage }}% OFF
       </span>

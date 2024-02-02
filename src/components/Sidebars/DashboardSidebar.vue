@@ -28,7 +28,6 @@ const defaultQueryParams = {
 <template>
   <nav
     class="md:left-0 md:block md:fixed md:top-0 md:bottom-0 md:overflow-y-auto md:flex-row md:flex-nowrap md:overflow-hidden shadow-xl bg-white flex flex-wrap items-center justify-between relative md:w-64 z-10 py-4 px-6"
-    data-te-sidenav-init
   >
     <div
       class="md:flex-col md:items-stretch md:min-h-full md:flex-nowrap px-0 flex flex-wrap items-center md:justify-between w-full mx-auto"
@@ -42,11 +41,12 @@ const defaultQueryParams = {
         <i class="fas fa-bars" />
       </button>
       <!-- Brand -->
-      <a
-        class="md:block text-blueslate-600 mr-0 inline-block whitespace-nowrap text-sm px-0 py-1 text-center"
+      <router-link
+        :to="{ name: 'home' }"
+        class="md:block text-slate-600 mr-0 inline-block whitespace-nowrap text-sm px-0 py-1 text-center"
       >
         <img :src="logo" alt="logo" class="w-auto h-10 object-contain" />
-      </a>
+      </router-link>
       <!-- User -->
       <ul class="md:hidden items-center flex flex-wrap list-none ml-auto">
         <li class="inline-block relative">
@@ -63,16 +63,15 @@ const defaultQueryParams = {
         :class="collapseShow"
       >
         <!-- Collapse header -->
-        <div
-          class="md:min-w-full md:hidden block pb-4 mb-4 border-b border-solid border-blueslate-200"
-        >
+        <div class="md:min-w-full md:hidden block pb-4 mb-4 border-b border-solid border-slate-200">
           <div class="flex flex-wrap">
             <div class="w-6/12">
-              <a
-                class="md:block text-left md:pb-2 text-blueslate-600 mr-0 inline-block whitespace-nowrap text-sm p-4 px-0"
+              <router-link
+                :to="{ name: 'home' }"
+                class="md:block text-left md:pb-2 text-slate-600 mr-0 inline-block whitespace-nowrap text-sm p-4 px-0"
               >
                 <img :src="logo" alt="logo" class="w-auto h-10 object-contain" />
-              </a>
+              </router-link>
             </div>
             <div class="w-6/12 flex justify-end">
               <button
@@ -91,7 +90,7 @@ const defaultQueryParams = {
             <input
               type="text"
               placeholder="Search"
-              class="px-3 py-2 h-12 border border-solid border-blueslate-500 placeholder-blueslate-300 text-blueslate-600 bg-white rounded text-base leading-snug shadow-none outline-none focus:outline-none w-full font-normal"
+              class="px-3 py-2 h-12 border border-solid border-slate-500 placeholder-slate-300 text-slate-600 bg-white rounded text-base leading-snug shadow-none outline-none focus:outline-none w-full font-normal"
             />
           </div>
         </form>
@@ -104,10 +103,7 @@ const defaultQueryParams = {
         </h6>
         <!-- Navigation -->
 
-        <ul
-          class="md:flex-col md:min-w-full flex flex-col list-none text-sm font-[600]"
-          data-te-sidenav-menu-ref
-        >
+        <ul class="md:flex-col md:min-w-full flex flex-col list-none text-sm font-[600]">
           <!-- Dashboard -->
           <li class="items-center">
             <router-link
@@ -198,7 +194,10 @@ const defaultQueryParams = {
           >
             <a
               class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] text-slate-600 hover:text-slate-800 outline-none transition duration-300 ease-linear"
-              data-te-sidenav-link-ref
+              data-te-collapse-init
+              data-te-target="#manage-shipping"
+              aria-expanded="false"
+              aria-controls="manage-shipping"
             >
               <div class="text-[13px] py-3">
                 <i class="fa-solid fa-truck-fast mr-2"></i>
@@ -206,7 +205,6 @@ const defaultQueryParams = {
               </div>
               <span
                 class="absolute right-0 ml-auto mr-[0.8rem] transition-transform duration-300 ease-linear motion-reduce:transition-none [&>svg]:text-slate-600"
-                data-te-sidenav-rotate-icon-ref
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -222,9 +220,16 @@ const defaultQueryParams = {
                 </svg>
               </span>
             </a>
+            <!-- show !visible hidden -->
             <ul
-              class="show !visible relative m-0 hidden list-none p-0 data-[te-collapse-show]:block"
-              data-te-sidenav-collapse-ref
+              class="!visible relative m-0 list-none p-0"
+              :class="{
+                hidden:
+                  !route.path.startsWith('/admin/delivery-areas') ||
+                  !route.path.startsWith('/admin/shipping-methods')
+              }"
+              id="manage-shipping"
+              data-te-collapse-item
             >
               <li
                 v-show="can('delivery-areas.view')"
@@ -234,7 +239,6 @@ const defaultQueryParams = {
                   :to="{ name: 'admin.delivery-areas.index', query: defaultQueryParams }"
                   class="flex font-semibold cursor-pointer items-center truncate rounded-[5px] py-3 pl-7 text-[0.8rem] outline-none transition duration-300 ease-linear"
                   :class="getSidebarMenuActiveColor('/admin/delivery-areas')"
-                  data-te-sidenav-link-ref
                 >
                   Delivery Areas
                 </router-link>
@@ -247,7 +251,6 @@ const defaultQueryParams = {
                   :to="{ name: 'admin.shipping-methods.index', query: defaultQueryParams }"
                   class="flex font-semibold cursor-pointer items-center truncate rounded-[5px] py-3 pl-7 text-[0.8rem] outline-none transition duration-300 ease-linear"
                   :class="getSidebarMenuActiveColor('/admin/shipping-methods')"
-                  data-te-sidenav-link-ref
                 >
                   Shipping Methods
                 </router-link>
@@ -259,7 +262,10 @@ const defaultQueryParams = {
           <li v-show="can('tables.view') || can('reservation-times.view')" class="items-center">
             <a
               class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] text-slate-600 hover:text-slate-800 outline-none transition duration-300 ease-linear"
-              data-te-sidenav-link-ref
+              data-te-collapse-init
+              data-te-target="#manage-reservation"
+              aria-expanded="false"
+              aria-controls="manage-reservation"
             >
               <div class="text-[13px] py-3">
                 <i class="fa-solid fa-calendar-week mr-2"></i>
@@ -267,7 +273,6 @@ const defaultQueryParams = {
               </div>
               <span
                 class="absolute right-0 ml-auto mr-[0.8rem] transition-transform duration-300 ease-linear motion-reduce:transition-none [&>svg]:text-slate-600"
-                data-te-sidenav-rotate-icon-ref
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -283,9 +288,18 @@ const defaultQueryParams = {
                 </svg>
               </span>
             </a>
+
             <ul
-              class="show !visible relative m-0 hidden list-none p-0 data-[te-collapse-show]:block"
-              data-te-sidenav-collapse-ref
+              class="!visible relative m-0 list-none p-0"
+              :class="{
+                hidden:
+                  !route.path.startsWith('/admin/tables') ||
+                  !route.path.startsWith('/admin/reservation-times') ||
+                  !route.path.startsWith('/admin/reservation-tables') ||
+                  !route.path.startsWith('/admin/reservation-requests')
+              }"
+              id="manage-reservation"
+              data-te-collapse-item
             >
               <li
                 v-show="can('tables.view')"
@@ -295,7 +309,6 @@ const defaultQueryParams = {
                   :to="{ name: 'admin.tables.index', query: defaultQueryParams }"
                   class="flex font-semibold cursor-pointer items-center truncate rounded-[5px] py-3 pl-7 text-[0.8rem] outline-none transition duration-300 ease-linear"
                   :class="getSidebarMenuActiveColor('/admin/tables')"
-                  data-te-sidenav-link-ref
                 >
                   Tables
                 </router-link>
@@ -308,7 +321,6 @@ const defaultQueryParams = {
                   :to="{ name: 'admin.reservation-times.index', query: defaultQueryParams }"
                   class="flex font-semibold cursor-pointer items-center truncate rounded-[5px] py-3 pl-7 text-[0.8rem] outline-none transition duration-300 ease-linear"
                   :class="getSidebarMenuActiveColor('/admin/reservation-times')"
-                  data-te-sidenav-link-ref
                 >
                   Reservation Times
                 </router-link>
@@ -317,7 +329,6 @@ const defaultQueryParams = {
                 <a
                   class="flex font-semibold cursor-pointer items-center truncate rounded-[5px] py-3 pl-7 text-[0.8rem] outline-none transition duration-300 ease-linear"
                   :class="getSidebarMenuActiveColor('/admin/reservation-tables')"
-                  data-te-sidenav-link-ref
                 >
                   Table Availabilities
                 </a>
@@ -327,7 +338,6 @@ const defaultQueryParams = {
                 <a
                   class="flex font-semibold cursor-pointer items-center truncate rounded-[5px] py-3 pl-7 text-[0.8rem] outline-none transition duration-300 ease-linear"
                   :class="getSidebarMenuActiveColor('/admin/reservation-requests')"
-                  data-te-sidenav-link-ref
                 >
                   Reservation Requests
                 </a>
@@ -344,7 +354,10 @@ const defaultQueryParams = {
           >
             <a
               class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] text-slate-600 hover:text-slate-800 outline-none transition duration-300 ease-linear"
-              data-te-sidenav-link-ref
+              data-te-collapse-init
+              data-te-target="#manage-blog"
+              aria-expanded="false"
+              aria-controls="manage-blog"
             >
               <div class="text-[13px] py-3">
                 <i class="fa-solid fa-pen-nib mr-2"></i>
@@ -352,7 +365,6 @@ const defaultQueryParams = {
               </div>
               <span
                 class="absolute right-0 ml-auto mr-[0.8rem] transition-transform duration-300 ease-linear motion-reduce:transition-none [&>svg]:text-slate-600"
-                data-te-sidenav-rotate-icon-ref
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -369,8 +381,15 @@ const defaultQueryParams = {
               </span>
             </a>
             <ul
-              class="show !visible relative m-0 hidden list-none p-0 data-[te-collapse-show]:block"
-              data-te-sidenav-collapse-ref
+              class="!visible relative m-0 list-none p-0"
+              :class="{
+                hidden:
+                  !route.path.startsWith('/admin/blog-categories') ||
+                  !route.path.startsWith('/admin/blog-contents') ||
+                  !route.path.startsWith('/admin/blog-comments')
+              }"
+              id="manage-blog"
+              data-te-collapse-item
             >
               <li
                 v-show="can('blog-categories.view')"
@@ -380,7 +399,6 @@ const defaultQueryParams = {
                   :to="{ name: 'admin.blog-categories.index', query: defaultQueryParams }"
                   class="flex font-semibold cursor-pointer items-center truncate rounded-[5px] py-3 pl-7 text-[0.8rem] outline-none transition duration-300 ease-linear"
                   :class="getSidebarMenuActiveColor('/admin/blog-categories')"
-                  data-te-sidenav-link-ref
                 >
                   Categories
                 </router-link>
@@ -393,7 +411,6 @@ const defaultQueryParams = {
                   :to="{ name: 'admin.blog-contents.index', query: defaultQueryParams }"
                   class="flex font-semibold cursor-pointer items-center truncate rounded-[5px] py-3 pl-7 text-[0.8rem] outline-none transition duration-300 ease-linear"
                   :class="getSidebarMenuActiveColor('/admin/blog-contents')"
-                  data-te-sidenav-link-ref
                 >
                   Contents
                 </router-link>
@@ -406,7 +423,6 @@ const defaultQueryParams = {
                   :to="{ name: 'admin.blog-comments.index', query: defaultQueryParams }"
                   class="flex font-semibold cursor-pointer items-center truncate rounded-[5px] py-3 pl-7 text-[0.8rem] outline-none transition duration-300 ease-linear"
                   :class="getSidebarMenuActiveColor('/admin/blog-comments')"
-                  data-te-sidenav-link-ref
                 >
                   Comments
                 </router-link>
@@ -418,7 +434,10 @@ const defaultQueryParams = {
           <li v-show="can('subscribers.view') || can('newsletter.send')" class="items-center">
             <a
               class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] text-slate-600 hover:text-slate-800 outline-none transition duration-300 ease-linear"
-              data-te-sidenav-link-ref
+              data-te-collapse-init
+              data-te-target="#manage-newsletter"
+              aria-expanded="false"
+              aria-controls="manage-newsletter"
             >
               <div class="text-[13px] py-3">
                 <i class="fa-solid fa-envelope-open-text mr-2"></i>
@@ -426,7 +445,6 @@ const defaultQueryParams = {
               </div>
               <span
                 class="absolute right-0 ml-auto mr-[0.8rem] transition-transform duration-300 ease-linear motion-reduce:transition-none [&>svg]:text-slate-600"
-                data-te-sidenav-rotate-icon-ref
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -443,8 +461,14 @@ const defaultQueryParams = {
               </span>
             </a>
             <ul
-              class="show !visible relative m-0 hidden list-none p-0 data-[te-collapse-show]:block"
-              data-te-sidenav-collapse-ref
+              class="!visible relative m-0 list-none p-0"
+              :class="{
+                hidden:
+                  !route.path.startsWith('/admin/subscribers') ||
+                  !route.path.startsWith('/admin/send-newsletter')
+              }"
+              id="manage-newsletter"
+              data-te-collapse-item
             >
               <li
                 v-show="can('subscribers.view')"
@@ -454,7 +478,6 @@ const defaultQueryParams = {
                   :to="{ name: 'admin.subscribers.index', query: defaultQueryParams }"
                   class="flex font-semibold cursor-pointer items-center truncate rounded-[5px] py-3 pl-7 text-[0.8rem] outline-none transition duration-300 ease-linear"
                   :class="getSidebarMenuActiveColor('/admin/subscribers')"
-                  data-te-sidenav-link-ref
                 >
                   All Subscribers
                 </router-link>
@@ -467,7 +490,6 @@ const defaultQueryParams = {
                   :to="{ name: 'admin.send-newsletter' }"
                   class="flex font-semibold cursor-pointer items-center truncate rounded-[5px] py-3 pl-7 text-[0.8rem] outline-none transition duration-300 ease-linear"
                   :class="getSidebarMenuActiveColor('/admin/send-newsletter')"
-                  data-te-sidenav-link-ref
                 >
                   Send Newsletter
                 </router-link>
@@ -497,10 +519,7 @@ const defaultQueryParams = {
         </h6>
         <!-- Navigation -->
 
-        <ul
-          class="md:flex-col md:min-w-full flex flex-col list-none text-sm font-[600]"
-          data-te-sidenav-menu-ref
-        >
+        <ul class="md:flex-col md:min-w-full flex flex-col list-none text-sm font-[600]">
           <!-- POS -->
           <li class="items-center">
             <a
@@ -589,15 +608,11 @@ const defaultQueryParams = {
         </h6>
         <!-- Navigation -->
 
-        <ul
-          class="md:flex-col md:min-w-full flex flex-col list-none text-sm font-[600]"
-          data-te-sidenav-menu-ref
-        >
+        <ul class="md:flex-col md:min-w-full flex flex-col list-none text-sm font-[600]">
           <!-- Employee Management -->
           <li class="items-center">
             <a
               class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] text-slate-600 hover:text-slate-800 outline-none transition duration-300 ease-linear"
-              data-te-sidenav-link-ref
             >
               <div class="text-[13px] py-3">
                 <i class="fa-solid fa-user-tie mr-2"></i>
@@ -605,7 +620,6 @@ const defaultQueryParams = {
               </div>
               <span
                 class="absolute right-0 ml-auto mr-[0.8rem] transition-transform duration-300 ease-linear motion-reduce:transition-none [&>svg]:text-slate-600"
-                data-te-sidenav-rotate-icon-ref
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -623,7 +637,6 @@ const defaultQueryParams = {
             </a>
             <ul
               class="show !visible relative m-0 hidden list-none p-0 data-[te-collapse-show]:block"
-              data-te-sidenav-collapse-ref
             >
               <li
                 v-show="can('employee-positions.view')"
@@ -633,7 +646,6 @@ const defaultQueryParams = {
                   :to="{ name: 'admin.employee-positions.index', query: defaultQueryParams }"
                   class="flex font-semibold cursor-pointer items-center truncate rounded-[5px] py-3 pl-7 text-[0.8rem] outline-none transition duration-300 ease-linear"
                   :class="getSidebarMenuActiveColor('/admin/employee-positions')"
-                  data-te-sidenav-link-ref
                 >
                   Positions
                 </router-link>
@@ -646,7 +658,6 @@ const defaultQueryParams = {
                   :to="{ name: 'admin.employees.index', query: defaultQueryParams }"
                   class="flex font-semibold cursor-pointer items-center truncate rounded-[5px] py-3 pl-7 text-[0.8rem] outline-none transition duration-300 ease-linear"
                   :class="getSidebarMenuActiveColor('/admin/employees')"
-                  data-te-sidenav-link-ref
                 >
                   All Employee
                 </router-link>
@@ -655,7 +666,6 @@ const defaultQueryParams = {
                 <a
                   class="flex font-semibold cursor-pointer items-center truncate rounded-[5px] py-3 pl-7 text-[0.8rem] outline-none transition duration-300 ease-linear"
                   :class="getSidebarMenuActiveColor('/admin/attendance-lists')"
-                  data-te-sidenav-link-ref
                 >
                   Attendance Lists
                 </a>
@@ -664,7 +674,6 @@ const defaultQueryParams = {
                 <a
                   class="flex font-semibold cursor-pointer items-center truncate rounded-[5px] py-3 pl-7 text-[0.8rem] outline-none transition duration-300 ease-linear"
                   :class="getSidebarMenuActiveColor('/admin/salary')"
-                  data-te-sidenav-link-ref
                 >
                   Salary
                 </a>
@@ -673,7 +682,6 @@ const defaultQueryParams = {
                 <a
                   class="flex font-semibold cursor-pointer items-center truncate rounded-[5px] py-3 pl-7 text-[0.8rem] outline-none transition duration-300 ease-linear"
                   :class="getSidebarMenuActiveColor('/admin/pay-salary')"
-                  data-te-sidenav-link-ref
                 >
                   Pay Salary
                 </a>
@@ -682,7 +690,6 @@ const defaultQueryParams = {
                 <a
                   class="flex font-semibold cursor-pointer items-center truncate rounded-[5px] py-3 pl-7 text-[0.8rem] outline-none transition duration-300 ease-linear"
                   :class="getSidebarMenuActiveColor('/admin/last-month-salary')"
-                  data-te-sidenav-link-ref
                 >
                   Last Month Salary
                 </a>
@@ -694,7 +701,6 @@ const defaultQueryParams = {
           <li class="items-center">
             <a
               class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] text-slate-600 hover:text-slate-800 outline-none transition duration-300 ease-linear"
-              data-te-sidenav-link-ref
             >
               <div class="text-[13px] py-3">
                 <i class="fa-solid fa-people-carry-box mr-2"></i>
@@ -702,7 +708,6 @@ const defaultQueryParams = {
               </div>
               <span
                 class="absolute right-0 ml-auto mr-[0.8rem] transition-transform duration-300 ease-linear motion-reduce:transition-none [&>svg]:text-slate-600"
-                data-te-sidenav-rotate-icon-ref
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -720,13 +725,11 @@ const defaultQueryParams = {
             </a>
             <ul
               class="show !visible relative m-0 hidden list-none p-0 data-[te-collapse-show]:block"
-              data-te-sidenav-collapse-ref
             >
               <li class="relative hover:bg-gray-100 duration-100 rounded-md">
                 <a
                   class="flex font-semibold cursor-pointer items-center truncate rounded-[5px] py-3 pl-7 text-[0.8rem] outline-none transition duration-300 ease-linear"
                   :class="getSidebarMenuActiveColor('/admin/suppliers')"
-                  data-te-sidenav-link-ref
                 >
                   All Suppliers
                 </a>
@@ -754,7 +757,6 @@ const defaultQueryParams = {
           >
             <a
               class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] text-slate-600 hover:text-slate-800 outline-none transition duration-300 ease-linear"
-              data-te-sidenav-link-ref
             >
               <div class="text-[13px] py-3">
                 <i class="fa-solid fa-user-gear mr-2"></i>
@@ -762,7 +764,6 @@ const defaultQueryParams = {
               </div>
               <span
                 class="absolute right-0 ml-auto mr-[0.8rem] transition-transform duration-300 ease-linear motion-reduce:transition-none [&>svg]:text-slate-600"
-                data-te-sidenav-rotate-icon-ref
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -780,7 +781,6 @@ const defaultQueryParams = {
             </a>
             <ul
               class="show !visible relative m-0 hidden list-none p-0 data-[te-collapse-show]:block"
-              data-te-sidenav-collapse-ref
             >
               <li
                 v-show="can('registered-accounts.view')"
@@ -790,7 +790,6 @@ const defaultQueryParams = {
                   :to="{ name: 'admin.registered-accounts.index', query: defaultQueryParams }"
                   class="flex font-semibold cursor-pointer items-center truncate rounded-[5px] py-3 pl-7 text-[0.8rem] outline-none transition duration-300 ease-linear"
                   :class="getSidebarMenuActiveColor('/admin/registered-accounts')"
-                  data-te-sidenav-link-ref
                 >
                   Registered Accounts
                 </router-link>
@@ -803,7 +802,6 @@ const defaultQueryParams = {
                   :to="{ name: 'admin.admin-manage.index', query: defaultQueryParams }"
                   class="flex font-semibold cursor-pointer items-center truncate rounded-[5px] py-3 pl-7 text-[0.8rem] outline-none transition duration-300 ease-linear"
                   :class="getSidebarMenuActiveColor('/admin/admin-manage')"
-                  data-te-sidenav-link-ref
                 >
                   Admin Manage
                 </router-link>
@@ -820,7 +818,6 @@ const defaultQueryParams = {
           >
             <a
               class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] text-slate-600 hover:text-slate-800 outline-none transition duration-300 ease-linear"
-              data-te-sidenav-link-ref
             >
               <div class="text-[13px] py-3">
                 <i class="fa-solid fa-shield mr-2"></i>
@@ -828,7 +825,6 @@ const defaultQueryParams = {
               </div>
               <span
                 class="absolute right-0 ml-auto mr-[0.8rem] transition-transform duration-300 ease-linear motion-reduce:transition-none [&>svg]:text-slate-600"
-                data-te-sidenav-rotate-icon-ref
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -846,7 +842,6 @@ const defaultQueryParams = {
             </a>
             <ul
               class="show !visible relative m-0 hidden list-none p-0 data-[te-collapse-show]:block"
-              data-te-sidenav-collapse-ref
             >
               <li
                 v-show="can('permissions.view')"
@@ -856,7 +851,6 @@ const defaultQueryParams = {
                   :to="{ name: 'admin.permissions.index', query: defaultQueryParams }"
                   class="flex font-semibold cursor-pointer items-center truncate rounded-[5px] py-3 pl-7 text-[0.8rem] outline-none transition duration-300 ease-linear"
                   :class="getSidebarMenuActiveColor('/admin/permissions')"
-                  data-te-sidenav-link-ref
                 >
                   Permissions
                 </router-link>
@@ -870,7 +864,6 @@ const defaultQueryParams = {
                   :to="{ name: 'admin.roles.index', query: defaultQueryParams }"
                   class="flex font-semibold cursor-pointer items-center truncate rounded-[5px] py-3 pl-7 text-[0.8rem] outline-none transition duration-300 ease-linear"
                   :class="getSidebarMenuActiveColor('/admin/roles')"
-                  data-te-sidenav-link-ref
                 >
                   Roles
                 </router-link>
@@ -883,7 +876,6 @@ const defaultQueryParams = {
                   :to="{ name: 'admin.assign-role-permissions.index', query: defaultQueryParams }"
                   class="flex font-semibold cursor-pointer items-center truncate rounded-[5px] py-3 pl-7 text-[0.8rem] outline-none transition duration-300 ease-linear"
                   :class="getSidebarMenuActiveColor('/admin/assign-role-permissions')"
-                  data-te-sidenav-link-ref
                 >
                   Assign Role Permissions
                 </router-link>

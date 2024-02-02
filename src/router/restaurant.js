@@ -51,5 +51,22 @@ export default [
     path: '/contact',
     name: 'contact',
     component: () => import('@/views/restaurant/Contact.vue')
+  },
+
+  /***** Cart, Checkout and Payment *****/
+  {
+    path: '/cart',
+    name: 'cart',
+    component: () => import('@/views/restaurant/Cart.vue')
+  },
+  {
+    path: '/checkout',
+    name: 'checkout',
+    component: () => import('@/views/restaurant/Checkout.vue')
+  },
+  {
+    path: '/payments',
+    name: 'payments',
+    component: () => import('@/views/restaurant/Payment.vue')
   }
 ]
