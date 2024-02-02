@@ -8,11 +8,12 @@ import BreadcrumbLinkItem from '@/components/Breadcrumbs/BreadcrumbLinkItem.vue'
 import BreadcrumbItem from '@/components/Breadcrumbs/BreadcrumbItem.vue'
 import ProductInformationTab from '@/components/Tabs/ProductInformationTab.vue'
 import GreenBadge from '@/components/Badges/GreenBadge.vue'
-import { computed, onMounted, ref, watch } from 'vue'
+import { computed, onMounted, reactive, ref, watch } from 'vue'
 import { useTitle } from '@vueuse/core'
 import { useMenuStore } from '@/stores/restaurant/menu'
 import { storeToRefs } from 'pinia'
 import { useFormatFunctions } from '@/composables/useFormatFunctions'
+import { useCartItemStore } from '@/stores/restaurant/cartItem'
 
 const props = defineProps({
   slug: {
@@ -21,14 +22,16 @@ const props = defineProps({
   }
 })
 
-const store = useMenuStore()
-
-const { menu, relatedItems } = storeToRefs(store)
+const { menu, relatedItems } = storeToRefs(useMenuStore())
 const { formatAmount } = useFormatFunctions()
+const cartItemStore = useCartItemStore()
 
 const fetchData = async () => {
-  await store.getMenu(props?.slug)
+  await useMenuStore().getMenu(props?.slug)
   useTitle(menu.value?.name + '- Restaurant Food Ordering')
+  cartItemData.product_id = menu?.value?.id
+  cartItemData.total_price = calculateTotalPrice()
+  quantity.value = 1
   window.scrollTo(0, 0)
 }
 
@@ -36,14 +39,9 @@ onMounted(async () => await fetchData())
 
 const avgRating = computed(() => {
   const rawAvgRating = menu.value?.product_reviews_avg_rating
-
   const avgRatingValue = parseFloat(rawAvgRating)
 
-  if (!Number.isNaN(avgRatingValue)) {
-    return avgRatingValue.toFixed(1)
-  }
-
-  return null
+  return !Number.isNaN(avgRatingValue) ? avgRatingValue.toFixed(1) : null
 })
 
 watch(
@@ -57,6 +55,64 @@ const increment = () =>
   quantity.value >= menu?.value?.qty ? (quantity.value = menu?.value?.qty) : quantity.value++
 
 const decrement = () => (quantity.value <= 1 ? 1 : quantity.value--)
+
+const calculateTotalPrice = () => {
+  let totalPrice = 0
+
+  if (menu.value && cartItemData) {
+    const unitPrice = menu.value?.discount_price ? menu.value.discount_price : menu.value.base_price
+
+    cartItemData.unit_price = unitPrice
+    totalPrice = cartItemData.qty * unitPrice
+
+    if (
+      menu.value?.addons &&
+      menu.value?.addons?.length > 0 &&
+      cartItemData.addons &&
+      cartItemData.addons.length > 0
+    ) {
+      totalPrice += cartItemData.addons.reduce((addonTotal, addon) => {
+        return addonTotal + parseFloat(addon.additional_price) * cartItemData.qty
+      }, 0)
+    }
+
+    return totalPrice
+  } else {
+    return totalPrice
+  }
+}
+
+const cartItemData = reactive({
+  product_id: menu.value?.id,
+  qty: quantity.value,
+  unit_price: 0,
+  total_price: 0,
+  addons: []
+})
+
+const handleSelectedAddons = (addon) => {
+  const existingAddonIndex = cartItemData.addons.findIndex(
+    (existingAddon) => existingAddon.name === addon.name
+  )
+
+  if (existingAddonIndex !== -1) {
+    cartItemData.addons.splice(existingAddonIndex, 1)
+  } else {
+    cartItemData.addons.push({ name: addon?.name, additional_price: addon?.additional_price })
+  }
+
+  cartItemData.total_price = calculateTotalPrice()
+}
+
+watch(quantity, (newValue) => {
+  cartItemData.qty = newValue
+  cartItemData.total_price = calculateTotalPrice()
+})
+
+const isAddonSelected = (addon) =>
+  cartItemData.addons.some((selectedAddon) => selectedAddon.name === addon.name)
+
+const handleAddToCart = async () => await cartItemStore.createCartItem({ ...cartItemData })
 </script>
 
 <template>
@@ -116,43 +172,20 @@ const decrement = () => (quantity.value <= 1 ? 1 : quantity.value--)
                 </span>
               </div>
 
-              <!-- <div class="flex items-center justify-start space-x-5 w-full">
-                <p class="font-semibold text-slate-800 text-sm md:mb-0 mb-3">Select Size :</p>
-
-                <div class="flex items-center md:space-x-3 flex-wrap">
-                  <button
-                    type="button"
-                    class="px-4 py-2 text-xs rounded-full font-semibold md:mb-0 md:ml-0 ml-3 mb-3 border border-gray-300 bg-orange-500 text-white"
-                  >
-                    Small ( + 1.5$ )
-                  </button>
-                  <button
-                    type="button"
-                    class="px-4 py-2 text-xs rounded-full font-semibold md:mb-0 md:ml-0 ml-3 mb-3 border border-gray-300"
-                  >
-                    Medium ( + 1.5$ )
-                  </button>
-                  <button
-                    type="button"
-                    class="px-4 py-2 text-xs rounded-full font-semibold md:mb-0 md:ml-0 ml-3 mb-3 border border-gray-300"
-                  >
-                    Large ( + 1.5$ )
-                  </button>
-                </div>
-              </div> -->
-
               <div
                 v-show="menu?.addons?.length"
-                class="flex items-center justify-start space-x-5 w-full"
+                class="flex items-center justify-start space-x-3 w-full"
               >
-                <p class="font-semibold text-slate-800 text-sm md:mb-0 mb-3 w-[100px]">Add-ons :</p>
+                <p class="font-semibold text-slate-800 text-sm md:mb-0 mb-3 w-[70px]">Add-ons :</p>
 
                 <div class="flex items-center space-x-3 flex-wrap md:flex-nowrap">
                   <button
                     v-for="addon in menu?.addons"
                     :key="addon?.id"
                     type="button"
-                    class="px-4 py-2 text-xs rounded-md font-semibold md:ml-0 ml-3 mb-3 border border-orange-300 text-orange-500"
+                    @click="handleSelectedAddons(addon)"
+                    class="px-4 py-2 text-xs rounded-md font-semibold md:ml-0 ml-3 md:mb-0 mb-3 border border-orange-300 text-orange-500"
+                    :class="{ 'bg-orange-500 text-white': isAddonSelected(addon) }"
                   >
                     {{ addon?.name }} ( + {{ formatAmount(addon?.additional_price) }}$ )
                   </button>
@@ -189,6 +222,7 @@ const decrement = () => (quantity.value <= 1 ? 1 : quantity.value--)
 
               <div class="flex items-center justify-start space-x-3">
                 <button
+                  @click="handleAddToCart"
                   class="focus:ring-2 focus:ring-orange-300 text-white bg-orange-500 hover:bg-orange-600 rounded-full text-xs md:text-sm font-medium px-5 py-3 animate-press duration-200 transition-all"
                 >
                   <i class="fa-solid fa-cart-plus"></i>
@@ -223,14 +257,3 @@ const decrement = () => (quantity.value <= 1 ? 1 : quantity.value--)
     </div>
   </AppLayout>
 </template>
-
-<style scoped>
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  display: none;
-}
-
-.scrollbar::-webkit-scrollbar {
-  height: 10px;
-}
-</style>

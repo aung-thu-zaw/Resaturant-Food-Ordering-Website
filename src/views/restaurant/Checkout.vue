@@ -5,8 +5,10 @@ import InputLabel from '@/components/Forms/Fields/InputLabel.vue'
 import InputField from '@/components/Forms/Fields/InputField.vue'
 import SelectBox from '@/components/Forms/Fields/SelectBox.vue'
 import TextAreaField from '@/components/Forms/Fields/TextAreaField.vue'
+import CheckoutCouponForm from '@/components/Forms/CheckoutCouponForm.vue'
 import FormButton from '@/components/Buttons/FormButton.vue'
 import { useTitle } from '@vueuse/core'
+import OrderSummaryCard from '@/components/Cards/OrderSummaryCard.vue'
 import { onMounted } from 'vue'
 
 useTitle('Checkout - Restaurant Food Ordering')
@@ -104,70 +106,9 @@ onMounted(() => window.scrollTo(0, 0))
             </div>
           </div>
           <div class="col-span-1" data-aos="fade-left" data-aos-duration="1000">
-            <div class="border border-gray-200 bg-white shadow-sm rounded-md mb-5 p-5">
-              <h2 class="text-center mb-5 font-bold text-xl text-gray-800">Order Summary</h2>
-              <ul class="space-y-3 text-sm font-semibold mb-5">
-                <li class="flex justify-between text-gray-700">
-                  <span>Total Items:</span>
-                  <span>5 Items</span>
-                </li>
+            <OrderSummaryCard />
 
-                <li class="flex justify-between text-gray-700">
-                  <span>Total Items Price:</span>
-                  <span>$ 100</span>
-                </li>
-
-                <li class="flex justify-between text-gray-700">
-                  <span>Delivery:</span>
-                  <span>$ 10</span>
-                </li>
-
-                <li class="flex justify-between text-gray-700">
-                  <span>Coupon Code:</span>
-                  <span class="text-yellow-600 text-sm font-bold">
-                    Global Usage
-                    <button class="text-gray-700 cursor-pointer hover:text-red-600">
-                      <i class="fas fa-xmark"></i>
-                    </button>
-                  </span>
-                </li>
-
-                <!-- <li v-show="coupon" class="flex justify-between text-gray-700">
-                    <span>Coupon Discount:</span>
-                    <span v-if="coupon?.type === 'fixed'" class="text-gray-700 text-sm font-bold">
-                      - $ {{ formatAmount(coupon.value) }}
-                    </span>
-                    <span
-                      v-else-if="coupon?.type === 'percentage'"
-                      class="text-gray-700 text-sm font-bold"
-                    >
-                      - % {{ coupon.value }}
-                    </span>
-                  </li> -->
-
-                <li class="text-lg font-bold border-t flex justify-between mt-3 pt-3">
-                  <span>Total Price:</span>
-                  <span> $ 150.45</span>
-                </li>
-              </ul>
-            </div>
-
-            <div class="border border-gray-200 bg-white shadow-sm rounded-md mb-5 p-5">
-              <span class="font-bold text-orange-600 text-sm my-4"> Coupon code is applied </span>
-
-              <form @submit.prevent="" class="space-y-3">
-                <div>
-                  <InputField type="text" name="coupon-code" placeholder="Enter Coupon Code" />
-                </div>
-
-                <button
-                  type="submit"
-                  class="px-4 py-3 inline-block text-sm w-full text-center font-semibold text-white bg-orange-600 shadow-sm border border-gray-200 rounded-md hover:bg-orange-700 duration-200"
-                >
-                  Apply
-                </button>
-              </form>
-            </div>
+            <CheckoutCouponForm />
           </div>
         </div>
       </div>

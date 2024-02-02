@@ -1,3 +1,5 @@
+import checkCartItems from '@/middlewares/checkCartItems'
+
 export default [
   /***** Home *****/
   {
@@ -62,11 +64,17 @@ export default [
   {
     path: '/checkout',
     name: 'checkout',
-    component: () => import('@/views/restaurant/Checkout.vue')
+    component: () => import('@/views/restaurant/Checkout.vue'),
+    meta: {
+      middleware: [checkCartItems]
+    }
   },
   {
     path: '/payments',
     name: 'payments',
-    component: () => import('@/views/restaurant/Payment.vue')
+    component: () => import('@/views/restaurant/Payment.vue'),
+    meta: {
+      middleware: [checkCartItems]
+    }
   }
 ]
