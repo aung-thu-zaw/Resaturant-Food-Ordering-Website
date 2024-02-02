@@ -13,6 +13,7 @@ import { useTitle } from '@vueuse/core'
 import { useMenuStore } from '@/stores/restaurant/menu'
 import { storeToRefs } from 'pinia'
 import { useFormatFunctions } from '@/composables/useFormatFunctions'
+import { useCartStore } from '@/stores/restaurant/cart'
 import { useCartItemStore } from '@/stores/restaurant/cartItem'
 
 const props = defineProps({
@@ -24,6 +25,7 @@ const props = defineProps({
 
 const { menu, relatedItems } = storeToRefs(useMenuStore())
 const { formatAmount } = useFormatFunctions()
+const cartStore = useCartStore()
 const cartItemStore = useCartItemStore()
 
 const fetchData = async () => {
@@ -112,7 +114,10 @@ watch(quantity, (newValue) => {
 const isAddonSelected = (addon) =>
   cartItemData.addons.some((selectedAddon) => selectedAddon.name === addon.name)
 
-const handleAddToCart = async () => await cartItemStore.createCartItem({ ...cartItemData })
+const handleAddToCart = async () => {
+  await cartItemStore.createCartItem({ ...cartItemData })
+  await cartStore.getCartWithCartItems()
+}
 </script>
 
 <template>

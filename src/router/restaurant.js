@@ -72,7 +72,7 @@ export default [
   {
     path: '/payments',
     name: 'payments',
-    component: () => import('@/views/restaurant/Payment.vue'),
+    component: () => import('@/views/restaurant/Payments/Index.vue'),
     meta: {
       middleware: [checkCartItems]
     }

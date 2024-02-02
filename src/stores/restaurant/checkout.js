@@ -46,7 +46,7 @@ export const useCheckoutStore = defineStore('checkout', {
 
         this.information = response.data
 
-        this.router.push({ name: 'payments' })
+        this.router.push({ name: 'payments', query: { tab: 'paypal' } })
       } catch (error) {
         this.responseErrors = error.response?.data?.errors
       }

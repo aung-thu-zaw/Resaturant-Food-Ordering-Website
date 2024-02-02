@@ -1,13 +1,26 @@
 <script setup>
 import FoodSearchBox from '@/components/Forms/SearchBoxs/FoodSearchBox.vue'
 import UserDropdown from '@/components/Dropdowns/UserDropdown.vue'
-import { ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
+import { useCartStore } from '@/stores/restaurant/cart'
+import { storeToRefs } from 'pinia'
 
 const authStore = useAuthStore()
+const cartStore = useCartStore()
 const searchBox = ref(false)
 const router = useRouter()
+const { cart } = storeToRefs(cartStore)
+
+onMounted(async () => await cartStore.getCartWithCartItems())
+
+const totalCartItems = computed(() => {
+  if (cart.value?.cart_items?.length) {
+    return cart.value?.cart_items?.reduce((acc, item) => acc + item.qty, 0)
+  }
+  return 0
+})
 </script>
 
 <template>
@@ -42,9 +55,10 @@ const router = useRouter()
                   <i class="fa-solid fa-shopping-cart"></i>
                 </span>
                 <span
+                  v-show="totalCartItems"
                   class="text-white bg-purpleDark text-[.6rem] font-bold w-3.5 h-3.5 rounded-full absolute -top-2 -right-2 flex items-center justify-center"
                 >
-                  2
+                  {{ totalCartItems }}
                 </span>
               </router-link>
             </div>
