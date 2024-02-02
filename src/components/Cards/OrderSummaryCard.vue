@@ -3,9 +3,19 @@ import { useRoute } from 'vue-router'
 import { useCartStore } from '@/stores/restaurant/cart'
 import { storeToRefs } from 'pinia'
 import { computed } from 'vue'
+import { useFormatFunctions } from '@/composables/useFormatFunctions'
+
+const props = defineProps({
+  deliveryCost: {
+    type: [Number, String],
+    required: false,
+    default: () => 0
+  }
+})
 
 const route = useRoute()
 const cartStore = useCartStore()
+const { formatAmount } = useFormatFunctions()
 
 const { cart } = storeToRefs(cartStore)
 
@@ -29,6 +39,24 @@ const calculateTotalItemAmount = computed(() => {
     return Number(totalPrice.toFixed(2))
   }
 })
+
+const calculateTotalAmount = computed(() => {
+  let totalPrice = 0
+
+  if (cart.value?.cart_items?.length) {
+    for (const item of cart.value.cart_items) {
+      totalPrice += parseFloat(item.total_price)
+    }
+  }
+
+  totalPrice += parseFloat(props.deliveryCost)
+
+  if (Number.isInteger(totalPrice)) {
+    return Number(totalPrice.toFixed(0))
+  } else {
+    return Number(totalPrice.toFixed(2))
+  }
+})
 </script>
 
 <template>
@@ -45,10 +73,10 @@ const calculateTotalItemAmount = computed(() => {
         <span>$ {{ calculateTotalItemAmount }}</span>
       </li>
 
-      <!-- <li class="flex justify-between text-gray-700">
+      <li v-show="deliveryCost" class="flex justify-between text-gray-700">
         <span>Delivery:</span>
-        <span>$ 10</span>
-      </li> -->
+        <span>$ {{ formatAmount(deliveryCost) }}</span>
+      </li>
 
       <!-- <li class="flex justify-between text-gray-700">
         <span>Coupon Code:</span>
@@ -75,7 +103,7 @@ const calculateTotalItemAmount = computed(() => {
 
       <li class="text-lg font-bold border-t flex justify-between mt-3 pt-3">
         <span>Total Price:</span>
-        <span> $ 150.45</span>
+        <span> $ {{ formatAmount(calculateTotalAmount) }}</span>
       </li>
     </ul>
 

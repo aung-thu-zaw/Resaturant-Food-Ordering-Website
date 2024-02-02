@@ -5,6 +5,8 @@ export default async function checkCartItems(to, from, next) {
   const authStore = useAuthStore()
   const cartStore = useCartStore()
 
+  await cartStore.getCartWithCartItems()
+
   if (!authStore.currentUser) await authStore.getAuthenticatedUser()
 
   if (authStore.isAuthenticated && authStore.currentUser) {
