@@ -34,40 +34,40 @@ const { currentUser } = storeToRefs(authStore)
     </button>
 
     <ul
-      class="absolute z-[1000] float-left m-0 hidden min-w-max list-none overflow-hidden rounded-lg border-none bg-white bg-clip-padding text-left text-base shadow-md [&[data-te-dropdown-show]]:block border border-slate-800 p-2"
+      class="absolute z-[1000] float-left m-0 hidden min-w-max list-none overflow-hidden rounded-lg bg-white bg-clip-padding text-left text-base shadow-md [&[data-te-dropdown-show]]:block border border-gray-200 p-2 w-[200px]"
       aria-labelledby="user-dropdown"
       data-te-dropdown-menu-ref
     >
       <li>
-        <a
+        <router-link
+          :to="{ name: 'my-account', query: { tab: 'personal-information' } }"
           class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-bold text-slate-700 hover:bg-slate-100 rounded-md"
-          href="#"
-          data-te-dropdown-item-ref
-        >
-          <i class="fa-solid fa-tv mr-1" />
-          My Dashboard
-        </a>
-      </li>
-
-      <li>
-        <a
-          class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-bold text-slate-700 hover:bg-slate-100 rounded-md"
-          href="#"
           data-te-dropdown-item-ref
         >
           <i class="fa-solid fa-user-circle mr-1" />
-          Profile
-        </a>
+          My Account
+        </router-link>
       </li>
+
       <li>
-        <a
+        <router-link
+          :to="{ name: 'my-orders' }"
           class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-bold text-slate-700 hover:bg-slate-100 rounded-md"
-          href="#"
           data-te-dropdown-item-ref
         >
-          <i class="fa-solid fa-gear mr-1" />
-          Settings
-        </a>
+          <i class="fa-solid fa-bowl-rice mr-1" />
+          My Orders
+        </router-link>
+      </li>
+      <li>
+        <router-link
+          :to="{ name: 'wishlists' }"
+          class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-bold text-slate-700 hover:bg-slate-100 rounded-md"
+          data-te-dropdown-item-ref
+        >
+          <i class="fa-solid fa-heart mr-1" />
+          Wishlists
+        </router-link>
       </li>
 
       <hr class="my-2" />

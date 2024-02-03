@@ -80,9 +80,16 @@ const handleRemoveItem = async () => {
       </div>
     </td>
     <td class="border-r px-6 py-4 space-y-3 text-left">
-      <h3 class="hover:text-orange-500 text-lg font-bold">
+      <router-link
+        :to="{
+          name: 'menus.show',
+          params: { slug: cartItem?.product?.slug },
+          query: { tab: 'description' }
+        }"
+        class="hover:text-orange-500 text-lg font-bold"
+      >
         {{ cartItem?.product?.name }}
-      </h3>
+      </router-link>
       <div v-show="cartItem?.addons?.length" class="flex flex-col items-start space-y-2">
         <span
           v-for="(addon, index) in cartItem?.addons"

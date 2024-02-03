@@ -1,4 +1,6 @@
 import { defineStore } from 'pinia'
+import { toast } from 'vue3-toastify'
+import 'vue3-toastify/dist/index.css'
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
@@ -43,6 +45,36 @@ export const useAuthStore = defineStore('auth', {
         this.authStatus = response.data.status
       } catch (error) {
         if (error.response.status === 422) {
+          this.authErrors = error.response?.data?.errors
+        }
+      }
+    },
+
+    async changePassword(passwords) {
+      try {
+        const response = await this.$axios.put('/password', { ...passwords })
+
+        if (!response) throw new Error('Response Not Found!')
+
+        toast.success(response.data?.message, { autoClose: 2000 })
+
+        return response
+      } catch (error) {
+        if (error?.response?.status === 422) {
+          this.authErrors = error.response?.data?.errors
+        }
+      }
+    },
+
+    async sendVerificationEmail() {
+      try {
+        const response = await this.$axios.post('/email/verification-notification')
+
+        if (!response) throw new Error('Response Not Found!')
+
+        this.authStatus = response.data.status
+      } catch (error) {
+        if (error?.response?.status === 422) {
           this.authErrors = error.response?.data?.errors
         }
       }

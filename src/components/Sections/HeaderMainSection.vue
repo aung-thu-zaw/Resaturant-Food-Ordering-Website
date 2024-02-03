@@ -50,13 +50,13 @@
               <i class="fa-solid fa-bag-shopping"></i>
               Order Now
             </button>
-            <button
-              type="button"
+            <router-link
+              :to="{ name: 'menus.index' }"
               class="px-5 py-3 bg-purpleDark text-white rounded-full text-sm font-bold border animate-press"
             >
               <i class="fa-solid fa-magnifying-glass"></i>
               Browse More
-            </button>
+            </router-link>
           </div>
         </div>
 

@@ -16,6 +16,7 @@ import { useFormatFunctions } from '@/composables/useFormatFunctions'
 import { useCartStore } from '@/stores/restaurant/cart'
 import { useCartItemStore } from '@/stores/restaurant/cartItem'
 import { useWishlistStore } from '@/stores/restaurant/wishlist'
+import { useRouter } from 'vue-router'
 
 const props = defineProps({
   slug: {
@@ -24,6 +25,7 @@ const props = defineProps({
   }
 })
 
+const router = useRouter()
 const { menu, relatedItems } = storeToRefs(useMenuStore())
 const { formatAmount } = useFormatFunctions()
 const cartStore = useCartStore()
@@ -121,6 +123,12 @@ const isAddonSelected = (addon) =>
 const handleAddToCart = async () => {
   await cartItemStore.createCartItem({ ...cartItemData })
   await cartStore.getCartWithCartItems()
+}
+
+const handleBuyNow = async () => {
+  await handleAddToCart()
+
+  router.push({ name: 'cart' })
 }
 
 const wishlist = computed(() => {
@@ -256,6 +264,7 @@ const handleWishlist = async () => {
                 </button>
 
                 <button
+                  @click="handleBuyNow"
                   class="focus:ring-2 focus:ring-indigo-300 focus:border-indigo-300 text-white bg-purpleDark hover:bg-indigo-950 mr-2 rounded-full text-xs md:text-sm font-medium px-5 py-3 animate-press duration-200 transition-all"
                 >
                   <i class="fa-solid fa-bag-shopping"></i>
