@@ -15,6 +15,7 @@ import { storeToRefs } from 'pinia'
 import { useFormatFunctions } from '@/composables/useFormatFunctions'
 import { useCartStore } from '@/stores/restaurant/cart'
 import { useCartItemStore } from '@/stores/restaurant/cartItem'
+import { useWishlistStore } from '@/stores/restaurant/wishlist'
 
 const props = defineProps({
   slug: {
@@ -27,9 +28,12 @@ const { menu, relatedItems } = storeToRefs(useMenuStore())
 const { formatAmount } = useFormatFunctions()
 const cartStore = useCartStore()
 const cartItemStore = useCartItemStore()
+const wishlistStore = useWishlistStore()
+const { wishlists } = storeToRefs(wishlistStore)
 
 const fetchData = async () => {
   await useMenuStore().getMenu(props?.slug)
+  await wishlistStore.getAllWishlists()
   useTitle(menu.value?.name + '- Restaurant Food Ordering')
   cartItemData.product_id = menu?.value?.id
   cartItemData.total_price = calculateTotalPrice()
@@ -118,6 +122,23 @@ const handleAddToCart = async () => {
   await cartItemStore.createCartItem({ ...cartItemData })
   await cartStore.getCartWithCartItems()
 }
+
+const wishlist = computed(() => {
+  return wishlists.value?.filter((wishlists) => wishlists?.product_id === menu.value?.id)
+})
+
+const handleWishlist = async () => {
+  if (!wishlist.value?.length) {
+    await wishlistStore.createWishlist({
+      product_id: cartItemData?.product_id,
+      addons: cartItemData?.addons
+    })
+  } else {
+    await wishlistStore.deleteWishlist(wishlist.value[0]?.id)
+  }
+
+  await wishlistStore.getAllWishlists()
+}
 </script>
 
 <template>
@@ -181,7 +202,7 @@ const handleAddToCart = async () => {
                 v-show="menu?.addons?.length"
                 class="flex items-center justify-start space-x-3 w-full"
               >
-                <p class="font-semibold text-slate-800 text-sm md:mb-0 mb-3 w-[70px]">Add-ons :</p>
+                <p class="font-semibold text-slate-800 text-sm md:mb-0 mb-3 w-[80px]">Add-ons :</p>
 
                 <div class="flex items-center space-x-3 flex-wrap md:flex-nowrap">
                   <button
@@ -241,8 +262,13 @@ const handleAddToCart = async () => {
                   Buy Now
                 </button>
 
-                <button class="px-5 text-xl text-gray-600 hover:text-orange-600">
-                  <i class="fa-regular fa-heart"></i>
+                <button @click="handleWishlist" type="button" class="px-5 text-xl">
+                  <span v-if="!wishlist.length" class="text-gray-600 hover:text-orange-600">
+                    <i class="fa-regular fa-heart"></i>
+                  </span>
+                  <span v-else class="text-orange-500">
+                    <i class="fa-solid fa-heart"></i>
+                  </span>
                 </button>
               </div>
             </div>
