@@ -32,10 +32,7 @@ export const useWishlistStore = defineStore('wishlist', {
 
         if (!response) throw new Error('Response Not Found!')
 
-        toast.success(
-          `Item is moved to the wishlist, you can re-add it to the cart from the wishlist`,
-          { autoClose: 3000 }
-        )
+        toast.success(`Item is saved to the wishlist.`, { autoClose: 3000 })
       } catch (error) {
         this.responseErrors = error.response?.data?.errors
       }
