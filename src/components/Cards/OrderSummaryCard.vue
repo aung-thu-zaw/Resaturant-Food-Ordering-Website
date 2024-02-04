@@ -2,7 +2,7 @@
 import { useRoute } from 'vue-router'
 import { useCartStore } from '@/stores/restaurant/cart'
 import { storeToRefs } from 'pinia'
-import { computed } from 'vue'
+import { computed, watchEffect } from 'vue'
 import { useFormatFunctions } from '@/composables/useFormatFunctions'
 
 const props = defineProps({
@@ -56,6 +56,16 @@ const calculateTotalAmount = computed(() => {
   } else {
     return Number(totalPrice.toFixed(2))
   }
+})
+
+const emit = defineEmits(['updateTotalAmount'])
+
+const emitTotalAmount = () => {
+  emit('updateTotalAmount', calculateTotalAmount.value)
+}
+
+watchEffect(() => {
+  emitTotalAmount()
 })
 </script>
 

@@ -5,7 +5,7 @@ import Paypal from './Partials/Paypal.vue'
 // import Stripe from './Partials/Stripe.vue'
 import CashOnDelivery from './Partials/CashOnDelivery.vue'
 import { useTitle } from '@vueuse/core'
-import { onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useCheckoutStore } from '@/stores/restaurant/checkout'
 import { storeToRefs } from 'pinia'
 import { useRoute } from 'vue-router'
@@ -14,6 +14,11 @@ useTitle('Payments - Restaurant Food Ordering')
 
 const route = useRoute()
 const store = useCheckoutStore()
+const totalAmount = ref(0)
+
+const emitTotalAmount = (newTotalAmount) => {
+  totalAmount.value = newTotalAmount
+}
 
 onMounted(async () => {
   await store.getCheckoutInformation()
@@ -58,13 +63,16 @@ const { checkoutInformation } = storeToRefs(store)
                 </div>
 
                 <div v-if="route.query?.tab === 'cash-on-delivery'">
-                  <CashOnDelivery />
+                  <CashOnDelivery :totalAmount="totalAmount" />
                 </div>
               </div>
             </div>
           </div>
           <div class="col-span-1" data-aos="fade-left" data-aos-duration="1000">
-            <OrderSummaryCard :deliveryCost="checkoutInformation?.shipping_cost" />
+            <OrderSummaryCard
+              :deliveryCost="checkoutInformation?.shipping_cost"
+              @updateTotalAmount="emitTotalAmount"
+            />
           </div>
         </div>
       </div>

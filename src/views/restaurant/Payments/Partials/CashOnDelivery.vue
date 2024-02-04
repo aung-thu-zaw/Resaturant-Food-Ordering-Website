@@ -1,4 +1,11 @@
 <script setup>
+import { usePaymentStore } from '@/stores/restaurant/payment'
+
+const props = defineProps({ totalAmount: [Number, String] })
+
+const store = usePaymentStore()
+
+const handleCashOnDelivery = async () => await store.cashOnDelivery(props?.totalAmount)
 </script>
 
 <template>
@@ -7,6 +14,7 @@
       You can pay in cash to our courier when you receive the foods at your doorstep.
     </h2>
     <button
+      @click="handleCashOnDelivery"
       type="button"
       class="px-5 py-3 text-sm font-bold rounded-md mt-10 mb-5 bg-orange-600 text-white transition-all animate-press"
     >
