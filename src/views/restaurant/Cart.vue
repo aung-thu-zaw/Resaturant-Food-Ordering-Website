@@ -69,7 +69,7 @@ onMounted(async () => {
 
           <router-link
             :to="{ name: 'menus.index' }"
-            class="px-5 py-3 border border-purpleDark animate-press text-purpleDark hover:bg-purpleDark hover:text-white duration-200 text-xs font-semibold rounded-md"
+            class="px-5 py-3 border border-purpleDark animate-press bg-purpleDark text-white duration-200 text-xs font-semibold rounded-md"
           >
             <i class="fa-solid fa-bowl-food"></i>
             Go To Menu

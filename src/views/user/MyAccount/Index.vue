@@ -5,10 +5,13 @@ import ChangePassword from './Partials/ChangePassword.vue'
 import DeleteAccount from './Partials/DeleteAccount.vue'
 import { useTitle } from '@vueuse/core'
 import { useRoute } from 'vue-router'
+import { onMounted } from 'vue'
 
 useTitle('My Account - Restaurant Food Ordering')
 
 const route = useRoute()
+
+onMounted(() => window.scrollTo(0, 0))
 </script>
 
 <template>

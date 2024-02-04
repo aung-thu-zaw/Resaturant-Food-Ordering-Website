@@ -27,6 +27,7 @@ onMounted(async () => {
 const form = reactive({
   contact_name: '',
   contact_phone: '',
+  contact_email: '',
   address: '',
   shipping_method: '',
   shipping_cost: 0,
@@ -70,6 +71,20 @@ const handleStoreInformation = async () => await store.storeCheckoutInformation(
                   />
 
                   <InputError :message="store.errors?.contact_name" />
+                </div>
+
+                <div>
+                  <InputLabel label="Contact Email Address" required />
+
+                  <InputField
+                    type="text"
+                    name="email"
+                    placeholder="Enter Email Address"
+                    v-model="form.contact_email"
+                    required
+                  />
+
+                  <InputError :message="store.errors?.contact_email" />
                 </div>
 
                 <div>

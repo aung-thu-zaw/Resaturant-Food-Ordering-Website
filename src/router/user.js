@@ -13,7 +13,7 @@ export default [
   {
     path: '/my-orders',
     name: 'my-orders',
-    component: () => import('@/views/user/MyOrders/Index.vue'),
+    component: () => import('@/views/user/MyOrders.vue'),
     meta: { middleware: [auth] }
   },
 
