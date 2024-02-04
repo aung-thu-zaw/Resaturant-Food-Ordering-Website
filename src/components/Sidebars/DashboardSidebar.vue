@@ -522,15 +522,16 @@ const defaultQueryParams = {
         <ul class="md:flex-col md:min-w-full flex flex-col list-none text-sm font-[600]">
           <!-- POS -->
           <li class="items-center">
-            <a
+            <router-link
+              :to="{ name: 'admin.pos.index', query: defaultQueryParams }"
               class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] outline-none"
               :class="getSidebarMenuActiveColor('/admin/pos')"
             >
               <div class="text-[13px] py-3 block">
-                <i class="fas fa-calculator mr-2" />
+                <i class="fas fa-cash-register mr-2" />
                 POS
               </div>
-            </a>
+            </router-link>
           </li>
 
           <!-- Customer Orders -->
@@ -547,7 +548,7 @@ const defaultQueryParams = {
           </li>
 
           <!-- Kitchen Orders -->
-          <li class="items-center">
+          <!-- <li class="items-center">
             <a
               class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] outline-none"
               :class="getSidebarMenuActiveColor('/admin/kitchen-orders')"
@@ -557,10 +558,10 @@ const defaultQueryParams = {
                 Kitchen Orders
               </div>
             </a>
-          </li>
+          </li> -->
 
           <!-- Counter Checkout -->
-          <li class="items-center">
+          <!-- <li class="items-center">
             <a
               class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] outline-none"
               :class="getSidebarMenuActiveColor('/admin/counter-checkout')"
@@ -570,7 +571,7 @@ const defaultQueryParams = {
                 Counter Checkout
               </div>
             </a>
-          </li>
+          </li> -->
 
           <!-- Menu Stock -->
           <li class="items-center">
@@ -587,7 +588,7 @@ const defaultQueryParams = {
           </li>
 
           <!-- Table Booking -->
-          <li class="items-center">
+          <!-- <li class="items-center">
             <a
               class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] outline-none"
               :class="getSidebarMenuActiveColor('/admin/table-booking')"
@@ -597,7 +598,7 @@ const defaultQueryParams = {
                 Table Booking
               </div>
             </a>
-          </li>
+          </li> -->
         </ul>
 
         <!-- Divider -->
@@ -613,6 +614,10 @@ const defaultQueryParams = {
           <li class="items-center">
             <a
               class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] text-slate-600 hover:text-slate-800 outline-none transition duration-300 ease-linear"
+              data-te-collapse-init
+              data-te-target="#manage-employee"
+              aria-expanded="false"
+              aria-controls="manage-employee"
             >
               <div class="text-[13px] py-3">
                 <i class="fa-solid fa-user-tie mr-2"></i>
@@ -636,7 +641,18 @@ const defaultQueryParams = {
               </span>
             </a>
             <ul
-              class="show !visible relative m-0 hidden list-none p-0 data-[te-collapse-show]:block"
+              class="!visible relative m-0 list-none p-0"
+              :class="{
+                hidden:
+                  !route.path.startsWith('/admin/employee-positions') ||
+                  !route.path.startsWith('/admin/employees') ||
+                  !route.path.startsWith('/admin/attendance-lists') ||
+                  !route.path.startsWith('/admin/salary') ||
+                  !route.path.startsWith('/admin/pay-salary') ||
+                  !route.path.startsWith('/admin/last-month-salary')
+              }"
+              id="manage-employee"
+              data-te-collapse-item
             >
               <li
                 v-show="can('employee-positions.view')"
@@ -757,6 +773,10 @@ const defaultQueryParams = {
           >
             <a
               class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] text-slate-600 hover:text-slate-800 outline-none transition duration-300 ease-linear"
+              data-te-collapse-init
+              data-te-target="#manage-account"
+              aria-expanded="false"
+              aria-controls="manage-account"
             >
               <div class="text-[13px] py-3">
                 <i class="fa-solid fa-user-gear mr-2"></i>
@@ -780,7 +800,14 @@ const defaultQueryParams = {
               </span>
             </a>
             <ul
-              class="show !visible relative m-0 hidden list-none p-0 data-[te-collapse-show]:block"
+              class="!visible relative m-0 list-none p-0"
+              :class="{
+                hidden:
+                  !route.path.startsWith('/admin/registered-accounts') ||
+                  !route.path.startsWith('/admin/admin-manage')
+              }"
+              id="manage-account"
+              data-te-collapse-item
             >
               <li
                 v-show="can('registered-accounts.view')"
@@ -818,6 +845,10 @@ const defaultQueryParams = {
           >
             <a
               class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] text-slate-600 hover:text-slate-800 outline-none transition duration-300 ease-linear"
+              data-te-collapse-init
+              data-te-target="#manage-authority"
+              aria-expanded="false"
+              aria-controls="manage-authority"
             >
               <div class="text-[13px] py-3">
                 <i class="fa-solid fa-shield mr-2"></i>
@@ -841,7 +872,15 @@ const defaultQueryParams = {
               </span>
             </a>
             <ul
-              class="show !visible relative m-0 hidden list-none p-0 data-[te-collapse-show]:block"
+              class="!visible relative m-0 list-none p-0"
+              :class="{
+                hidden:
+                  !route.path.startsWith('/admin/permissions') ||
+                  !route.path.startsWith('/admin/roles') ||
+                  !route.path.startsWith('/admin/assign-role-permissions')
+              }"
+              id="manage-authority"
+              data-te-collapse-item
             >
               <li
                 v-show="can('permissions.view')"

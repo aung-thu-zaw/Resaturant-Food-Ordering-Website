@@ -315,6 +315,14 @@ export default [
         ]
       },
 
+      /***** POS *****/
+      {
+        path: '/admin/pos',
+        name: 'admin.pos.index',
+        component: () => import('@/views/admin/Pos/Index.vue')
+        // meta: { middleware: [authorizePermission('subscribers.view')] }
+      },
+
       /***** Menu Stock *****/
       {
         path: '/admin/menu-stock',
