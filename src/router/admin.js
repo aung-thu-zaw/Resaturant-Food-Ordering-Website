@@ -328,7 +328,7 @@ export default [
         path: '/admin/menu-stock',
         name: 'admin.menu-stock.index',
         component: () => import('@/views/admin/MenuStock/Index.vue'),
-        meta: { middleware: [authorizePermission('subscribers.view')] }
+        meta: { middleware: [authorizePermission('menu-stocks.view')] }
       },
 
       /***** Employee Positions *****/

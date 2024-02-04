@@ -254,10 +254,15 @@ const handleWishlist = async () => {
                 </div>
               </div>
 
+              <p v-show="!menu?.is_available" class="text-sm font-semibold text-red-600">
+                This menu is currently not available
+              </p>
+
               <div class="flex items-center justify-start space-x-3">
                 <button
                   @click="handleAddToCart"
-                  class="focus:ring-2 focus:ring-orange-300 text-white bg-orange-500 hover:bg-orange-600 rounded-full text-xs md:text-sm font-medium px-5 py-3 animate-press duration-200 transition-all"
+                  class="focus:ring-2 focus:ring-orange-300 text-white bg-orange-500 hover:bg-orange-600 rounded-full text-xs md:text-sm font-medium px-5 py-3 animate-press duration-200 transition-all disabled:bg-orange-300"
+                  :disabled="!menu?.is_available"
                 >
                   <i class="fa-solid fa-cart-plus"></i>
                   Add To Cart
@@ -265,7 +270,8 @@ const handleWishlist = async () => {
 
                 <button
                   @click="handleBuyNow"
-                  class="focus:ring-2 focus:ring-indigo-300 focus:border-indigo-300 text-white bg-purpleDark hover:bg-indigo-950 mr-2 rounded-full text-xs md:text-sm font-medium px-5 py-3 animate-press duration-200 transition-all"
+                  class="focus:ring-2 focus:ring-indigo-300 focus:border-indigo-300 text-white bg-purpleDark hover:bg-indigo-950 mr-2 rounded-full text-xs md:text-sm font-medium px-5 py-3 animate-press duration-200 transition-all disabled:bg-indigo-300"
+                  :disabled="!menu?.is_available"
                 >
                   <i class="fa-solid fa-bag-shopping"></i>
                   Buy Now

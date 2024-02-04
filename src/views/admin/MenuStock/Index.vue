@@ -4,10 +4,34 @@ import Breadcrumb from '@/components/Breadcrumbs/MainBreadcrumb.vue'
 import BreadcrumbItem from '@/components/Breadcrumbs/BreadcrumbItem.vue'
 import MenuStockCard from '@/components/Cards/MenuStockCard.vue'
 import DashboardTableDataSearchBox from '@/components/Forms/SearchBoxs/DashboardTableDataSearchBox.vue'
-import DashboardTableDataPerPageSelectBox from '@/components/Forms/SelectBoxs/DashboardTableDataPerPageSelectBox.vue'
+import FilterByCategory from '@/components/Forms/SelectBoxs/FilterByCategory.vue'
+import SortByStock from '@/components/Forms/SelectBoxs/SortByStock.vue'
+import StockFilteredByTags from '@/components/StockFilteredByTags.vue'
 import { useTitle } from '@vueuse/core'
+import { useMenuStockStore } from '@/stores/dashboard/menuStock'
+import { onMounted, watch } from 'vue'
+import { useQueryStringParams } from '@/composables/useQueryStringParams'
+import Pagination from '@/components/Paginations/DashboardPagination.vue'
+import { storeToRefs } from 'pinia'
+import { useRoute } from 'vue-router'
 
 useTitle('Menu Stock - Restaurant Food Ordering')
+
+const route = useRoute()
+const store = useMenuStockStore()
+const { products, categories } = storeToRefs(store)
+const { dashboardParams } = useQueryStringParams()
+
+onMounted(async () => {
+  await store.getAllPublishedMenu({ ...dashboardParams.value, per_page: 12 })
+
+  await store.getResources()
+})
+
+watch(
+  () => route.query,
+  async () => await store.getAllPublishedMenu({ ...dashboardParams.value, per_page: 12 })
+)
 </script>
 
 <template>
@@ -32,69 +56,23 @@ useTitle('Menu Stock - Restaurant Food Ordering')
           <DashboardTableDataSearchBox placeholder="Search by product name" />
 
           <div class="space-x-5 flex items-center">
-            <div>
-              <select
-                id="filter-by-category"
-                class="p-3 py-3.5 font-medium text-xs text-gray-700 rounded-md bg-gray-50 outline-none focus:ring-2 focus:ring-slate-300 border border-gray-300 focus:border-slate-400"
-              >
-                <option selected disabled>Filter By Menu Category</option>
-                <option value="5">Main Courses</option>
-                <option value="5">Salads</option>
-                <option value="5">Seafood</option>
-                <option value="5">Desserts</option>
-                <option value="5">Breakfast</option>
-                <option value="5">Kids Menu</option>
-                <option value="5">Burgers</option>
-                <option value="5">Pasta</option>
-                <option value="5">Vegetarian</option>
-                <option value="5">Drinks</option>
-              </select>
-            </div>
+            <FilterByCategory :options="categories ?? {}" />
 
-            <div>
-              <select
-                id="filter-by-stock"
-                class="p-3 py-3.5 font-medium text-xs text-gray-700 rounded-md bg-gray-50 outline-none focus:ring-2 focus:ring-slate-300 border border-gray-300 focus:border-slate-400"
-              >
-                <option selected disabled>Filter By Stock</option>
-                <option value="5">Out Of Stock</option>
-                <option value="5">In Stock</option>
-                <option value="10">Less Than 10 Stock</option>
-                <option value="10">Less Than 5 Stock</option>
-              </select>
-            </div>
-
-            <div>
-              <select
-                id="sort-by"
-                class="p-3 py-3.5 font-medium text-xs text-gray-700 rounded-md bg-gray-50 outline-none focus:ring-2 focus:ring-slate-300 border border-gray-300 focus:border-slate-400"
-              >
-                <option selected disabled>Sort By</option>
-                <option value="5">Low To High Stock</option>
-                <option value="10">High To Low Stock</option>
-              </select>
-            </div>
-
-            <DashboardTableDataPerPageSelectBox />
+            <SortByStock />
           </div>
         </div>
       </div>
 
+      <!-- Filtered By -->
+      <StockFilteredByTags :total="products?.total" />
+
       <div
         class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 p-5 rounded-md border border-gray-300 bg-white"
       >
-        <MenuStockCard />
-        <MenuStockCard />
-        <MenuStockCard />
-        <MenuStockCard />
-        <MenuStockCard />
-        <MenuStockCard />
-        <MenuStockCard />
-        <MenuStockCard />
-        <MenuStockCard />
-        <MenuStockCard />
-        <MenuStockCard />
+        <MenuStockCard v-for="product in products.data" :key="product?.id" :product="product" />
       </div>
+
+      <Pagination :data="products" />
     </div>
   </DashboardLayout>
 </template>

@@ -61,7 +61,7 @@ watch(
 <template>
   <select
     id="filter-by-category"
-    class="p-3 py-4 font-semibold text-sm text-gray-700 rounded-md bg-gray-50 outline-none focus:ring-2 focus:ring-slate-300 border border-gray-300 focus:border-slate-400"
+    class="p-3 py-3.5 font-semibold text-sm text-gray-700 rounded-md bg-gray-50 outline-none focus:ring-2 focus:ring-slate-300 border border-gray-300 focus:border-slate-400"
     v-model="currentCategory"
   >
     <option value="" :selected="modelValue === ''" disabled>{{ placeholder }}</option>

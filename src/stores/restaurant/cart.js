@@ -17,7 +17,7 @@ export const useCartStore = defineStore('cart', {
 
         this.specificData = response.data
       } catch (error) {
-        if (error.response.status === 404)
+        if (error.response?.status === 404)
           this.router.push({ name: 'errors', query: { status: 404 } })
 
         this.responseErrors = error.response?.data?.errors
