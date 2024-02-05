@@ -521,7 +521,7 @@ const defaultQueryParams = {
 
         <ul class="md:flex-col md:min-w-full flex flex-col list-none text-sm font-[600]">
           <!-- POS -->
-          <li class="items-center">
+          <li v-show="can('pos.view')" class="items-center">
             <router-link
               :to="{ name: 'admin.pos.index', query: defaultQueryParams }"
               class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] outline-none"
@@ -535,16 +535,17 @@ const defaultQueryParams = {
           </li>
 
           <!-- Customer Orders -->
-          <li class="items-center">
-            <a
+          <li v-show="can('orders.view')" class="items-center">
+            <router-link
+              :to="{ name: 'admin.orders.index', query: defaultQueryParams }"
               class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] outline-none"
-              :class="getSidebarMenuActiveColor('/admin/customer-orders')"
+              :class="getSidebarMenuActiveColor('/admin/orders')"
             >
               <div class="text-[13px] py-3 block">
                 <i class="fas fa-cart-plus mr-2" />
                 Customer Orders
               </div>
-            </a>
+            </router-link>
           </li>
 
           <!-- Kitchen Orders -->

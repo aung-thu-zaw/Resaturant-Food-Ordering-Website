@@ -323,6 +323,26 @@ export default [
         // meta: { middleware: [authorizePermission('subscribers.view')] }
       },
 
+      /***** Admin Manage *****/
+      {
+        path: 'orders',
+        children: [
+          {
+            path: '',
+            name: 'admin.orders.index',
+            component: () => import('@/views/admin/Orders/Index.vue'),
+            meta: { middleware: [authorizePermission('orders.view')] }
+          },
+          {
+            path: ':uuid',
+            name: 'admin.orders.show',
+            component: () => import('@/views/admin/Orders/Show.vue'),
+            props: (route) => ({ uuid: String(route.params.uuid) }),
+            meta: { middleware: [authorizePermission('orders.edit')] }
+          }
+        ]
+      },
+
       /***** Menu Stock *****/
       {
         path: '/admin/menu-stock',
