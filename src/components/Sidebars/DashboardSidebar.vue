@@ -498,7 +498,7 @@ const defaultQueryParams = {
           </li>
 
           <!-- Chat Box -->
-          <li class="items-center">
+          <!-- <li class="items-center">
             <a
               class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] outline-none"
               :class="getSidebarMenuActiveColor('/admin/chat-box')"
@@ -508,15 +508,15 @@ const defaultQueryParams = {
                 Chat Box
               </div>
             </a>
-          </li>
+          </li> -->
         </ul>
 
         <!-- Divider -->
-        <hr class="my-4 md:min-w-full" />
+        <!-- <hr class="my-4 md:min-w-full" /> -->
         <!-- Heading -->
-        <h6 class="md:min-w-full font-bold text-xs block pt-1 pb-4 no-underline">
+        <!-- <h6 class="md:min-w-full font-bold text-xs block pt-1 pb-4 no-underline">
           Orders And Management
-        </h6>
+        </h6> -->
         <!-- Navigation -->
 
         <ul class="md:flex-col md:min-w-full flex flex-col list-none text-sm font-[600]">
@@ -603,16 +603,16 @@ const defaultQueryParams = {
         </ul>
 
         <!-- Divider -->
-        <hr class="my-4 md:min-w-full" />
+        <!-- <hr class="my-4 md:min-w-full" /> -->
         <!-- Heading -->
-        <h6 class="md:min-w-full font-bold text-xs block pt-1 pb-4 no-underline">
+        <!-- <h6 class="md:min-w-full font-bold text-xs block pt-1 pb-4 no-underline">
           Management & Oversight
-        </h6>
+        </h6> -->
         <!-- Navigation -->
 
         <ul class="md:flex-col md:min-w-full flex flex-col list-none text-sm font-[600]">
           <!-- Employee Management -->
-          <li class="items-center">
+          <!-- <li class="items-center">
             <a
               class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] text-slate-600 hover:text-slate-800 outline-none transition duration-300 ease-linear"
               data-te-collapse-init
@@ -712,10 +712,10 @@ const defaultQueryParams = {
                 </a>
               </li>
             </ul>
-          </li>
+          </li> -->
 
           <!-- Supplier Management -->
-          <li class="items-center">
+          <!-- <li class="items-center">
             <a
               class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] text-slate-600 hover:text-slate-800 outline-none transition duration-300 ease-linear"
             >
@@ -752,10 +752,10 @@ const defaultQueryParams = {
                 </a>
               </li>
             </ul>
-          </li>
+          </li> -->
 
           <!-- Customer Mangement -->
-          <li class="items-center">
+          <!-- <li class="items-center">
             <a
               class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] outline-none"
               :class="getSidebarMenuActiveColor('/admin/customer-management')"
@@ -765,7 +765,7 @@ const defaultQueryParams = {
                 Customer Management
               </div>
             </a>
-          </li>
+          </li> -->
 
           <!-- Account Management -->
           <li
@@ -924,7 +924,7 @@ const defaultQueryParams = {
           </li>
 
           <!-- Settings -->
-          <li class="items-center">
+          <!-- <li class="items-center">
             <a
               class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] outline-none"
               :class="getSidebarMenuActiveColor('/admin/settings')"
@@ -934,7 +934,7 @@ const defaultQueryParams = {
                 Settings
               </div>
             </a>
-          </li>
+          </li> -->
 
           <!-- Database Backups -->
           <li v-show="can('database-backups.view')" class="items-center">

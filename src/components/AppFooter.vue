@@ -80,7 +80,7 @@
             >
               <input
                 type="text"
-                class="text-sm font-bold font-lato text-black w-full border-none focus:ring-0 bg-gray-50"
+                class="text-sm font-bold font-lato text-black w-full border-none focus:ring-0 outline-none pl-2.5 bg-gray-50"
                 placeholder="Enter your email"
               />
               <button
