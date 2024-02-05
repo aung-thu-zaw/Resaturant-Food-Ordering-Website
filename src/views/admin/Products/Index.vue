@@ -92,24 +92,6 @@ watch(
           <i class="fa-solid fa-file-circle-plus mr-1"></i>
           Add A New Product
         </RouterLinkButton>
-
-        <RouterLinkButton
-          v-show="can('products.create')"
-          to="admin.products.create"
-          class="bg-orange-600 text-white hover:bg-orange-700"
-        >
-          <i class="fa-solid fa-file-import mr-1"></i>
-          Import
-        </RouterLinkButton>
-
-        <RouterLinkButton
-          v-show="can('products.create')"
-          to="admin.products.create"
-          class="bg-indigo-600 text-white hover:bg-indigo-700"
-        >
-          <i class="fa-solid fa-file-export mr-1"></i>
-          Export
-        </RouterLinkButton>
       </div>
 
       <!-- Table Start -->

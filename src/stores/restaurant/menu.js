@@ -63,6 +63,7 @@ export const useMenuStore = defineStore('menu', {
   getters: {
     menus: (state) => state.data,
     menu: (state) => state.specificData?.product,
+    productReviews: (state) => state.specificData?.productReviews,
     relatedItems: (state) => state.specificData?.relatedItems,
     categories: (state) => state.resources,
     errors: (state) => state.responseErrors

@@ -19,7 +19,7 @@ const getSidebarMenuActiveColor = (targetRoute) => {
 
 const defaultQueryParams = {
   page: 1,
-  per_page: 5,
+  per_page: 10,
   sort: 'id',
   direction: 'desc'
 }
@@ -105,7 +105,7 @@ const defaultQueryParams = {
 
         <ul class="md:flex-col md:min-w-full flex flex-col list-none text-sm font-[600]">
           <!-- Dashboard -->
-          <li class="items-center">
+          <!-- <li class="items-center">
             <router-link
               :to="{ name: 'admin.dashboard' }"
               class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] outline-none"
@@ -116,10 +116,10 @@ const defaultQueryParams = {
                 Dashboard
               </div>
             </router-link>
-          </li>
+          </li> -->
 
           <!-- Analytics -->
-          <li class="items-center">
+          <!-- <li class="items-center">
             <a
               class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] outline-none"
               :class="getSidebarMenuActiveColor('/admin/analytics')"
@@ -129,7 +129,7 @@ const defaultQueryParams = {
                 Analytics
               </div>
             </a>
-          </li>
+          </li> -->
 
           <!-- Category -->
           <li v-show="can('categories.view')" class="items-center">
@@ -259,7 +259,7 @@ const defaultQueryParams = {
           </li>
 
           <!-- Manage Reservations -->
-          <li v-show="can('tables.view') || can('reservation-times.view')" class="items-center">
+          <!-- <li v-show="can('tables.view') || can('reservation-times.view')" class="items-center">
             <a
               class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] text-slate-600 hover:text-slate-800 outline-none transition duration-300 ease-linear"
               data-te-collapse-init
@@ -343,7 +343,7 @@ const defaultQueryParams = {
                 </a>
               </li>
             </ul>
-          </li>
+          </li> -->
 
           <!-- Manage Blogs -->
           <li

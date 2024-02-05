@@ -26,7 +26,7 @@ const props = defineProps({
 })
 
 const router = useRouter()
-const { menu, relatedItems } = storeToRefs(useMenuStore())
+const { menu, relatedItems, productReviews } = storeToRefs(useMenuStore())
 const { formatAmount } = useFormatFunctions()
 const cartStore = useCartStore()
 const cartItemStore = useCartItemStore()
@@ -289,7 +289,7 @@ const handleWishlist = async () => {
             </div>
           </div>
 
-          <ProductInformationTab :description="menu?.description" />
+          <ProductInformationTab :product="menu" :productReviews="productReviews" />
         </section>
 
         <section v-if="relatedItems?.length" class="space-y-10">

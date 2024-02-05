@@ -1,14 +1,25 @@
 <script setup>
+import ReviewCard from '@/components/Cards/ReviewCard.vue'
+// import ReviewResponseCard from '@/components/Cards/ReviewResponseCard.vue'
+import Pagination from '@/components/Paginations/AppPagination.vue'
 import { useRoute, useRouter } from 'vue-router'
+import { useMenuStore } from '@/stores/restaurant/menu'
 
 defineProps({
-  description: String
+  product: Object,
+  productReviews: Object
 })
 
 const route = useRoute()
 const router = useRouter()
+const menuStore = useMenuStore()
 
 const goToTab = (tab) => router.push({ query: { tab } })
+
+const handleUpdatedData = (data) => {
+  menuStore.$patch({ specificData: data })
+  window.scrollTo(0, 600)
+}
 </script>
 
 <template>
@@ -53,10 +64,40 @@ const goToTab = (tab) => router.push({ query: { tab } })
       <!--Tabs content-->
       <div class="mb-6">
         <div v-if="route.query.tab === 'description'" class="px-10 py-5">
-          <p v-html="description"></p>
+          <p v-html="product?.description"></p>
         </div>
 
-        <div v-if="route.query.tab === 'reviews'" class="px-10 py-5">This is reviews</div>
+        <div v-if="route.query.tab === 'reviews'" class="px-10 py-5">
+          <div v-if="productReviews?.data?.length" class="space-y-5">
+            <div
+              v-for="productReview in productReviews?.data"
+              :key="productReview.id"
+              class="border border-gray-200 rounded-md flex flex-col items-center space-y-6 justify-between p-6"
+            >
+              <!-- Review -->
+              <ReviewCard :review="productReview" />
+
+              <hr />
+
+              <!-- Reply -->
+              <ReviewResponseCard
+                v-show="productReview.product_review_response"
+                :response="productReview.product_review_response"
+              />
+            </div>
+
+            <!-- Pagination -->
+            <div class="my-5 py-5">
+              <Pagination :data="productReviews" @updatedData="handleUpdatedData" />
+            </div>
+          </div>
+          <div v-else class="py-20 flex items-center w-full">
+            <p class="text-center font-bold text-md text-gray-600 w-full">
+              <i class="fa-solid fa-file-circle-xmark"></i>
+              This product does not have any product reviews.
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
