@@ -105,7 +105,7 @@ const defaultQueryParams = {
 
         <ul class="md:flex-col md:min-w-full flex flex-col list-none text-sm font-[600]">
           <!-- Dashboard -->
-          <!-- <li class="items-center">
+          <li class="items-center">
             <router-link
               :to="{ name: 'admin.dashboard' }"
               class="flex h-12 cursor-pointer items-center truncate rounded-[5px] py-3 text-[0.875rem] outline-none"
@@ -116,7 +116,7 @@ const defaultQueryParams = {
                 Dashboard
               </div>
             </router-link>
-          </li> -->
+          </li>
 
           <!-- Analytics -->
           <!-- <li class="items-center">

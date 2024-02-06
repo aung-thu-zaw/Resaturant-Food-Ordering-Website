@@ -1,7 +1,7 @@
 <script setup>
-import FoodSearchBox from '@/components/Forms/SearchBoxs/FoodSearchBox.vue'
+// import FoodSearchBox from '@/components/Forms/SearchBoxs/FoodSearchBox.vue'
 import UserDropdown from '@/components/Dropdowns/UserDropdown.vue'
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import { useCartStore } from '@/stores/restaurant/cart'
@@ -9,7 +9,7 @@ import { storeToRefs } from 'pinia'
 
 const authStore = useAuthStore()
 const cartStore = useCartStore()
-const searchBox = ref(false)
+// const searchBox = ref(false)
 const router = useRouter()
 const { cart } = storeToRefs(cartStore)
 
@@ -36,7 +36,7 @@ const totalCartItems = computed(() => {
 
         <div class="md:order-2 flex items-center space-x-5 w-auto">
           <div class="flex items-center space-x-8">
-            <div class="">
+            <!-- <div class="">
               <div
                 @click="searchBox = !searchBox"
                 class="tooltip tooltip-bottom tooltip-warning cursor-pointer"
@@ -47,7 +47,7 @@ const totalCartItems = computed(() => {
                 </span>
               </div>
               <FoodSearchBox :search="searchBox" @closedSearchBox="searchBox = false" />
-            </div>
+            </div> -->
 
             <div class="inline-block">
               <router-link :to="{ name: 'cart' }" class="relative">
